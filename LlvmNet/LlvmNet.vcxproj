@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B534C80C-CFFE-4AA1-91D0-95A492618A74}</ProjectGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>LlvmNet</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CLRSupport>true</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CLRSupport>Safe</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\..\llvm\include;$(SolutionDir)\..\llvm_build\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)\..\llvm_build\lib\Debug;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)\..\llvm\include;$(SolutionDir)\..\llvm_build\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)\..\llvm_build\lib\Debug;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>LLVMAArch64AsmParser.lib;LLVMAArch64AsmPrinter.lib;LLVMAArch64CodeGen.lib;LLVMAArch64Desc.lib;LLVMAArch64Disassembler.lib;LLVMAArch64Info.lib;LLVMAArch64Utils.lib;LLVMAnalysis.lib;LLVMArchive.lib;LLVMARMAsmParser.lib;LLVMARMAsmPrinter.lib;LLVMARMCodeGen.lib;LLVMARMDesc.lib;LLVMARMDisassembler.lib;LLVMARMInfo.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMCppBackendCodeGen.lib;LLVMCppBackendInfo.lib;LLVMDebugInfo.lib;LLVMExecutionEngine.lib;LLVMHexagonAsmPrinter.lib;LLVMHexagonCodeGen.lib;LLVMHexagonDesc.lib;LLVMHexagonInfo.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMInterpreter.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMJIT.lib;LLVMLinker.lib;LLVMMBlazeAsmParser.lib;LLVMMBlazeAsmPrinter.lib;LLVMMBlazeCodeGen.lib;LLVMMBlazeDesc.lib;LLVMMBlazeDisassembler.lib;LLVMMBlazeInfo.lib;LLVMMC.lib;LLVMMCDisassembler.lib;LLVMMCJIT.lib;LLVMMCParser.lib;LLVMMipsAsmParser.lib;LLVMMipsAsmPrinter.lib;LLVMMipsCodeGen.lib;LLVMMipsDesc.lib;LLVMMipsDisassembler.lib;LLVMMipsInfo.lib;LLVMMSP430AsmPrinter.lib;LLVMMSP430CodeGen.lib;LLVMMSP430Desc.lib;LLVMMSP430Info.lib;LLVMNVPTXAsmPrinter.lib;LLVMNVPTXCodeGen.lib;LLVMNVPTXDesc.lib;LLVMNVPTXInfo.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMOption.lib;LLVMPowerPCAsmParser.lib;LLVMPowerPCAsmPrinter.lib;LLVMPowerPCCodeGen.lib;LLVMPowerPCDesc.lib;LLVMPowerPCInfo.lib;LLVMRuntimeDyld.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSparcCodeGen.lib;LLVMSparcDesc.lib;LLVMSparcInfo.lib;LLVMSupport.lib;LLVMSystemZAsmParser.lib;LLVMSystemZAsmPrinter.lib;LLVMSystemZCodeGen.lib;LLVMSystemZDesc.lib;LLVMSystemZInfo.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;LLVMX86AsmParser.lib;LLVMX86AsmPrinter.lib;LLVMX86CodeGen.lib;LLVMX86Desc.lib;LLVMX86Disassembler.lib;LLVMX86Info.lib;LLVMX86Utils.lib;LLVMXCoreAsmPrinter.lib;LLVMXCoreCodeGen.lib;LLVMXCoreDesc.lib;LLVMXCoreDisassembler.lib;LLVMXCoreInfo.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>LLVMAArch64AsmParser.lib;LLVMAArch64AsmPrinter.lib;LLVMAArch64CodeGen.lib;LLVMAArch64Desc.lib;LLVMAArch64Disassembler.lib;LLVMAArch64Info.lib;LLVMAArch64Utils.lib;LLVMAnalysis.lib;LLVMArchive.lib;LLVMARMAsmParser.lib;LLVMARMAsmPrinter.lib;LLVMARMCodeGen.lib;LLVMARMDesc.lib;LLVMARMDisassembler.lib;LLVMARMInfo.lib;LLVMAsmParser.lib;LLVMAsmPrinter.lib;LLVMBitReader.lib;LLVMBitWriter.lib;LLVMCodeGen.lib;LLVMCore.lib;LLVMCppBackendCodeGen.lib;LLVMCppBackendInfo.lib;LLVMDebugInfo.lib;LLVMExecutionEngine.lib;LLVMHexagonAsmPrinter.lib;LLVMHexagonCodeGen.lib;LLVMHexagonDesc.lib;LLVMHexagonInfo.lib;LLVMInstCombine.lib;LLVMInstrumentation.lib;LLVMInterpreter.lib;LLVMipa.lib;LLVMipo.lib;LLVMIRReader.lib;LLVMJIT.lib;LLVMLinker.lib;LLVMMBlazeAsmParser.lib;LLVMMBlazeAsmPrinter.lib;LLVMMBlazeCodeGen.lib;LLVMMBlazeDesc.lib;LLVMMBlazeDisassembler.lib;LLVMMBlazeInfo.lib;LLVMMC.lib;LLVMMCDisassembler.lib;LLVMMCJIT.lib;LLVMMCParser.lib;LLVMMipsAsmParser.lib;LLVMMipsAsmPrinter.lib;LLVMMipsCodeGen.lib;LLVMMipsDesc.lib;LLVMMipsDisassembler.lib;LLVMMipsInfo.lib;LLVMMSP430AsmPrinter.lib;LLVMMSP430CodeGen.lib;LLVMMSP430Desc.lib;LLVMMSP430Info.lib;LLVMNVPTXAsmPrinter.lib;LLVMNVPTXCodeGen.lib;LLVMNVPTXDesc.lib;LLVMNVPTXInfo.lib;LLVMObjCARCOpts.lib;LLVMObject.lib;LLVMOption.lib;LLVMPowerPCAsmParser.lib;LLVMPowerPCAsmPrinter.lib;LLVMPowerPCCodeGen.lib;LLVMPowerPCDesc.lib;LLVMPowerPCInfo.lib;LLVMRuntimeDyld.lib;LLVMScalarOpts.lib;LLVMSelectionDAG.lib;LLVMSparcCodeGen.lib;LLVMSparcDesc.lib;LLVMSparcInfo.lib;LLVMSupport.lib;LLVMSystemZAsmParser.lib;LLVMSystemZAsmPrinter.lib;LLVMSystemZCodeGen.lib;LLVMSystemZDesc.lib;LLVMSystemZInfo.lib;LLVMTableGen.lib;LLVMTarget.lib;LLVMTransformUtils.lib;LLVMVectorize.lib;LLVMX86AsmParser.lib;LLVMX86AsmPrinter.lib;LLVMX86CodeGen.lib;LLVMX86Desc.lib;LLVMX86Disassembler.lib;LLVMX86Info.lib;LLVMX86Utils.lib;LLVMXCoreAsmPrinter.lib;LLVMXCoreCodeGen.lib;LLVMXCoreDesc.lib;LLVMXCoreDisassembler.lib;LLVMXCoreInfo.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Argument.cpp" />
+    <ClCompile Include="Attributes.cpp" />
+    <ClCompile Include="BasicBlock.cpp" />
+    <ClCompile Include="Constant.cpp" />
+    <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="DebugLoc.cpp" />
+    <ClCompile Include="DerivedTypes.cpp" />
+    <ClCompile Include="Function.cpp" />
+    <ClCompile Include="GlobalAlias.cpp" />
+    <ClCompile Include="GlobalValue.cpp" />
+    <ClCompile Include="GlobalVariable.cpp" />
+    <ClCompile Include="GVMaterializer.cpp" />
+    <ClCompile Include="InlineAsm.cpp" />
+    <ClCompile Include="InstrTypes.cpp" />
+    <ClCompile Include="Instruction.cpp" />
+    <ClCompile Include="Instructions.cpp" />
+    <ClCompile Include="IntrinsicInst.cpp" />
+    <ClCompile Include="Intrinsics.cpp" />
+    <ClCompile Include="IRBuilder.cpp" />
+    <ClCompile Include="LLVMContext.cpp" />
+    <ClCompile Include="MDBuilder.cpp" />
+    <ClCompile Include="Metadata.cpp" />
+    <ClCompile Include="Module.cpp" />
+    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="Type.cpp" />
+    <ClCompile Include="Use.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="Value.cpp" />
+    <ClCompile Include="ValueSymbolTable.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Argument.h" />
+    <ClInclude Include="Attributes.h" />
+    <ClInclude Include="BasicBlock.h" />
+    <ClInclude Include="CallingConv.h" />
+    <ClInclude Include="Constant.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="DebugLoc.h" />
+    <ClInclude Include="DerivedTypes.h" />
+    <ClInclude Include="Function.h" />
+    <ClInclude Include="GlobalAlias.h" />
+    <ClInclude Include="GlobalValue.h" />
+    <ClInclude Include="GlobalVariable.h" />
+    <ClInclude Include="GVMaterializer.h" />
+    <ClInclude Include="InlineAsm.h" />
+    <ClInclude Include="InstrTypes.h" />
+    <ClInclude Include="Instruction.h" />
+    <ClInclude Include="Instructions.h" />
+    <ClInclude Include="IntrinsicInst.h" />
+    <ClInclude Include="Intrinsics.h" />
+    <ClInclude Include="IRBuilder.h" />
+    <ClInclude Include="LLVMContext.h" />
+    <ClInclude Include="MDBuilder.h" />
+    <ClInclude Include="Metadata.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="Operator.h" />
+    <ClInclude Include="Type.h" />
+    <ClInclude Include="Use.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="Value.h" />
+    <ClInclude Include="ValueSymbolTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gen.pl" />
+    <None Include="gen.pl.template" />
+    <None Include="gengen.pl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
