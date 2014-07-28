@@ -5,6 +5,7 @@
 namespace LLVM
 {
 
+ref class raw_ostream;
 ref class LLVMContext;
 ref class IntegerType;
 ref class PointerType;
@@ -43,7 +44,7 @@ internal:
 public:
 	!Type();
 	virtual ~Type();
-	// void print(raw_ostream &O);
+	void print(raw_ostream ^O);
 	void dump();
 	LLVMContext ^getContext();
 	Type::TypeID getTypeID();

@@ -4,7 +4,6 @@
 namespace LLVM
 {
 
-
 public ref class CallingConv
 {
 public:

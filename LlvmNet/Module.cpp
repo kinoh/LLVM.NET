@@ -16,6 +16,8 @@
 #include "Value.h"
 #include "GVMaterializer.h"
 #include "ValueSymbolTable.h"
+#include "raw_ostream.h"
+#include "AssemblyAnnotationWriter.h"
 #include <msclr/marshal.h>
 #include "utils.h"
 
@@ -293,6 +295,10 @@ size_t Module::named_metadata_size()
 bool Module::named_metadata_empty()
 {
 	return base->named_metadata_empty();
+}
+void Module::print(raw_ostream ^OS, AssemblyAnnotationWriter ^AAW)
+{
+	base->print(*OS->base, AAW->base);
 }
 void Module::dump()
 {

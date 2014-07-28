@@ -2,6 +2,8 @@
 #include "llvm/ADT/StringRef.h"
 #include "llvm/ADT/StringMap.h"
 #include "llvm/ADT/Twine.h"
+#include "raw_ostream.h"
+#include "AssemblyAnnotationWriter.h"
 #include "Type.h"
 #include "LLVMContext.h"
 #include "User.h"
@@ -26,6 +28,14 @@ Value::~Value()
 void Value::dump()
 {
 	base->dump();
+}
+void Value::print(raw_ostream ^O)
+{
+	base->print(*O->base);
+}
+void Value::print(raw_ostream ^O, AssemblyAnnotationWriter ^AAW)
+{
+	base->print(*O->base, AAW->base);
 }
 Type ^Value::getType()
 {

@@ -2,7 +2,9 @@
 gengen.pl ../../llvm/include
 
 gen.pl ../../llvm/include/llvm/GVMaterializer.h
+gen.pl ../../llvm/include/llvm/Assembly/AssemblyAnnotationWriter.h
 gen.pl ../../llvm/include/llvm/Support/DebugLoc.h
+gen.pl ../../llvm/include/llvm/Support/raw_ostream.h
 gen.pl ../../llvm/include/llvm/IR/Argument.h
 gen.pl ../../llvm/include/llvm/IR/Attributes.h
 gen.pl ../../llvm/include/llvm/IR/BasicBLock.h

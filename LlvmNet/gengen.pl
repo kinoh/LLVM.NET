@@ -50,7 +50,7 @@ sub read
 		{
 			$public = ($1 eq 'public');
 		}
-		elsif ($class and /^\s*enum (\w+)?(?!\w)[^\}]*(\};)?\s*$/)
+		elsif ($class and $public and /^\s*enum (\w+)?(?!\w)[^\}]*(\};)?\s*$/)
 		{
 			if ($1) {
 				$defined_in_class{$1} = $class;
@@ -62,7 +62,7 @@ sub read
 				}
 			}
 		}
-		elsif (/^\s*\};/)
+		elsif (/^\};/)
 		{
 			$class = "";
 		}

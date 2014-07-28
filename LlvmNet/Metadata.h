@@ -10,6 +10,8 @@ ref class LLVMContext;
 ref class Value;
 ref class Module;
 ref class MDNode;
+ref class raw_ostream;
+ref class AssemblyAnnotationWriter;
 
 public ref class MDString
 	: public Value
@@ -77,7 +79,8 @@ public:
 	unsigned getNumOperands();
 	void addOperand(MDNode ^M);
 	System::String ^getName();
-	// void print(raw_ostream &ROS, AssemblyAnnotationWriter *AAW = 0);
+	void print(raw_ostream ^ROS);
+	void print(raw_ostream ^ROS, AssemblyAnnotationWriter ^AAW);
 	void dump();
 };
 

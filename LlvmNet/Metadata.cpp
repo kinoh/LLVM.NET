@@ -6,6 +6,8 @@
 #include "Value.h"
 #include "Module.h"
 #include "Metadata.h"
+#include "raw_ostream.h"
+#include "AssemblyAnnotationWriter.h"
 #include <msclr/marshal.h>
 #include "utils.h"
 
@@ -170,6 +172,14 @@ void NamedMDNode::addOperand(MDNode ^M)
 System::String ^NamedMDNode::getName()
 {
 	return utils::manage_str(base->getName());
+}
+void NamedMDNode::print(raw_ostream ^ROS)
+{
+	base->print(*ROS->base);
+}
+void NamedMDNode::print(raw_ostream ^ROS, AssemblyAnnotationWriter ^AAW)
+{
+	base->print(*ROS->base, AAW->base);
 }
 void NamedMDNode::dump()
 {

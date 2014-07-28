@@ -6,6 +6,8 @@ namespace LLVM
 {
 
 ref class Value;
+ref class raw_ostream;
+ref class AssemblyAnnotationWriter;
 ref class Type;
 ref class LLVMContext;
 ref class User;
@@ -54,7 +56,8 @@ public:
 	virtual ~Value();
 	// virtual ~Value();
 	void dump();
-	// void print(raw_ostream &O, AssemblyAnnotationWriter *AAW = 0);
+	void print(raw_ostream ^O);
+	void print(raw_ostream ^O, AssemblyAnnotationWriter ^AAW);
 	Type ^getType();
 	LLVMContext ^getContext();
 	bool hasName();

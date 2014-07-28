@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Argument.cpp" />
+    <ClCompile Include="AssemblyAnnotationWriter.cpp" />
     <ClCompile Include="Attributes.cpp" />
     <ClCompile Include="BasicBlock.cpp" />
     <ClCompile Include="Constant.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="Metadata.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="raw_ostream.cpp" />
     <ClCompile Include="Type.cpp" />
     <ClCompile Include="Use.cpp" />
     <ClCompile Include="User.cpp" />
@@ -112,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Argument.h" />
+    <ClInclude Include="AssemblyAnnotationWriter.h" />
     <ClInclude Include="Attributes.h" />
     <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="CallingConv.h" />
@@ -136,6 +139,7 @@
     <ClInclude Include="Metadata.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Operator.h" />
+    <ClInclude Include="raw_ostream.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="Use.h" />
     <ClInclude Include="User.h" />

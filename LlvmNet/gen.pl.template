@@ -51,6 +51,7 @@ while (<F>)
 	{
 		if ($1 eq 'ConcreteOperator'
 			or $1 eq 'IRBuilderDefaultInserter'
+			or $1 eq 'raw_svector_ostream'
 			or $1 =~ /iterator/)
 		{
 			next;
@@ -130,7 +131,7 @@ foreach (@refs_decl) {
 foreach (@additional_decl) {
 	print H "$_;\n";
 }
-print H "\n";
+print H "\n" if ((@refs_decl ne 0) or (@additional_decl ne 0));
 print H (join "\n\n", @header);
 print H "\n}\n";
 close H;
@@ -348,7 +349,7 @@ sub func_filter
 	if ($type =~ /^const (?!char|Twine)| operator$|iterator$|APInt/
 		or $name eq 'DECLARE_TRANSPARENT_OPERAND_ACCESSORS'
 		or $name eq 'DEFINE_HELPERS'
-		or $name eq 'print'
+		or $name eq 'raw_ostream'
 		or $name eq 'getIntrinsicInfoTableEntries'
 		or $name eq 'use_empty_except_constants'
 		or $args =~ /iterator|APInt|APFloat|FoldingSet|InlineAsmDiagHandlerTy|CaseIt|IntegersSubset|TBAAStructField|Inserter|InsertPoint| T |DataLayout/
@@ -420,14 +421,6 @@ EOF
 	}
 
 	my $return_by_ptr = 0;
-
-	if (($args[$#args] =~ /^(SmallVectorImpl<\w+>)\s+&\w+$/))
-	{
-		pop @args;
-		$type = $1;
-		$return_by_ptr = 1;
-	}
-
 	my $constr = '';
 	my $pre = '';
 	my $post = '';
@@ -435,6 +428,13 @@ EOF
 	my $store = 0;
 	my $use_ctx = 0;
 	my @arg_call = ();
+
+	if (not $constructor and ($args[$#args] =~ /^(SmallVectorImpl<\w+>)\s+&\w+$/))
+	{
+		pop @args;
+		$type = $1;
+		$return_by_ptr = 1;
+	}
 
 	$static = 'static ' if (not $static and $static_class);
 
@@ -687,6 +687,8 @@ sub manage_arg
 	my ($arg, $constr, $pre, $post, $store, $use_ctx, $constructor) = @_;
 	my ($r, $call);
 
+	$arg =~ s/^enum //;
+
 	if ($arg =~ /(?<c>ArrayRef)<(?<ns>\w+::)?(?<t>\w+)\s*(?<ptr>\^)?> &?(?<n>\w+)/)
 	{
 		&add_lib($+{c});
@@ -799,8 +801,8 @@ sub add_lib
 {
 	my $lib = &defined_in($_[0]);
 	my $in_header = $_[1];
-	$lib =~ s/^llvm\/IR\///;
-
+	$lib =~ s/^llvm\/(?:IR|Support|Assembly)\/|^llvm\/(?=[^\/]+$)//;
+	
 	if ($lib and $lib ne "$file_name.h")
 	{
 		if ($in_header and not (grep { $_ eq $lib } @refs_incl_h)) {
@@ -828,8 +830,7 @@ sub add_type
 	}
 
 	my $fn = &defined_in($n);
-	#$fn =~ s/^.*\/([^\/]+)$/$1/;
-	$fn =~ s/^llvm\/(?:(?:IR|Support)\/)?//;
+	$fn =~ s/^llvm\/(?:IR|Support|Assembly)\/|^llvm\/(?=[^\/]+$)//;
 
 	if ($fn)
 	{

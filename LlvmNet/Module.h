@@ -22,6 +22,8 @@ ref class Value;
 ref class MDNode;
 ref class GVMaterializer;
 ref class ValueSymbolTable;
+ref class raw_ostream;
+ref class AssemblyAnnotationWriter;
 
 public ref class Module
 {
@@ -169,7 +171,7 @@ public:
 	// const_named_metadata_iterator named_metadata_end();
 	size_t named_metadata_size();
 	bool named_metadata_empty();
-	// void print(raw_ostream &OS, AssemblyAnnotationWriter *AAW);
+	void print(raw_ostream ^OS, AssemblyAnnotationWriter ^AAW);
 	void dump();
 	void dropAllReferences();
 };

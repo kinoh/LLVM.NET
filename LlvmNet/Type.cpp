@@ -1,5 +1,6 @@
 #include "Type.h"
 #include "llvm/ADT/StringRef.h"
+#include "raw_ostream.h"
 #include "LLVMContext.h"
 #include "DerivedTypes.h"
 #include "utils.h"
@@ -16,6 +17,10 @@ Type::!Type()
 Type::~Type()
 {
 	this->!Type();
+}
+void Type::print(raw_ostream ^O)
+{
+	base->print(*O->base);
 }
 void Type::dump()
 {
