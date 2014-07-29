@@ -4,7 +4,12 @@ use strict;
 my %defined_in_class = ('ID' => 'CallingConv');
 my %defined_in = (
 	'CallingConv' => 'llvm/IR/CallingConv.h',
-	'Intrinsic' => 'llvm/IR/Intrinsics.h');
+	'Intrinsic' => 'llvm/IR/Intrinsics.h',
+	'AnalysisID' => 'Pass.h',
+	'PassManagerType' => 'Pass.h',
+	'PassKind' => 'Pass.h',
+	'PassDebuggingString' => 'PassManagers.h'
+	);
 my $base_dir = $ARGV[0] . '/';
 
 &explore("");
@@ -50,7 +55,7 @@ sub read
 		{
 			$public = ($1 eq 'public');
 		}
-		elsif ($class and $public and /^\s*enum (\w+)?(?!\w)[^\}]*(\};)?\s*$/)
+		elsif ($class and $public and /^\s*enum (\w+)?(?!\w)[^\})]*(\};)?\s*$/)
 		{
 			if ($1) {
 				$defined_in_class{$1} = $class;

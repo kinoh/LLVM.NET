@@ -55,7 +55,6 @@ my %defined_in_class = (
 	'HazardType' => 'ScheduleHazardRecognizer',
 	'VendorType' => 'Triple',
 	'LegalizeTypeAction' => 'TargetLoweringBase',
-	'PassDebuggingString' => 'PMDataManager',
 	'MachineOperandType' => 'MachineOperand',
 	'QueryType' => 'MachineInstr',
 	'ModFlagBehavior' => 'Module',
@@ -114,7 +113,6 @@ my %defined_in_class = (
 	'OpType' => 'MCDwarfFile',
 	'Specification' => 'DILineInfoSpecifier',
 	'ModRefBehavior' => 'AliasAnalysis',
-	'ValueExpected' => 'parser',
 	'Predicate' => 'CmpInst',
 	'InterferenceKind' => 'LiveRegMatrix',
 
@@ -213,6 +211,7 @@ my %defined_in = (
 	'IntrinsicInst' => 'llvm/IR/IntrinsicInst.h',
 	'ilist_iterator' => 'llvm/ADT/ilist.h',
 	'MCOperandInfo' => 'llvm/MC/MCInstrDesc.h',
+	'PassManagerType' => 'Pass.h',
 	'ConstantDataVector' => 'llvm/IR/Constants.h',
 	'MachineConstantPoolValue' => 'llvm/CodeGen/MachineConstantPool.h',
 	'GCOVFunction' => 'llvm/Support/GCOV.h',
@@ -363,6 +362,7 @@ my %defined_in = (
 	'KeyValueNode' => 'llvm/Support/YAMLParser.h',
 	'MCRelaxableFragment' => 'llvm/MC/MCAssembler.h',
 	'MachineModuleInfoMachO' => 'llvm/CodeGen/MachineModuleInfoImpls.h',
+	'PassDebuggingString' => 'PassManagers.h',
 	'PossiblyExactOperator' => 'llvm/IR/Operator.h',
 	'Sequence' => 'llvm/ADT/PriorityQueue.h',
 	'TypeFinder' => 'llvm/IR/TypeFinder.h',
@@ -412,6 +412,7 @@ my %defined_in = (
 	'CallGraphSCC' => 'llvm/Analysis/CallGraphSCCPass.h',
 	'IntegersSubset' => 'llvm/Support/IntegersSubset.h',
 	'MCAssembler' => 'llvm/MC/MCAssembler.h',
+	'AnalysisID' => 'Pass.h',
 	'BlockFrequencyInfo' => 'llvm/Analysis/BlockFrequencyInfo.h',
 	'MCInstPrinter' => 'llvm/MC/MCInstPrinter.h',
 	'FieldInit' => 'llvm/TableGen/Record.h',
@@ -449,6 +450,7 @@ my %defined_in = (
 	'StringSwitch' => 'llvm/ADT/StringSwitch.h',
 	'RegisterAGBase' => 'llvm/PassSupport.h',
 	'ArrayRef' => 'llvm/ADT/ArrayRef.h',
+	'basic_parser' => 'llvm/Support/CommandLine.h',
 	'TargetJITInfo' => 'llvm/Target/TargetJITInfo.h',
 	'SmallPtrSetIteratorImpl' => 'llvm/ADT/SmallPtrSet.h',
 	'MCExpr' => 'llvm/MC/MCExpr.h',
@@ -534,6 +536,7 @@ my %defined_in = (
 	'Graph' => 'llvm/CodeGen/PBQP/Graph.h',
 	'User' => 'llvm/IR/User.h',
 	'LockFileManager' => 'llvm/Support/LockFileManager.h',
+	'FPPassManager' => 'llvm/PassManagers.h',
 	'RecordRecTy' => 'llvm/TableGen/Record.h',
 	'SmallVectorImpl' => 'llvm/ADT/SmallVector.h',
 	'ObjectBufferStream' => 'llvm/ExecutionEngine/ObjectBuffer.h',
@@ -778,6 +781,7 @@ my %defined_in = (
 	'basic_collection_iterator' => 'llvm/Support/YAMLParser.h',
 	'MutexImpl' => 'llvm/Support/Mutex.h',
 	'ValueMapConstIterator' => 'llvm/ADT/ValueMap.h',
+	'PassKind' => 'Pass.h',
 	'TimeRecord' => 'llvm/Support/Timer.h',
 	'DominatorTreeBase' => 'llvm/Analysis/Dominators.h',
 	'MachineSchedStrategy' => 'llvm/CodeGen/MachineScheduler.h',
@@ -937,7 +941,7 @@ my (@header, @code) = ((), ());
 open F, $file;
 while (<F>)
 {
-	s/^\s\s// if ($class eq 'DebugLoc' or ($class and $file_name eq 'IntrinsicInst'));
+	s/^\s\s// if ($class eq 'DebugLoc' or ($class and ($file_name eq 'IntrinsicInst' or $file_name eq 'PrettyStackTrace')));
 
 	if (/^namespace (\w+)\s*\{/
 		and ($1 eq 'CallingConv' or $1 eq 'Intrinsic'))
@@ -955,6 +959,7 @@ while (<F>)
 		if ($1 eq 'ConcreteOperator'
 			or $1 eq 'IRBuilderDefaultInserter'
 			or $1 eq 'raw_svector_ostream'
+			or $1 eq 'FPPassManager'
 			or $1 =~ /iterator/)
 		{
 			next;
@@ -1029,10 +1034,18 @@ print H "\n";
 print H "namespace LLVM\n";
 print H "{\n\n";
 foreach (@refs_decl) {
-	print H "ref class $_;\n";
+	my $t;
+	if ($_ eq 'AnalysisID') {
+		$t = 'value';
+	} elsif (&is_enum($_)) {
+		$t = 'enum';
+	} else {
+		$t = 'ref';
+	}
+	print H "$t class $_;\n";
 }
 foreach (@additional_decl) {
-	print H "$_;\n";
+	print H "$_\n";
 }
 print H "\n" if ((@refs_decl ne 0) or (@additional_decl ne 0));
 print H (join "\n\n", @header);
@@ -1060,6 +1073,7 @@ if ($#code >= 0)
 }
 
 
+my $abstruct;
 my $constr_inhr;
 my @member_private;
 my @decl;
@@ -1070,7 +1084,22 @@ sub manage_class
 	{
 		push @refs_decl, 'Value';
 		push @additional_decl,
-			'typedef System::Collections::Generic::KeyValuePair<System::String ^, Value ^> ValueName';
+			'typedef System::Collections::Generic::KeyValuePair<System::String ^, Value ^> ValueName;';
+	}
+	elsif ($class eq 'Pass')
+	{
+		push @additional_decl, <<EOF
+
+public value class AnalysisID
+{
+internal:
+	const void *base;
+	AnalysisID(const void *base)
+		: base(base)
+	{
+	}
+};
+EOF
 	}
 
 	$constr_inhr = '';
@@ -1108,7 +1137,10 @@ sub manage_class
 	$text =~ s/(?<=[a-zA-Z])\s+(?=\()//g;
 	$text =~ s/(?:\s*;\s*|(?<=[^;\s])\s*)$/;/mg;
 	$text =~ s/ const;$/;/mg;
+	$text =~ s/^\s*~$class\(\)\s*;\s*$//mg;
 	$text =~ s/^	/\t/mg;
+
+	$abstruct = ($text =~ / = 0;/);
 
 	my @header = ();
 	my @code = ();
@@ -1130,10 +1162,11 @@ sub manage_class
 
 			(?(DEFINE)
 				(?<TYPE>(?:\w+::)?\w+(?:\ \w+)*(?:<(?:\w+::)?\w+\s*(?:\*\s*)?>)?)
-				(?<ARG>(?&TYPE)(?:\ [*&]?\w+)?)
+				(?<ARG>(?&TYPE)(?:\ [*&]?\w*)?)
 				(?<DEF>\s*=\s*(?:\w+(?:\(\))?|\"\"))
 			)
-			/x and &func_filter($1, $2, $3, $4, $5, $6 . $7))
+			/x and &func_filter($1, $2, $3, $4, $5, $6 . $7)
+			and not ($abstruct and $5 eq $class))
 		{
 			$has_constr = 1 if ($5 eq $class);
 			my ($h, $c) = &trans_func($1, $2, $3, $4, $5, $6, $7);
@@ -1255,7 +1288,12 @@ sub func_filter
 		or $name eq 'raw_ostream'
 		or $name eq 'getIntrinsicInfoTableEntries'
 		or $name eq 'use_empty_except_constants'
-		or $args =~ /iterator|APInt|APFloat|FoldingSet|InlineAsmDiagHandlerTy|CaseIt|IntegersSubset|TBAAStructField|Inserter|InsertPoint| T |DataLayout/
+		or $name eq 'getAnalysisIfAvailable'
+		or $name eq 'addRequired'
+		or $name eq 'addRequiredTransitive'
+		or $name eq 'addPreserved'
+		or $name eq 'getImmutablePasses'
+		or $args =~ /iterator|APInt|APFloat|FoldingSet|InlineAsmDiagHandlerTy|CaseIt|IntegersSubset|TBAAStructField|Inserter|InsertPoint| T |DataLayout|SmallVectorImpl/
 		or $type eq 'APInt'
 		or $type eq 'APFloat'
 		or $type eq 'InlineAsmDiagHandlerTy'
@@ -1264,6 +1302,7 @@ sub func_filter
 		or $type eq 'ConstraintInfoVector'
 		or $type eq 'InstTy'
 		or $type eq 'InsertPoint'
+		or $type eq 'AnalysisType'
 		)
 	{
 		return 0;
@@ -1454,10 +1493,14 @@ EOF
 		$ptr = '*';
 		$need_cast = 0;
 	}
+	elsif ($type eq 'AnalysisID')
+	{
+		$ptr = '*';
+	}
 	elsif ($type)
 	{
 		&add_type($type);
-		$ptr = '&' if (not $ptr and (defined $defined_in{$type}));
+		$ptr = '&' if (not $ptr and &is_ref_class($type));
 	}
 
 	my $call_by;
@@ -1501,6 +1544,7 @@ EOF
 			and not $need_cast
 			and not $return_by_ptr
 			and ($type ne 'void')
+			and ($type ne 'AnalysisID')
 			and not &is_prim_type($type))
 		{
 			$call =  '&' . $call;
@@ -1550,6 +1594,13 @@ EOF
 			and ($name eq 'removeFromParent'
 				or $name eq 'eraseFromParent'
 				or $name eq 'copyAttributesFrom'))
+		or ($class ne 'Pass'
+			and ($name eq 'assignPassManager'
+				or $name eq 'getPotentialPassManagerType'
+				or $name eq 'getAsImmutablePass'
+				or $name eq 'runOnModule'))
+		or ($class ne 'PassManagerBase'
+			and $name eq 'add')
 		or ($class ne 'Constant'
 			and $name eq 'destroyConstant'))
 		{
@@ -1636,30 +1687,26 @@ sub manage_arg
 			$pre = "\tmsclr::interop::marshal_context ctx;\n" . $pre;
 		}
 	}
-	elsif ($arg =~ /^((?:\w+::)*)(\w+)$/)
+	elsif ($arg =~ /^(?:const )?((?:\w+::)*\w+)(?: &?(\^?)(\w*))?$/ and not &is_prim_type($1))
 	{
-		&add_type($1 . $2);
-		my $t = $2;
-		$call = $t;
-		$call =~ s/^([A-Z])/ lc($1) /e;
-		$r = "$t $call";
-		$call = &make_call("$t $call");
-	}
-	elsif ($arg =~ /^(?:const )?((?:\w+::)*\w+) &?(\^?)(\w+)$/ and not &is_prim_type($1))
-	{
+		my $n = $3;
+		unless ($n) {
+			$n = $1;
+			$n =~ s/^.*([A-Z][a-z]*)$/ lc($1) /e;
+		}
 		&add_type($1);
 		if ($1 eq 'void') {
-			$r = "void *$3";
-			$call = $3;
+			$r = "void *$n";
+			$call = $n;
 		} else {
 			my $ptr = '';
-			if ($2) {
+			if ($2 or ($1 eq 'AnalysisID')) {
 				$ptr = '^';
-			} elsif (defined $defined_in{$1}) {
+			} elsif (&is_ref_class($1)) {
 				$ptr = '&';
 			}
-			$r = "$1 " . ($ptr ? '^' : '') . $3;
-			$call = &make_call("$1 $ptr$3");
+			$r = "$1 " . ($ptr ? '^' : '') . $n;
+			$call = &make_call("$1 $ptr$n");
 		}
 	}
 	elsif ($arg =~ /^(\w+) &(\w+)$/ and &is_prim_type($1))
@@ -1732,6 +1779,12 @@ sub add_type
 		return;
 	}
 
+	if (&is_global_enum($n))
+	{
+		&add_lib($n, 1);
+		return;
+	}
+
 	my $fn = &defined_in($n);
 	$fn =~ s/^llvm\/(?:IR|Support|Assembly)\/|^llvm\/(?=[^\/]+$)//;
 
@@ -1763,16 +1816,29 @@ sub is_prim_type
 {
 	return grep { $_ eq $_[0] } @prim_types;
 }
+sub is_ref_class
+{
+	my $type = $_[0];
+	return ((defined $defined_in{$type}) and not &is_enum($type));
+}
 sub is_enum
 {
 	my $type = $_[0];
 	my ($ns, $n) = ($type =~ /^(\w+)::(\w+)$/);
 	$n = $type unless ($n);
 	return (
-		($type eq 'AtomicOrdering')
-		or ($type eq 'SynchronizationScope')
+		&is_global_enum($type)
 		or (($ns or not (defined $defined_in{$type}))
 			and (defined $defined_in_class{$n})));
+}
+sub is_global_enum
+{
+	my $type = $_[0];
+	return (($type eq 'AtomicOrdering')
+		or ($type eq 'SynchronizationScope')
+		or ($type eq 'PassManagerType')
+		or ($type eq 'PassKind')
+		or ($type eq 'PassDebuggingString'));
 }
 sub reduce_indent
 {

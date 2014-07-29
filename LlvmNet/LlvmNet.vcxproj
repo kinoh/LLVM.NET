@@ -105,6 +105,11 @@
     <ClCompile Include="Metadata.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="Pass.cpp" />
+    <ClCompile Include="PassAnalysisSupport.cpp" />
+    <ClCompile Include="PassManager.cpp" />
+    <ClCompile Include="PassManagers.cpp" />
+    <ClCompile Include="PrettyStackTrace.cpp" />
     <ClCompile Include="raw_ostream.cpp" />
     <ClCompile Include="Type.cpp" />
     <ClCompile Include="Use.cpp" />
@@ -139,6 +144,11 @@
     <ClInclude Include="Metadata.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Operator.h" />
+    <ClInclude Include="Pass.h" />
+    <ClInclude Include="PassAnalysisSupport.h" />
+    <ClInclude Include="PassManager.h" />
+    <ClInclude Include="PassManagers.h" />
+    <ClInclude Include="PrettyStackTrace.h" />
     <ClInclude Include="raw_ostream.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="Use.h" />

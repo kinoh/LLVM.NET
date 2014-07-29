@@ -34,6 +34,8 @@ namespace Test
 
             builder.CreateRetVoid();
 
+            var pm = new PassManager();
+
             module.dump();
 
             Console.ReadKey();
