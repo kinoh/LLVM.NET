@@ -64,7 +64,7 @@ internal:
 public:
 	!Instruction();
 	virtual ~Instruction();
-	// ~Instruction();
+	//
 	Instruction ^use_back();
 	// const Instruction *use_back();
 	// inline const BasicBlock *getParent();

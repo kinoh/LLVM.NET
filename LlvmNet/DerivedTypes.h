@@ -84,7 +84,7 @@ internal:
 public:
 	!StructType();
 	virtual ~StructType();
-	// ~StructType();
+	//
 	static StructType ^create(LLVMContext ^Context, System::String ^Name);
 	static StructType ^create(LLVMContext ^Context);
 	static StructType ^create(array<Type ^> ^Elements, System::String ^Name);

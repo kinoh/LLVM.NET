@@ -126,7 +126,7 @@ public:
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Constant);
 	inline ArrayType ^getType();
 	virtual void destroyConstant() override;
-	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U) override;
 	static bool classof(Value ^V);
 };
 
@@ -154,7 +154,7 @@ public:
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Constant);
 	inline StructType ^getType();
 	virtual void destroyConstant() override;
-	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U) override;
 	static bool classof(Value ^V);
 };
 
@@ -175,7 +175,7 @@ public:
 	inline VectorType ^getType();
 	Constant ^getSplatValue();
 	virtual void destroyConstant() override;
-	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U) override;
 	static bool classof(Value ^V);
 };
 
@@ -289,7 +289,7 @@ public:
 	Function ^getFunction();
 	BasicBlock ^getBasicBlock();
 	virtual void destroyConstant() override;
-	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U) override;
 	static inline bool classof(Value ^V);
 };
 
@@ -412,7 +412,7 @@ public:
 	Constant ^getWithOperands(array<Constant ^> ^Ops, Type ^Ty);
 	Instruction ^getAsInstruction();
 	virtual void destroyConstant() override;
-	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U) override;
 	static inline bool classof(Value ^V);
 };
 

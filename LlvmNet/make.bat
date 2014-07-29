@@ -2,8 +2,13 @@
 gengen.pl ../../llvm/include
 
 gen.pl ../../llvm/include/llvm/GVMaterializer.h
+gen.pl ../../llvm/include/llvm/Pass.h
+gen.pl ../../llvm/include/llvm/PassAnalysisSupport.h
+gen.pl ../../llvm/include/llvm/PassManager.h
+gen.pl ../../llvm/include/llvm/PassManagers.h
 gen.pl ../../llvm/include/llvm/Assembly/AssemblyAnnotationWriter.h
 gen.pl ../../llvm/include/llvm/Support/DebugLoc.h
+gen.pl ../../llvm/include/llvm/Support/PrettyStackTrace.h
 gen.pl ../../llvm/include/llvm/Support/raw_ostream.h
 gen.pl ../../llvm/include/llvm/IR/Argument.h
 gen.pl ../../llvm/include/llvm/IR/Attributes.h

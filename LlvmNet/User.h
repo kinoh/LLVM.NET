@@ -18,7 +18,7 @@ internal:
 public:
 	!User();
 	virtual ~User();
-	// ~User();
+	//
 	// void operator delete(void *Usr);
 	// void operator delete(void*, unsigned);
 	// void operator delete(void*, unsigned, bool);

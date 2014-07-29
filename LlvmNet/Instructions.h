@@ -461,7 +461,6 @@ public:
 	static Instruction ^CreateMalloc(BasicBlock ^InsertAtEnd, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize, Function ^MallocF, System::String ^Name);
 	static Instruction ^CreateFree(Value ^Source, Instruction ^InsertBefore);
 	static Instruction ^CreateFree(Value ^Source, BasicBlock ^InsertAtEnd);
-	// ~CallInst();
 	bool isTailCall();
 	void setTailCall();
 	void setTailCall(bool isTC);
@@ -719,7 +718,6 @@ public:
 	static PHINode ^Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr);
 	static PHINode ^Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr, Instruction ^InsertBefore);
 	static PHINode ^Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr, BasicBlock ^InsertAtEnd);
-	// ~PHINode();
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	// typedef BasicBlock **block_iterator;
 	// typedef BasicBlock  *const *const_block_iterator;
@@ -768,7 +766,6 @@ public:
 	static LandingPadInst ^Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses, System::String ^NameStr);
 	static LandingPadInst ^Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses, System::String ^NameStr, Instruction ^InsertBefore);
 	static LandingPadInst ^Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses, System::String ^NameStr, BasicBlock ^InsertAtEnd);
-	// ~LandingPadInst();
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	Value ^getPersonalityFn();
 	bool isCleanup();
@@ -856,7 +853,6 @@ public:
 	static SwitchInst ^Create(Value ^Value, BasicBlock ^Default, unsigned NumCases);
 	static SwitchInst ^Create(Value ^Value, BasicBlock ^Default, unsigned NumCases, Instruction ^InsertBefore);
 	static SwitchInst ^Create(Value ^Value, BasicBlock ^Default, unsigned NumCases, BasicBlock ^InsertAtEnd);
-	// ~SwitchInst();
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	Value ^getCondition();
 	void setCondition(Value ^V);
@@ -898,7 +894,6 @@ public:
 	static IndirectBrInst ^Create(Value ^Address, unsigned NumDests);
 	static IndirectBrInst ^Create(Value ^Address, unsigned NumDests, Instruction ^InsertBefore);
 	static IndirectBrInst ^Create(Value ^Address, unsigned NumDests, BasicBlock ^InsertAtEnd);
-	// ~IndirectBrInst();
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	Value ^getAddress();
 	// const Value *getAddress();

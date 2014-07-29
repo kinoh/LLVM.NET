@@ -40,7 +40,6 @@ public:
 	!UnaryInstruction();
 	virtual ~UnaryInstruction();
 	// void *operator new(size_t s);
-	// ~UnaryInstruction();
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	static inline bool classof(Instruction ^I);
 	static inline bool classof(Value ^V);
@@ -163,10 +162,10 @@ internal:
 public:
 	!CastInst();
 	virtual ~CastInst();
-	static CastInst ^Create(CastOps castOps, Value ^S, Type ^Ty);
-	static CastInst ^Create(CastOps castOps, Value ^S, Type ^Ty, System::String ^Name);
-	static CastInst ^Create(CastOps castOps, Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore);
-	static CastInst ^Create(CastOps castOps, Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd);
+	static CastInst ^Create(Instruction::CastOps ops, Value ^S, Type ^Ty);
+	static CastInst ^Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name);
+	static CastInst ^Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore);
+	static CastInst ^Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd);
 	static CastInst ^CreateZExtOrBitCast(Value ^S, Type ^Ty);
 	static CastInst ^CreateZExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name);
 	static CastInst ^CreateZExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore);

@@ -34,7 +34,6 @@ public:
 	static BasicBlock ^Create(LLVMContext ^Context, System::String ^Name);
 	static BasicBlock ^Create(LLVMContext ^Context, System::String ^Name, Function ^Parent);
 	static BasicBlock ^Create(LLVMContext ^Context, System::String ^Name, Function ^Parent, BasicBlock ^InsertBefore);
-	// ~BasicBlock();
 	// const Function *getParent();
 	Function ^getParent();
 	TerminatorInst ^getTerminator();

@@ -22,7 +22,6 @@ public:
 	// typedef ValueMap::iterator iterator;
 	// typedef ValueMap::const_iterator const_iterator;
 	ValueSymbolTable();
-	// ~ValueSymbolTable();
 	Value ^lookup(System::String ^Name);
 	inline bool empty();
 	inline unsigned size();

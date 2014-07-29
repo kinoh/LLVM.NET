@@ -1293,7 +1293,22 @@ sub func_filter
 		or $name eq 'addRequiredTransitive'
 		or $name eq 'addPreserved'
 		or $name eq 'getImmutablePasses'
-		or $args =~ /iterator|APInt|APFloat|FoldingSet|InlineAsmDiagHandlerTy|CaseIt|IntegersSubset|TBAAStructField|Inserter|InsertPoint| T |DataLayout|SmallVectorImpl/
+		or $name eq 'collectRequiredAnalysis'
+		or $args =~ /
+			iterator
+			|APInt
+			|APFloat
+			|FoldingSet
+			|InlineAsmDiagHandlerTy
+			|CaseIt
+			|IntegersSubset
+			|TBAAStructField
+			|Inserter
+			|InsertPoint
+			|\ T\ 
+			|DataLayout
+			|formatted_raw_ostream
+			/x
 		or $type eq 'APInt'
 		or $type eq 'APFloat'
 		or $type eq 'InlineAsmDiagHandlerTy'
@@ -1371,15 +1386,25 @@ EOF
 	my $use_ctx = 0;
 	my @arg_call = ();
 
-	if (not $constructor and ($args[$#args] =~ /^(SmallVectorImpl<\w+>)\s+&\w+$/))
+	if (not $constructor and ($args[$#args] =~ /^(SmallVectorImpl<\w+\s*\^?>)\s+&\w+$/))
 	{
 		pop @args;
+		$type = $1;
+		$return_by_ptr = -1;
+	}
+	elsif (not $constructor and ($args[0] =~ /^(SmallVectorImpl<\w+\s*\^?>)\s+&\w+$/))
+	{
+		shift @args;
 		$type = $1;
 		$return_by_ptr = 1;
 	}
 
 	$static = 'static ' if (not $static and $static_class);
 
+	if ($class eq 'Constant' and $name eq 'replaceUsesOfWithOnConstant') {
+		$args[0] = 'Value ^From';
+		$args[1] = 'Value ^To';
+	}
 	for (my $i = 0; $i <= $#args; $i++)
 	{
 		($args[$i], $arg_call[$i], $constr, $pre, $post, $store, $use_ctx)
@@ -1388,7 +1413,7 @@ EOF
 
 	if ($return_by_ptr)
 	{
-		splice @arg_call, 1, 0, 'r';
+		splice @arg_call, ($return_by_ptr > 0 ? 0 : $#arg_call + 1), 0, 'r';
 	}
 	
 	my $array = 0;
@@ -1401,7 +1426,7 @@ EOF
 		$type = $defined_in_class{$type} . '::' . $type;
 	}
 
-	if ($type =~ /(SmallVectorImpl)<((?:\w+::)?\w+)\s*(\*?)>/)
+	if ($type =~ /(SmallVectorImpl)<((?:\w+::)?\w+)\s*(\^?)>/)
 	{
 		&add_lib($1);
 		&add_lib($2);
@@ -1412,7 +1437,7 @@ EOF
 			$t = $class . '::' . $t;
 		}
 
-		$pre = "\tllvm::SmallVector<" . (&is_prim_type($t) ? '' : 'llvm::') . $t . ($3 ? ' ^' : '') . ", 8> r;\n";
+		$pre = "\tllvm::SmallVector<" . (&is_prim_type($t) ? '' : 'llvm::') . $t . ($3 ? ' *' : '') . ", 8> r;\n";
 		unless (&is_prim_type($t))
 		{
 			if ($t eq 'StringRef')
@@ -1427,11 +1452,10 @@ EOF
 			}
 			else
 			{
+				my $h = (&is_ref_class($t) ? '' : '&');
+				$c = "gcnew $t($h$c)";
 				if ($t !~ /\^$/) {
-					$c = "gcnew $t(&$c)";
 					$t = "$t ^";
-				} else {
-					$c = "gcnew $t($c)";
 				}
 			}
 		}
@@ -1602,7 +1626,8 @@ EOF
 		or ($class ne 'PassManagerBase'
 			and $name eq 'add')
 		or ($class ne 'Constant'
-			and $name eq 'destroyConstant'))
+			and ($name eq 'destroyConstant'
+				or $name eq 'replaceUsesOfWithOnConstant')))
 		{
 			$mod = 'virtual ' . $mod if ($mod !~ /virtual/);
 			$decl_suffix .= ' override';
@@ -1672,14 +1697,15 @@ sub manage_arg
 			$post = "\tdelete $n;\n" . $post;
 		}
 	}
-	elsif ($arg =~ /((?<=const )(?:Twine|char)|StringRef)\s*[\^&]?\s*(\w+)/)
+	elsif ($arg =~ /((?<=const )(?:Twine|char)|StringRef)\s*[\^&]?\s*(\w+)?/)
 	{
 		$use_netlib = 1;
 		$use_marshal = 1;
 		&add_lib($1) if ($1 ne 'char');
 
-		$r = "System::String ^$2";
-		$call = "ctx.marshal_as<const char *>($2)";
+		my $n = ($2 or 'Name');
+		$r = "System::String ^$n";
+		$call = "ctx.marshal_as<const char *>($n)";
 
 		unless ($use_ctx)
 		{
@@ -1692,6 +1718,7 @@ sub manage_arg
 		my $n = $3;
 		unless ($n) {
 			$n = $1;
+			$n =~ s/^\w+:://;
 			$n =~ s/^.*([A-Z][a-z]*)$/ lc($1) /e;
 		}
 		&add_type($1);

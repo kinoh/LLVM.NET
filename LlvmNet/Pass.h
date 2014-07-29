@@ -5,11 +5,9 @@
 namespace LLVM
 {
 
-enum class PassKind;
 ref class Module;
 ref class raw_ostream;
 ref class PMStack;
-enum class PassManagerType;
 ref class AnalysisResolver;
 ref class AnalysisUsage;
 value class AnalysisID;

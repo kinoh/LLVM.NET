@@ -16,6 +16,7 @@
 #include "Instructions.h"
 #include "Metadata.h"
 #include "Operator.h"
+#include "Constant.h"
 #include <msclr/marshal.h>
 #include "utils.h"
 
@@ -354,6 +355,15 @@ void IRBuilder::SetFastMathFlags(FastMathFlags ^NewFMF)
 bool IRBuilder::isNamePreserving()
 {
 	return base->isNamePreserving();
+}
+Constant ^IRBuilder::Insert(Constant ^C)
+{
+	return gcnew Constant(base->Insert(C->base));
+}
+Constant ^IRBuilder::Insert(Constant ^C, System::String ^Name)
+{
+	msclr::interop::marshal_context ctx;
+	return gcnew Constant(base->Insert(C->base, ctx.marshal_as<const char *>(Name)));
 }
 ReturnInst ^IRBuilder::CreateRetVoid()
 {

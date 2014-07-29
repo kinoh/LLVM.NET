@@ -85,7 +85,7 @@ public:
 	virtual ~PMTopLevelManager();
 	void schedulePass(Pass ^P);
 	void setLastUser(array<Pass ^> ^AnalysisPasses, Pass ^P);
-	// void collectLastUses(SmallVectorImpl<Pass *> &LastUses, Pass *P);
+	array<Pass ^> ^collectLastUsesArray(Pass ^P);
 	Pass ^findAnalysisPass(AnalysisID ^AID);
 	AnalysisUsage ^findAnalysisUsage(Pass ^P);
 	// virtual ~PMTopLevelManager();

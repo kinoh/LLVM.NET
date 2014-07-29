@@ -27,6 +27,14 @@ unsigned Operator::getOpcode(Value ^V)
 {
 	return llvm::Operator::getOpcode(V->base);
 }
+inline bool Operator::classof(Instruction ^instruction)
+{
+	return llvm::Operator::classof(instruction->base);
+}
+inline bool Operator::classof(ConstantExpr ^expr)
+{
+	return llvm::Operator::classof(expr->base);
+}
 inline bool Operator::classof(Value ^V)
 {
 	return llvm::Operator::classof(V->base);

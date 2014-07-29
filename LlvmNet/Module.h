@@ -86,7 +86,6 @@ public:
 	// typedef NamedMDListType::iterator             named_metadata_iterator;
 	// typedef NamedMDListType::const_iterator const_named_metadata_iterator;
 	Module(System::String ^ModuleID, LLVMContext ^C);
-	// ~Module();
 	// const std::string &getModuleIdentifier();
 	// const std::string &getDataLayout();
 	// const std::string &getTargetTriple();

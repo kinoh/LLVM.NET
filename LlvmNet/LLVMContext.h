@@ -20,7 +20,6 @@ public:
 	virtual ~LLVMContext();
 	// LLVMContextImpl *const pImpl;
 	LLVMContext();
-	// ~LLVMContext();
 	// enum;
 	unsigned getMDKindID(System::String ^Name);
 	array<System::String ^> ^getMDKindNamesArray();

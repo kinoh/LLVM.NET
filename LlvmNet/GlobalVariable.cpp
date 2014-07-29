@@ -50,35 +50,35 @@ GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, 
 	, constructed(true)
 {
 }
-llvm::GlobalVariable *GlobalVariable::_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode)
+llvm::GlobalVariable *GlobalVariable::_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode)
 {
 	msclr::interop::marshal_context ctx;
-	return new llvm::GlobalVariable(Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), safe_cast<llvm::GlobalVariable::ThreadLocalMode>(threadLocalMode));
+	return new llvm::GlobalVariable(Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), safe_cast<llvm::GlobalVariable::ThreadLocalMode>(mode));
 }
-GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode)
-	: base(_construct(Ty, isConstant, Linkage, Initializer, Name, threadLocalMode))
+GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode)
+	: base(_construct(Ty, isConstant, Linkage, Initializer, Name, mode))
 	, GlobalValue(base)
 	, constructed(true)
 {
 }
-llvm::GlobalVariable *GlobalVariable::_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace)
+llvm::GlobalVariable *GlobalVariable::_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace)
 {
 	msclr::interop::marshal_context ctx;
-	return new llvm::GlobalVariable(Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), safe_cast<llvm::GlobalVariable::ThreadLocalMode>(threadLocalMode), AddressSpace);
+	return new llvm::GlobalVariable(Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), safe_cast<llvm::GlobalVariable::ThreadLocalMode>(mode), AddressSpace);
 }
-GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace)
-	: base(_construct(Ty, isConstant, Linkage, Initializer, Name, threadLocalMode, AddressSpace))
+GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace)
+	: base(_construct(Ty, isConstant, Linkage, Initializer, Name, mode, AddressSpace))
 	, GlobalValue(base)
 	, constructed(true)
 {
 }
-llvm::GlobalVariable *GlobalVariable::_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized)
+llvm::GlobalVariable *GlobalVariable::_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized)
 {
 	msclr::interop::marshal_context ctx;
-	return new llvm::GlobalVariable(Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), safe_cast<llvm::GlobalVariable::ThreadLocalMode>(threadLocalMode), AddressSpace, isExternallyInitialized);
+	return new llvm::GlobalVariable(Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), safe_cast<llvm::GlobalVariable::ThreadLocalMode>(mode), AddressSpace, isExternallyInitialized);
 }
-GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized)
-	: base(_construct(Ty, isConstant, Linkage, Initializer, Name, threadLocalMode, AddressSpace, isExternallyInitialized))
+GlobalVariable::GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized)
+	: base(_construct(Ty, isConstant, Linkage, Initializer, Name, mode, AddressSpace, isExternallyInitialized))
 	, GlobalValue(base)
 	, constructed(true)
 {
@@ -111,35 +111,35 @@ GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageType
 	, constructed(true)
 {
 }
-llvm::GlobalVariable *GlobalVariable::_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode)
+llvm::GlobalVariable *GlobalVariable::_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode)
 {
 	msclr::interop::marshal_context ctx;
-	return new llvm::GlobalVariable(*M->base, Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), InsertBefore->base, safe_cast<llvm::GlobalVariable::ThreadLocalMode>(threadLocalMode));
+	return new llvm::GlobalVariable(*M->base, Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), InsertBefore->base, safe_cast<llvm::GlobalVariable::ThreadLocalMode>(mode));
 }
-GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode)
-	: base(_construct(M, Ty, isConstant, Linkage, Initializer, Name, InsertBefore, threadLocalMode))
+GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode)
+	: base(_construct(M, Ty, isConstant, Linkage, Initializer, Name, InsertBefore, mode))
 	, GlobalValue(base)
 	, constructed(true)
 {
 }
-llvm::GlobalVariable *GlobalVariable::_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace)
+llvm::GlobalVariable *GlobalVariable::_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace)
 {
 	msclr::interop::marshal_context ctx;
-	return new llvm::GlobalVariable(*M->base, Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), InsertBefore->base, safe_cast<llvm::GlobalVariable::ThreadLocalMode>(threadLocalMode), AddressSpace);
+	return new llvm::GlobalVariable(*M->base, Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), InsertBefore->base, safe_cast<llvm::GlobalVariable::ThreadLocalMode>(mode), AddressSpace);
 }
-GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace)
-	: base(_construct(M, Ty, isConstant, Linkage, Initializer, Name, InsertBefore, threadLocalMode, AddressSpace))
+GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace)
+	: base(_construct(M, Ty, isConstant, Linkage, Initializer, Name, InsertBefore, mode, AddressSpace))
 	, GlobalValue(base)
 	, constructed(true)
 {
 }
-llvm::GlobalVariable *GlobalVariable::_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized)
+llvm::GlobalVariable *GlobalVariable::_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized)
 {
 	msclr::interop::marshal_context ctx;
-	return new llvm::GlobalVariable(*M->base, Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), InsertBefore->base, safe_cast<llvm::GlobalVariable::ThreadLocalMode>(threadLocalMode), AddressSpace, isExternallyInitialized);
+	return new llvm::GlobalVariable(*M->base, Ty->base, isConstant, safe_cast<llvm::GlobalVariable::LinkageTypes>(Linkage), Initializer->base, ctx.marshal_as<const char *>(Name), InsertBefore->base, safe_cast<llvm::GlobalVariable::ThreadLocalMode>(mode), AddressSpace, isExternallyInitialized);
 }
-GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized)
-	: base(_construct(M, Ty, isConstant, Linkage, Initializer, Name, InsertBefore, threadLocalMode, AddressSpace, isExternallyInitialized))
+GlobalVariable::GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized)
+	: base(_construct(M, Ty, isConstant, Linkage, Initializer, Name, InsertBefore, mode, AddressSpace, isExternallyInitialized))
 	, GlobalValue(base)
 	, constructed(true)
 {

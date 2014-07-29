@@ -21,6 +21,7 @@ ref class PointerType;
 ref class CallInst;
 ref class MDNode;
 ref class FastMathFlags;
+ref class Constant;
 ref class ReturnInst;
 ref class BranchInst;
 ref class SwitchInst;
@@ -157,7 +158,8 @@ public:
 	bool isNamePreserving();
 	// template<typename InstTy>;
 	// InstTy *Insert(InstTy *I, const Twine &Name = "");
-	// Constant *Insert(Constant *C, const Twine &= "");
+	Constant ^Insert(Constant ^C);
+	Constant ^Insert(Constant ^C, System::String ^Name);
 	ReturnInst ^CreateRetVoid();
 	ReturnInst ^CreateRet(Value ^V);
 	// ReturnInst *CreateAggregateRet(Value *const *retVals, unsigned N);

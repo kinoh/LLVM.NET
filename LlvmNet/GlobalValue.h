@@ -47,7 +47,7 @@ internal:
 public:
 	!GlobalValue();
 	virtual ~GlobalValue();
-	// ~GlobalValue();
+	//
 	unsigned getAlignment();
 	void setAlignment(unsigned Align);
 	bool hasUnnamedAddr();

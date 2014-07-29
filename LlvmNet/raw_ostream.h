@@ -88,7 +88,6 @@ public:
 	raw_fd_ostream(System::String ^Filename, std::string ErrorInfo, unsigned Flags);
 	raw_fd_ostream(int fd, bool shouldClose);
 	raw_fd_ostream(int fd, bool shouldClose, bool unbuffered);
-	// ~raw_fd_ostream();
 	void close();
 	uint64_t seek(uint64_t off);
 	void SetUseAtomicWrites(bool Value);
@@ -115,7 +114,6 @@ public:
 	!raw_string_ostream();
 	virtual ~raw_string_ostream();
 	raw_string_ostream(std::string O);
-	// ~raw_string_ostream();
 	System::String ^str();
 };
 
@@ -133,7 +131,6 @@ public:
 	!raw_null_ostream();
 	virtual ~raw_null_ostream();
 	raw_null_ostream();
-	// ~raw_null_ostream();
 };
 
 }

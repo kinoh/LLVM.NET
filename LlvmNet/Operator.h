@@ -23,8 +23,8 @@ public:
 	virtual ~Operator();
 	unsigned getOpcode();
 	static unsigned getOpcode(Value ^V);
-	// static inline bool classof(const Instruction *);
-	// static inline bool classof(const ConstantExpr *);
+	static inline bool classof(Instruction ^instruction);
+	static inline bool classof(ConstantExpr ^expr);
 	static inline bool classof(Value ^V);
 };
 

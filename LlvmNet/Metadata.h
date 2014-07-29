@@ -72,7 +72,6 @@ public:
 	virtual ~NamedMDNode();
 	void eraseFromParent();
 	void dropAllReferences();
-	// ~NamedMDNode();
 	inline Module ^getParent();
 	// inline const Module *getParent();
 	MDNode ^getOperand(unsigned i);

@@ -19,6 +19,10 @@ bool GVMaterializer::Materialize(GlobalValue ^GV)
 {
 	return base->Materialize(GV->base);
 }
+void GVMaterializer::Dematerialize(GlobalValue ^value)
+{
+	base->Dematerialize(value->base);
+}
 bool GVMaterializer::MaterializeModule(Module ^M)
 {
 	return base->MaterializeModule(M->base);

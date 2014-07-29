@@ -38,7 +38,6 @@ public:
 	static Function ^Create(FunctionType ^Ty, LinkageTypes Linkage);
 	static Function ^Create(FunctionType ^Ty, LinkageTypes Linkage, System::String ^N);
 	static Function ^Create(FunctionType ^Ty, LinkageTypes Linkage, System::String ^N, Module ^M);
-	// ~Function();
 	Type ^getReturnType();
 	FunctionType ^getFunctionType();
 	LLVMContext ^getContext();

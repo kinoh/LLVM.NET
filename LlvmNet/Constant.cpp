@@ -1,5 +1,6 @@
 #include "Constant.h"
 #include "Value.h"
+#include "Use.h"
 #include "Type.h"
 
 using namespace LLVM;
@@ -67,6 +68,10 @@ void Constant::destroyConstant()
 inline bool Constant::classof(Value ^V)
 {
 	return llvm::Constant::classof(V->base);
+}
+void Constant::replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^use)
+{
+	base->replaceUsesOfWithOnConstant(From->base, To->base, use->base);
 }
 Constant ^Constant::getNullValue(Type ^Ty)
 {

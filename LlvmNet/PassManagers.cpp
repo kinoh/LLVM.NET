@@ -1,5 +1,7 @@
 #include "PassManagers.h"
 #include "llvm/ADT/ArrayRef.h"
+#include "llvm/ADT/SmallVector.h"
+#include "Pass.h"
 #include "llvm/ADT/StringRef.h"
 #include "Pass.h"
 #include "Value.h"
@@ -109,6 +111,15 @@ void PMTopLevelManager::setLastUser(array<Pass ^> ^AnalysisPasses, Pass ^P)
 	llvm::ArrayRef<llvm::Pass*> brr(b, AnalysisPasses->Length);
 	base->setLastUser(brr, P->base);
 	delete b;
+}
+array<Pass ^> ^PMTopLevelManager::collectLastUsesArray(Pass ^P)
+{
+	llvm::SmallVector<llvm::Pass *, 8> r;
+	base->collectLastUses(r, P->base);
+	array<Pass ^> ^s = gcnew array<Pass ^>(r.size());
+	for (int i = 0; i < s->Length; i++)
+		s[i] = gcnew Pass(r[i]);
+	return s;
 }
 Pass ^PMTopLevelManager::findAnalysisPass(AnalysisID ^AID)
 {

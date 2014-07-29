@@ -330,24 +330,24 @@ CastInst::~CastInst()
 {
 	this->!CastInst();
 }
-CastInst ^CastInst::Create(CastOps castOps, Value ^S, Type ^Ty)
+CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::CastInst::CastOps>(castOps), S->base, Ty->base));
+	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base));
 }
-CastInst ^CastInst::Create(CastOps castOps, Value ^S, Type ^Ty, System::String ^Name)
+CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::CastInst::CastOps>(castOps), S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
-CastInst ^CastInst::Create(CastOps castOps, Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
+CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::CastInst::CastOps>(castOps), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
-CastInst ^CastInst::Create(CastOps castOps, Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
+CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::CastInst::CastOps>(castOps), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreateZExtOrBitCast(Value ^S, Type ^Ty)
 {

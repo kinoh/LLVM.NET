@@ -28,14 +28,14 @@ public:
 
 private:
 	bool constructed;	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name);
-	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode);
-	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace);
-	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized);
+	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode);
+	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace);
+	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized);
 	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name);
 	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore);
-	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode);
-	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace);
-	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized);
+	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode);
+	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace);
+	static llvm::GlobalVariable *_construct(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized);
 
 internal:
 	llvm::GlobalVariable *base;
@@ -48,16 +48,15 @@ public:
 	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage);
 	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer);
 	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name);
-	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode);
-	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace);
-	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized);
+	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode);
+	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace);
+	GlobalVariable(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized);
 	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer);
 	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name);
 	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore);
-	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode);
-	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace);
-	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode threadLocalMode, unsigned AddressSpace, bool isExternallyInitialized);
-	// ~GlobalVariable();
+	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode);
+	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace);
+	GlobalVariable(Module ^M, Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, GlobalVariable ^InsertBefore, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized);
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	inline bool hasInitializer();
 	inline bool hasDefinitiveInitializer();
@@ -76,7 +75,7 @@ public:
 	virtual void copyAttributesFrom(GlobalValue ^Src) override;
 	virtual void removeFromParent() override;
 	virtual void eraseFromParent() override;
-	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^U) override;
 	static inline bool classof(Value ^V);
 };
 

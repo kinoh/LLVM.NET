@@ -20,7 +20,7 @@ public:
 	// virtual bool isMaterializable(const GlobalValue *GV) const = 0;
 	// virtual bool isDematerializable(const GlobalValue *GV) const = 0;
 	virtual bool Materialize(GlobalValue ^GV);
-	// virtual void Dematerialize(GlobalValue *);
+	virtual void Dematerialize(GlobalValue ^value);
 	virtual bool MaterializeModule(Module ^M);
 };
 

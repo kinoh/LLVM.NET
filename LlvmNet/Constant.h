@@ -6,6 +6,7 @@ namespace LLVM
 {
 
 ref class Value;
+ref class Use;
 ref class Type;
 
 public ref class Constant
@@ -40,7 +41,7 @@ public:
 	// const APInt &getUniqueInteger();
 	virtual void destroyConstant();
 	static inline bool classof(Value ^V);
-	// virtual void replaceUsesOfWithOnConstant(Value *, Value *, Use *);
+	virtual void replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^use);
 	static Constant ^getNullValue(Type ^Ty);
 	static Constant ^getAllOnesValue(Type ^Ty);
 	// static Constant *getIntegerValue(Type *Ty, const APInt &V);
