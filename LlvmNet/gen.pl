@@ -943,15 +943,29 @@ while (<F>)
 {
 	s/^\s\s// if ($class eq 'DebugLoc' or ($class and ($file_name eq 'IntrinsicInst' or $file_name eq 'PrettyStackTrace')));
 
-	if (/^namespace (\w+)\s*\{/
-		and ($1 eq 'CallingConv' or $1 eq 'Intrinsic'))
+	if (/^namespace (\w+)\s*\{/)
 	{
-		print "namespace $1\n";
-		$class = $1;
+		if ($1 eq 'CallingConv' or $1 eq 'Intrinsic')
+		{
+			print "namespace $1\n";
+			$class = $1;
+		}
+		elsif ($1 eq 'llvm' and ($file_name eq 'PrintModulePass' or $file_name eq 'InitializePasses'))
+		{
+			print "global functions\n";
+			$class = 'Passes';
+		}
+		else
+		{
+			next;
+		}
 		$base = '';
 		@data = ();
 		$public = 1;
 		$static_class = 1;
+		while (<F>) {
+			last if ($_ !~ /^(?:|\s*class \w+;)$/);
+		}
 	}
 	elsif (not $class
 		and /^\s*class (\w+)(?:\s*:\s*([\w <>,\*]+))?\s*(\{)?[^;\{]*(?:\/\/.*)?$/)
@@ -1064,7 +1078,8 @@ if ($#code >= 0)
 		print C "#include \"$_\"\n";
 	}
 	print C "#include <msclr/marshal.h>\n" if ($use_marshal);
-	print C "#include <msclr/marshal_cpp.h>\n" if ($use_marshal_cpp);
+	print C "#include <msclr/marshal_cpp.h>\n"
+		. "#include <string>\n" if ($use_marshal_cpp);
 	print C "#include \"utils.h\"\n" if ($use_utils);
 	print C "\n";
 	print C "using namespace LLVM;\n\n";
@@ -1132,8 +1147,8 @@ EOF
 	$text =~ s/\(\s*\n\s*/(/mg;
 	$text =~ s/\s*\n\s*\)/)/mg;
 	$text =~ s/^\s*\n//mg;
-
-	$text =~ s/([\*&]) / $1/g;
+	
+	$text =~ s/(\w+)([\*&]) ?/$1 $2/g;
 	$text =~ s/(?<=[a-zA-Z])\s+(?=\()//g;
 	$text =~ s/(?:\s*;\s*|(?<=[^;\s])\s*)$/;/mg;
 	$text =~ s/ const;$/;/mg;
@@ -1161,7 +1176,7 @@ EOF
 			(?:\s*:\s*\w+[^;]+)?\s*(?:=\s*0\s*)?;
 
 			(?(DEFINE)
-				(?<TYPE>(?:\w+::)?\w+(?:\ \w+)*(?:<(?:\w+::)?\w+\s*(?:\*\s*)?>)?)
+				(?<TYPE>(?:const\ )?(?:\w+::)?\w+(?:<(?:\w+::)?\w+\s*(?:\*\s*)?>)?)
 				(?<ARG>(?&TYPE)(?:\ [*&]?\w*)?)
 				(?<DEF>\s*=\s*(?:\w+(?:\(\))?|\"\"))
 			)
@@ -1697,17 +1712,23 @@ sub manage_arg
 			$post = "\tdelete $n;\n" . $post;
 		}
 	}
-	elsif ($arg =~ /((?<=const )(?:Twine|char)|StringRef)\s*[\^&]?\s*(\w+)?/)
+	elsif ($arg =~ /((?<=const )(?:Twine|char)|StringRef|std::string)\s*[\^&]?\s*(\w+)?/)
 	{
 		$use_netlib = 1;
-		$use_marshal = 1;
 		&add_lib($1) if ($1 ne 'char');
 
+		my $cpp = ($1 eq 'std::string');
 		my $n = ($2 or 'Name');
 		$r = "System::String ^$n";
-		$call = "ctx.marshal_as<const char *>($n)";
+		if ($cpp) {
+			$use_marshal_cpp = 1;
+			$call = "marshal_as<std::string>($n)";
+		} else {
+			$use_marshal = 1;
+			$call = "ctx.marshal_as<const char *>($n)";
+		}
 
-		unless ($use_ctx)
+		if (not $use_ctx and not $cpp)
 		{
 			$use_ctx = 1;
 			$pre = "\tmsclr::interop::marshal_context ctx;\n" . $pre;

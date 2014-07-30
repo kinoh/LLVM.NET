@@ -35,8 +35,10 @@ namespace Test
             builder.CreateRetVoid();
 
             var pm = new PassManager();
-
-            module.dump();
+            var os = new raw_fd_ostream("code.ll");
+            pm.add(Passes.createPrintModulePass(os));
+            pm.run(module);
+            os.close();
 
             Console.ReadKey();
         }

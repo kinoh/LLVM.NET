@@ -1,6 +1,7 @@
 #include "raw_ostream.h"
 #include "llvm/ADT/StringRef.h"
 #include <msclr/marshal.h>
+#include <msclr/marshal_cppstd.h>
 #include "utils.h"
 
 using namespace LLVM;
@@ -101,55 +102,49 @@ bool raw_ostream::has_colors()
 }
 
 
-raw_fd_ostream::raw_fd_ostream(llvm::raw_fd_ostream *base)
-	: base(base)
-	, raw_ostream(base)
-	, constructed(false)
+System::String ^raw_fd_ostream::ErrorInfo::get()
 {
+	return msclr::interop::marshal_as<System::String ^>(*this->errorInfo);
 }
 raw_fd_ostream::!raw_fd_ostream()
 {
-	if (constructed)
-	{
-		delete base;
-	}
+	delete errorInfo;
+	delete base;
 }
 raw_fd_ostream::~raw_fd_ostream()
 {
 	this->!raw_fd_ostream();
 }
-llvm::raw_fd_ostream *raw_fd_ostream::_construct(System::String ^Filename, std::string ErrorInfo)
+llvm::raw_fd_ostream *raw_fd_ostream::_construct(System::String ^Filename, std::string &ErrorInfo)
 {
 	msclr::interop::marshal_context ctx;
 	return new llvm::raw_fd_ostream(ctx.marshal_as<const char *>(Filename), ErrorInfo);
 }
-raw_fd_ostream::raw_fd_ostream(System::String ^Filename, std::string ErrorInfo)
-	: base(_construct(Filename, ErrorInfo))
+raw_fd_ostream::raw_fd_ostream(System::String ^Filename)
+	: errorInfo(new std::string())
+	, base(_construct(Filename, *this->errorInfo))
 	, raw_ostream(base)
-	, constructed(true)
 {
 }
-llvm::raw_fd_ostream *raw_fd_ostream::_construct(System::String ^Filename, std::string ErrorInfo, unsigned Flags)
+llvm::raw_fd_ostream *raw_fd_ostream::_construct(System::String ^Filename, std::string &ErrorInfo, unsigned Flags)
 {
 	msclr::interop::marshal_context ctx;
 	return new llvm::raw_fd_ostream(ctx.marshal_as<const char *>(Filename), ErrorInfo, Flags);
 }
-raw_fd_ostream::raw_fd_ostream(System::String ^Filename, std::string ErrorInfo, unsigned Flags)
-	: base(_construct(Filename, ErrorInfo, Flags))
+raw_fd_ostream::raw_fd_ostream(System::String ^Filename, unsigned Flags)
+	: errorInfo(new std::string())
+	, base(_construct(Filename, *this->errorInfo, Flags))
 	, raw_ostream(base)
-	, constructed(true)
 {
 }
 raw_fd_ostream::raw_fd_ostream(int fd, bool shouldClose)
 	: base(new llvm::raw_fd_ostream(fd, shouldClose))
 	, raw_ostream(base)
-	, constructed(true)
 {
 }
 raw_fd_ostream::raw_fd_ostream(int fd, bool shouldClose, bool unbuffered)
 	: base(new llvm::raw_fd_ostream(fd, shouldClose, unbuffered))
 	, raw_ostream(base)
-	, constructed(true)
 {
 }
 void raw_fd_ostream::close()

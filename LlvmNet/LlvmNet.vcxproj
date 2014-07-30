@@ -107,8 +107,11 @@
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Pass.cpp" />
     <ClCompile Include="PassAnalysisSupport.cpp" />
+    <ClCompile Include="Passes.cpp" />
     <ClCompile Include="PassManager.cpp" />
     <ClCompile Include="PassManagers.cpp" />
+    <ClCompile Include="PassRegistry.cpp" />
+    <ClCompile Include="PassSupport.cpp" />
     <ClCompile Include="PrettyStackTrace.cpp" />
     <ClCompile Include="raw_ostream.cpp" />
     <ClCompile Include="Type.cpp" />
@@ -119,7 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Argument.h" />
-    <ClInclude Include="AssemblyAnnotationWriter.h" />
     <ClInclude Include="Attributes.h" />
     <ClInclude Include="BasicBlock.h" />
     <ClInclude Include="CallingConv.h" />
@@ -146,8 +148,11 @@
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Pass.h" />
     <ClInclude Include="PassAnalysisSupport.h" />
+    <ClInclude Include="Passes.h" />
     <ClInclude Include="PassManager.h" />
     <ClInclude Include="PassManagers.h" />
+    <ClInclude Include="PassRegistry.h" />
+    <ClInclude Include="PassSupport.h" />
     <ClInclude Include="PrettyStackTrace.h" />
     <ClInclude Include="raw_ostream.h" />
     <ClInclude Include="Type.h" />

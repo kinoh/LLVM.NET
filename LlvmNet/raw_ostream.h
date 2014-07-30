@@ -73,19 +73,23 @@ public ref class raw_fd_ostream
 	: public raw_ostream
 {
 private:
-	bool constructed;	static llvm::raw_fd_ostream *_construct(System::String ^Filename, std::string ErrorInfo);
-	static llvm::raw_fd_ostream *_construct(System::String ^Filename, std::string ErrorInfo, unsigned Flags);
+	std::string *errorInfo;
+	static llvm::raw_fd_ostream *_construct(System::String ^Filename, std::string &ErrorInfo);
+	static llvm::raw_fd_ostream *_construct(System::String ^Filename, std::string &ErrorInfo, unsigned Flags);
 
 internal:
 	llvm::raw_fd_ostream *base;
-	raw_fd_ostream(llvm::raw_fd_ostream *base);
 
 public:
+	property System::String ^ErrorInfo
+	{
+		System::String ^get();
+	}
 	!raw_fd_ostream();
 	virtual ~raw_fd_ostream();
 	// enum;
-	raw_fd_ostream(System::String ^Filename, std::string ErrorInfo);
-	raw_fd_ostream(System::String ^Filename, std::string ErrorInfo, unsigned Flags);
+	raw_fd_ostream(System::String ^Filename);
+	raw_fd_ostream(System::String ^Filename, unsigned Flags);
 	raw_fd_ostream(int fd, bool shouldClose);
 	raw_fd_ostream(int fd, bool shouldClose, bool unbuffered);
 	void close();
