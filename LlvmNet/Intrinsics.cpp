@@ -27,7 +27,7 @@ System::String ^Intrinsic::getName(ID id, array<Type ^> ^Tys)
 }
 FunctionType ^Intrinsic::getType(LLVMContext ^Context, ID id)
 {
-	return gcnew FunctionType(llvm::Intrinsic::getType(*Context->base, safe_cast<llvm::Intrinsic::ID>(id)));
+	return FunctionType::_wrap(llvm::Intrinsic::getType(*Context->base, safe_cast<llvm::Intrinsic::ID>(id)));
 }
 FunctionType ^Intrinsic::getType(LLVMContext ^Context, ID id, array<Type ^> ^Tys)
 {
@@ -35,7 +35,7 @@ FunctionType ^Intrinsic::getType(LLVMContext ^Context, ID id, array<Type ^> ^Tys
 	for (int i = 0; i < Tys->Length; i++)
 		b[i] = Tys[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Tys->Length);
-	auto r = gcnew FunctionType(llvm::Intrinsic::getType(*Context->base, safe_cast<llvm::Intrinsic::ID>(id), brr));
+	auto r = FunctionType::_wrap(llvm::Intrinsic::getType(*Context->base, safe_cast<llvm::Intrinsic::ID>(id), brr));
 	delete b;
 	return r;
 }
@@ -45,11 +45,11 @@ bool Intrinsic::isOverloaded(ID id)
 }
 AttributeSet ^Intrinsic::getAttributes(LLVMContext ^C, ID id)
 {
-	return gcnew AttributeSet(&llvm::Intrinsic::getAttributes(*C->base, safe_cast<llvm::Intrinsic::ID>(id)));
+	return AttributeSet::_wrap(&llvm::Intrinsic::getAttributes(*C->base, safe_cast<llvm::Intrinsic::ID>(id)));
 }
 Function ^Intrinsic::getDeclaration(Module ^M, ID id)
 {
-	return gcnew Function(llvm::Intrinsic::getDeclaration(M->base, safe_cast<llvm::Intrinsic::ID>(id)));
+	return Function::_wrap(llvm::Intrinsic::getDeclaration(M->base, safe_cast<llvm::Intrinsic::ID>(id)));
 }
 Function ^Intrinsic::getDeclaration(Module ^M, ID id, array<Type ^> ^Tys)
 {
@@ -57,7 +57,7 @@ Function ^Intrinsic::getDeclaration(Module ^M, ID id, array<Type ^> ^Tys)
 	for (int i = 0; i < Tys->Length; i++)
 		b[i] = Tys[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Tys->Length);
-	auto r = gcnew Function(llvm::Intrinsic::getDeclaration(M->base, safe_cast<llvm::Intrinsic::ID>(id), brr));
+	auto r = Function::_wrap(llvm::Intrinsic::getDeclaration(M->base, safe_cast<llvm::Intrinsic::ID>(id), brr));
 	delete b;
 	return r;
 }

@@ -20,6 +20,10 @@ PassManagerPrettyStackEntry::PassManagerPrettyStackEntry(llvm::PassManagerPretty
 	, constructed(false)
 {
 }
+inline PassManagerPrettyStackEntry ^PassManagerPrettyStackEntry::_wrap(llvm::PassManagerPrettyStackEntry *base)
+{
+	return base ? gcnew PassManagerPrettyStackEntry(base) : nullptr;
+}
 PassManagerPrettyStackEntry::!PassManagerPrettyStackEntry()
 {
 	if (constructed)
@@ -59,6 +63,10 @@ PMStack::PMStack(llvm::PMStack *base)
 	: base(base)
 {
 }
+inline PMStack ^PMStack::_wrap(llvm::PMStack *base)
+{
+	return base ? gcnew PMStack(base) : nullptr;
+}
 PMStack::!PMStack()
 {
 }
@@ -72,7 +80,7 @@ void PMStack::pop()
 }
 PMDataManager ^PMStack::top()
 {
-	return gcnew PMDataManager(base->top());
+	return PMDataManager::_wrap(base->top());
 }
 void PMStack::push(PMDataManager ^PM)
 {
@@ -91,6 +99,10 @@ void PMStack::dump()
 PMTopLevelManager::PMTopLevelManager(llvm::PMTopLevelManager *base)
 	: base(base)
 {
+}
+inline PMTopLevelManager ^PMTopLevelManager::_wrap(llvm::PMTopLevelManager *base)
+{
+	return base ? gcnew PMTopLevelManager(base) : nullptr;
 }
 PMTopLevelManager::!PMTopLevelManager()
 {
@@ -118,16 +130,16 @@ array<Pass ^> ^PMTopLevelManager::collectLastUsesArray(Pass ^P)
 	base->collectLastUses(r, P->base);
 	array<Pass ^> ^s = gcnew array<Pass ^>(r.size());
 	for (int i = 0; i < s->Length; i++)
-		s[i] = gcnew Pass(r[i]);
+		s[i] = Pass::_wrap(r[i]);
 	return s;
 }
 Pass ^PMTopLevelManager::findAnalysisPass(AnalysisID ^AID)
 {
-	return gcnew Pass(base->findAnalysisPass(AID->base));
+	return Pass::_wrap(base->findAnalysisPass(AID->base));
 }
 AnalysisUsage ^PMTopLevelManager::findAnalysisUsage(Pass ^P)
 {
-	return gcnew AnalysisUsage(base->findAnalysisUsage(P->base));
+	return AnalysisUsage::_wrap(base->findAnalysisUsage(P->base));
 }
 inline void PMTopLevelManager::addImmutablePass(ImmutablePass ^P)
 {
@@ -155,6 +167,10 @@ PMDataManager::PMDataManager(llvm::PMDataManager *base)
 	: base(base)
 {
 }
+inline PMDataManager ^PMDataManager::_wrap(llvm::PMDataManager *base)
+{
+	return base ? gcnew PMDataManager(base) : nullptr;
+}
 PMDataManager::!PMDataManager()
 {
 }
@@ -164,7 +180,7 @@ PMDataManager::~PMDataManager()
 }
 Pass ^PMDataManager::getAsPass()
 {
-	return gcnew Pass(base->getAsPass());
+	return Pass::_wrap(base->getAsPass());
 }
 void PMDataManager::recordAvailableAnalysis(Pass ^P)
 {
@@ -202,7 +218,7 @@ void PMDataManager::addLowerLevelRequiredPass(Pass ^P, Pass ^RequiredPass)
 }
 Pass ^PMDataManager::getOnTheFlyPass(Pass ^P, AnalysisID ^PI, Function ^F)
 {
-	return gcnew Pass(base->getOnTheFlyPass(P->base, PI->base, *F->base));
+	return Pass::_wrap(base->getOnTheFlyPass(P->base, PI->base, *F->base));
 }
 void PMDataManager::initializeAnalysisInfo()
 {
@@ -218,11 +234,11 @@ void PMDataManager::initializeAnalysisImpl(Pass ^P)
 }
 Pass ^PMDataManager::findAnalysisPass(AnalysisID ^AID, bool Direction)
 {
-	return gcnew Pass(base->findAnalysisPass(AID->base, Direction));
+	return Pass::_wrap(base->findAnalysisPass(AID->base, Direction));
 }
 PMTopLevelManager ^PMDataManager::getTopLevelManager()
 {
-	return gcnew PMTopLevelManager(base->getTopLevelManager());
+	return PMTopLevelManager::_wrap(base->getTopLevelManager());
 }
 void PMDataManager::setTopLevelManager(PMTopLevelManager ^T)
 {
@@ -243,11 +259,6 @@ void PMDataManager::dumpLastUses(Pass ^P, unsigned Offset)
 void PMDataManager::dumpPassArguments()
 {
 	base->dumpPassArguments();
-}
-void PMDataManager::dumpPassInfo(Pass ^P, PassDebuggingString S1, PassDebuggingString S2, System::String ^Msg)
-{
-	msclr::interop::marshal_context ctx;
-	base->dumpPassInfo(P->base, safe_cast<llvm::PassDebuggingString>(S1), safe_cast<llvm::PassDebuggingString>(S2), ctx.marshal_as<const char *>(Msg));
 }
 void PMDataManager::dumpRequiredSet(Pass ^P)
 {

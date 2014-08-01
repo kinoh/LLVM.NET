@@ -17,6 +17,10 @@ BasicBlock::BasicBlock(llvm::BasicBlock *base)
 	, Value(base)
 {
 }
+inline BasicBlock ^BasicBlock::_wrap(llvm::BasicBlock *base)
+{
+	return base ? gcnew BasicBlock(base) : nullptr;
+}
 BasicBlock::!BasicBlock()
 {
 }
@@ -26,46 +30,46 @@ BasicBlock::~BasicBlock()
 }
 LLVMContext ^BasicBlock::getContext()
 {
-	return gcnew LLVMContext(&base->getContext());
+	return LLVMContext::_wrap(&base->getContext());
 }
 BasicBlock ^BasicBlock::Create(LLVMContext ^Context)
 {
-	return gcnew BasicBlock(llvm::BasicBlock::Create(*Context->base));
+	return BasicBlock::_wrap(llvm::BasicBlock::Create(*Context->base));
 }
 BasicBlock ^BasicBlock::Create(LLVMContext ^Context, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BasicBlock(llvm::BasicBlock::Create(*Context->base, ctx.marshal_as<const char *>(Name)));
+	return BasicBlock::_wrap(llvm::BasicBlock::Create(*Context->base, ctx.marshal_as<const char *>(Name)));
 }
 BasicBlock ^BasicBlock::Create(LLVMContext ^Context, System::String ^Name, Function ^Parent)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BasicBlock(llvm::BasicBlock::Create(*Context->base, ctx.marshal_as<const char *>(Name), Parent->base));
+	return BasicBlock::_wrap(llvm::BasicBlock::Create(*Context->base, ctx.marshal_as<const char *>(Name), Parent->base));
 }
 BasicBlock ^BasicBlock::Create(LLVMContext ^Context, System::String ^Name, Function ^Parent, BasicBlock ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BasicBlock(llvm::BasicBlock::Create(*Context->base, ctx.marshal_as<const char *>(Name), Parent->base, InsertBefore->base));
+	return BasicBlock::_wrap(llvm::BasicBlock::Create(*Context->base, ctx.marshal_as<const char *>(Name), Parent->base, InsertBefore->base));
 }
 Function ^BasicBlock::getParent()
 {
-	return gcnew Function(base->getParent());
+	return Function::_wrap(base->getParent());
 }
 TerminatorInst ^BasicBlock::getTerminator()
 {
-	return gcnew TerminatorInst(base->getTerminator());
+	return TerminatorInst::_wrap(base->getTerminator());
 }
 Instruction ^BasicBlock::getFirstNonPHI()
 {
-	return gcnew Instruction(base->getFirstNonPHI());
+	return Instruction::_wrap(base->getFirstNonPHI());
 }
 Instruction ^BasicBlock::getFirstNonPHIOrDbg()
 {
-	return gcnew Instruction(base->getFirstNonPHIOrDbg());
+	return Instruction::_wrap(base->getFirstNonPHIOrDbg());
 }
 Instruction ^BasicBlock::getFirstNonPHIOrDbgOrLifetime()
 {
-	return gcnew Instruction(base->getFirstNonPHIOrDbgOrLifetime());
+	return Instruction::_wrap(base->getFirstNonPHIOrDbgOrLifetime());
 }
 void BasicBlock::removeFromParent()
 {
@@ -85,11 +89,11 @@ void BasicBlock::moveAfter(BasicBlock ^MovePos)
 }
 BasicBlock ^BasicBlock::getSinglePredecessor()
 {
-	return gcnew BasicBlock(base->getSinglePredecessor());
+	return BasicBlock::_wrap(base->getSinglePredecessor());
 }
 BasicBlock ^BasicBlock::getUniquePredecessor()
 {
-	return gcnew BasicBlock(base->getUniquePredecessor());
+	return BasicBlock::_wrap(base->getUniquePredecessor());
 }
 inline size_t BasicBlock::size()
 {
@@ -101,23 +105,23 @@ inline bool BasicBlock::empty()
 }
 inline Instruction ^BasicBlock::front()
 {
-	return gcnew Instruction(&base->front());
+	return Instruction::_wrap(&base->front());
 }
 inline Instruction ^BasicBlock::back()
 {
-	return gcnew Instruction(&base->back());
+	return Instruction::_wrap(&base->back());
 }
 System::Collections::Generic::List<Instruction ^> ^BasicBlock::getInstList()
 {
 	auto r = &base->getInstList();
 	auto s = gcnew System::Collections::Generic::List<Instruction ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew Instruction(it));
+		s->Add(Instruction::_wrap(it));
 	return s;
 }
 ValueSymbolTable ^BasicBlock::getValueSymbolTable()
 {
-	return gcnew ValueSymbolTable(base->getValueSymbolTable());
+	return ValueSymbolTable::_wrap(base->getValueSymbolTable());
 }
 inline bool BasicBlock::classof(Value ^V)
 {
@@ -149,5 +153,5 @@ bool BasicBlock::isLandingPad()
 }
 LandingPadInst ^BasicBlock::getLandingPadInst()
 {
-	return gcnew LandingPadInst(base->getLandingPadInst());
+	return LandingPadInst::_wrap(base->getLandingPadInst());
 }

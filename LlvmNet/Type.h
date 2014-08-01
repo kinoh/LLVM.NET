@@ -39,7 +39,12 @@ public:
 
 internal:
 	llvm::Type *base;
+
+protected:
 	Type(llvm::Type *base);
+
+internal:
+	static inline Type ^_wrap(llvm::Type *base);
 
 public:
 	!Type();
@@ -83,7 +88,7 @@ public:
 	int getFPMantissaWidth();
 	// const Type *getScalarType();
 	Type ^getScalarType();
-	// typedef Type  *const *subtype_iterator;
+	// typedef Type * const *subtype_iterator;
 	// subtype_iterator subtype_begin();
 	// subtype_iterator subtype_end();
 	Type ^getContainedType(unsigned i);

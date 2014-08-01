@@ -15,6 +15,10 @@ IntegerType::IntegerType(llvm::IntegerType *base)
 	, Type(base)
 {
 }
+inline IntegerType ^IntegerType::_wrap(llvm::IntegerType *base)
+{
+	return base ? gcnew IntegerType(base) : nullptr;
+}
 IntegerType::!IntegerType()
 {
 }
@@ -24,7 +28,7 @@ IntegerType::~IntegerType()
 }
 IntegerType ^IntegerType::get(LLVMContext ^C, unsigned NumBits)
 {
-	return gcnew IntegerType(llvm::IntegerType::get(*C->base, NumBits));
+	return IntegerType::_wrap(llvm::IntegerType::get(*C->base, NumBits));
 }
 unsigned IntegerType::getBitWidth()
 {
@@ -53,6 +57,10 @@ FunctionType::FunctionType(llvm::FunctionType *base)
 	, Type(base)
 {
 }
+inline FunctionType ^FunctionType::_wrap(llvm::FunctionType *base)
+{
+	return base ? gcnew FunctionType(base) : nullptr;
+}
 FunctionType::!FunctionType()
 {
 }
@@ -66,13 +74,13 @@ FunctionType ^FunctionType::get(Type ^Result, array<Type ^> ^Params, bool isVarA
 	for (int i = 0; i < Params->Length; i++)
 		b[i] = Params[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Params->Length);
-	auto r = gcnew FunctionType(llvm::FunctionType::get(Result->base, brr, isVarArg));
+	auto r = FunctionType::_wrap(llvm::FunctionType::get(Result->base, brr, isVarArg));
 	delete b;
 	return r;
 }
 FunctionType ^FunctionType::get(Type ^Result, bool isVarArg)
 {
-	return gcnew FunctionType(llvm::FunctionType::get(Result->base, isVarArg));
+	return FunctionType::_wrap(llvm::FunctionType::get(Result->base, isVarArg));
 }
 bool FunctionType::isValidReturnType(Type ^RetTy)
 {
@@ -88,11 +96,11 @@ bool FunctionType::isVarArg()
 }
 Type ^FunctionType::getReturnType()
 {
-	return gcnew Type(base->getReturnType());
+	return Type::_wrap(base->getReturnType());
 }
 Type ^FunctionType::getParamType(unsigned i)
 {
-	return gcnew Type(base->getParamType(i));
+	return Type::_wrap(base->getParamType(i));
 }
 unsigned FunctionType::getNumParams()
 {
@@ -109,6 +117,10 @@ CompositeType::CompositeType(llvm::CompositeType *base)
 	, Type(base)
 {
 }
+inline CompositeType ^CompositeType::_wrap(llvm::CompositeType *base)
+{
+	return base ? gcnew CompositeType(base) : nullptr;
+}
 CompositeType::!CompositeType()
 {
 }
@@ -118,11 +130,11 @@ CompositeType::~CompositeType()
 }
 Type ^CompositeType::getTypeAtIndex(Value ^V)
 {
-	return gcnew Type(base->getTypeAtIndex(V->base));
+	return Type::_wrap(base->getTypeAtIndex(V->base));
 }
 Type ^CompositeType::getTypeAtIndex(unsigned Idx)
 {
-	return gcnew Type(base->getTypeAtIndex(Idx));
+	return Type::_wrap(base->getTypeAtIndex(Idx));
 }
 bool CompositeType::indexValid(Value ^V)
 {
@@ -143,6 +155,10 @@ StructType::StructType(llvm::StructType *base)
 	, CompositeType(base)
 {
 }
+inline StructType ^StructType::_wrap(llvm::StructType *base)
+{
+	return base ? gcnew StructType(base) : nullptr;
+}
 StructType::!StructType()
 {
 }
@@ -153,11 +169,11 @@ StructType::~StructType()
 StructType ^StructType::create(LLVMContext ^Context, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew StructType(llvm::StructType::create(*Context->base, ctx.marshal_as<const char *>(Name)));
+	return StructType::_wrap(llvm::StructType::create(*Context->base, ctx.marshal_as<const char *>(Name)));
 }
 StructType ^StructType::create(LLVMContext ^Context)
 {
-	return gcnew StructType(llvm::StructType::create(*Context->base));
+	return StructType::_wrap(llvm::StructType::create(*Context->base));
 }
 StructType ^StructType::create(array<Type ^> ^Elements, System::String ^Name)
 {
@@ -166,7 +182,7 @@ StructType ^StructType::create(array<Type ^> ^Elements, System::String ^Name)
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::create(brr, ctx.marshal_as<const char *>(Name)));
+	auto r = StructType::_wrap(llvm::StructType::create(brr, ctx.marshal_as<const char *>(Name)));
 	delete b;
 	return r;
 }
@@ -177,7 +193,7 @@ StructType ^StructType::create(array<Type ^> ^Elements, System::String ^Name, bo
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::create(brr, ctx.marshal_as<const char *>(Name), isPacked));
+	auto r = StructType::_wrap(llvm::StructType::create(brr, ctx.marshal_as<const char *>(Name), isPacked));
 	delete b;
 	return r;
 }
@@ -187,7 +203,7 @@ StructType ^StructType::create(array<Type ^> ^Elements)
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::create(brr));
+	auto r = StructType::_wrap(llvm::StructType::create(brr));
 	delete b;
 	return r;
 }
@@ -198,7 +214,7 @@ StructType ^StructType::create(LLVMContext ^Context, array<Type ^> ^Elements, Sy
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::create(*Context->base, brr, ctx.marshal_as<const char *>(Name)));
+	auto r = StructType::_wrap(llvm::StructType::create(*Context->base, brr, ctx.marshal_as<const char *>(Name)));
 	delete b;
 	return r;
 }
@@ -209,7 +225,7 @@ StructType ^StructType::create(LLVMContext ^Context, array<Type ^> ^Elements, Sy
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::create(*Context->base, brr, ctx.marshal_as<const char *>(Name), isPacked));
+	auto r = StructType::_wrap(llvm::StructType::create(*Context->base, brr, ctx.marshal_as<const char *>(Name), isPacked));
 	delete b;
 	return r;
 }
@@ -219,7 +235,7 @@ StructType ^StructType::create(LLVMContext ^Context, array<Type ^> ^Elements)
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::create(*Context->base, brr));
+	auto r = StructType::_wrap(llvm::StructType::create(*Context->base, brr));
 	delete b;
 	return r;
 }
@@ -229,7 +245,7 @@ StructType ^StructType::get(LLVMContext ^Context, array<Type ^> ^Elements)
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::get(*Context->base, brr));
+	auto r = StructType::_wrap(llvm::StructType::get(*Context->base, brr));
 	delete b;
 	return r;
 }
@@ -239,17 +255,17 @@ StructType ^StructType::get(LLVMContext ^Context, array<Type ^> ^Elements, bool 
 	for (int i = 0; i < Elements->Length; i++)
 		b[i] = Elements[i]->base;
 	llvm::ArrayRef<llvm::Type*> brr(b, Elements->Length);
-	auto r = gcnew StructType(llvm::StructType::get(*Context->base, brr, isPacked));
+	auto r = StructType::_wrap(llvm::StructType::get(*Context->base, brr, isPacked));
 	delete b;
 	return r;
 }
 StructType ^StructType::get(LLVMContext ^Context)
 {
-	return gcnew StructType(llvm::StructType::get(*Context->base));
+	return StructType::_wrap(llvm::StructType::get(*Context->base));
 }
 StructType ^StructType::get(LLVMContext ^Context, bool isPacked)
 {
-	return gcnew StructType(llvm::StructType::get(*Context->base, isPacked));
+	return StructType::_wrap(llvm::StructType::get(*Context->base, isPacked));
 }
 bool StructType::isPacked()
 {
@@ -312,7 +328,7 @@ unsigned StructType::getNumElements()
 }
 Type ^StructType::getElementType(unsigned N)
 {
-	return gcnew Type(base->getElementType(N));
+	return Type::_wrap(base->getElementType(N));
 }
 inline bool StructType::classof(Type ^T)
 {
@@ -325,6 +341,10 @@ SequentialType::SequentialType(llvm::SequentialType *base)
 	, CompositeType(base)
 {
 }
+inline SequentialType ^SequentialType::_wrap(llvm::SequentialType *base)
+{
+	return base ? gcnew SequentialType(base) : nullptr;
+}
 SequentialType::!SequentialType()
 {
 }
@@ -334,7 +354,7 @@ SequentialType::~SequentialType()
 }
 Type ^SequentialType::getElementType()
 {
-	return gcnew Type(base->getElementType());
+	return Type::_wrap(base->getElementType());
 }
 inline bool SequentialType::classof(Type ^T)
 {
@@ -347,6 +367,10 @@ ArrayType::ArrayType(llvm::ArrayType *base)
 	, SequentialType(base)
 {
 }
+inline ArrayType ^ArrayType::_wrap(llvm::ArrayType *base)
+{
+	return base ? gcnew ArrayType(base) : nullptr;
+}
 ArrayType::!ArrayType()
 {
 }
@@ -356,7 +380,7 @@ ArrayType::~ArrayType()
 }
 ArrayType ^ArrayType::get(Type ^ElementType, uint64_t NumElements)
 {
-	return gcnew ArrayType(llvm::ArrayType::get(ElementType->base, NumElements));
+	return ArrayType::_wrap(llvm::ArrayType::get(ElementType->base, NumElements));
 }
 bool ArrayType::isValidElementType(Type ^ElemTy)
 {
@@ -377,6 +401,10 @@ VectorType::VectorType(llvm::VectorType *base)
 	, SequentialType(base)
 {
 }
+inline VectorType ^VectorType::_wrap(llvm::VectorType *base)
+{
+	return base ? gcnew VectorType(base) : nullptr;
+}
 VectorType::!VectorType()
 {
 }
@@ -386,19 +414,19 @@ VectorType::~VectorType()
 }
 VectorType ^VectorType::get(Type ^ElementType, unsigned NumElements)
 {
-	return gcnew VectorType(llvm::VectorType::get(ElementType->base, NumElements));
+	return VectorType::_wrap(llvm::VectorType::get(ElementType->base, NumElements));
 }
 VectorType ^VectorType::getInteger(VectorType ^VTy)
 {
-	return gcnew VectorType(llvm::VectorType::getInteger(VTy->base));
+	return VectorType::_wrap(llvm::VectorType::getInteger(VTy->base));
 }
 VectorType ^VectorType::getExtendedElementVectorType(VectorType ^VTy)
 {
-	return gcnew VectorType(llvm::VectorType::getExtendedElementVectorType(VTy->base));
+	return VectorType::_wrap(llvm::VectorType::getExtendedElementVectorType(VTy->base));
 }
 VectorType ^VectorType::getTruncatedElementVectorType(VectorType ^VTy)
 {
-	return gcnew VectorType(llvm::VectorType::getTruncatedElementVectorType(VTy->base));
+	return VectorType::_wrap(llvm::VectorType::getTruncatedElementVectorType(VTy->base));
 }
 bool VectorType::isValidElementType(Type ^ElemTy)
 {
@@ -423,6 +451,10 @@ PointerType::PointerType(llvm::PointerType *base)
 	, SequentialType(base)
 {
 }
+inline PointerType ^PointerType::_wrap(llvm::PointerType *base)
+{
+	return base ? gcnew PointerType(base) : nullptr;
+}
 PointerType::!PointerType()
 {
 }
@@ -432,11 +464,11 @@ PointerType::~PointerType()
 }
 PointerType ^PointerType::get(Type ^ElementType, unsigned AddressSpace)
 {
-	return gcnew PointerType(llvm::PointerType::get(ElementType->base, AddressSpace));
+	return PointerType::_wrap(llvm::PointerType::get(ElementType->base, AddressSpace));
 }
 PointerType ^PointerType::getUnqual(Type ^ElementType)
 {
-	return gcnew PointerType(llvm::PointerType::getUnqual(ElementType->base));
+	return PointerType::_wrap(llvm::PointerType::getUnqual(ElementType->base));
 }
 bool PointerType::isValidElementType(Type ^ElemTy)
 {

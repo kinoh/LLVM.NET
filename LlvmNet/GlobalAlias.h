@@ -15,13 +15,19 @@ public ref class GlobalAlias
 	: public GlobalValue
 {
 private:
-	bool constructed;	static llvm::GlobalAlias *_construct(Type ^Ty, LinkageTypes Linkage, System::String ^Name);
+	bool constructed;
+	static llvm::GlobalAlias *_construct(Type ^Ty, LinkageTypes Linkage, System::String ^Name);
 	static llvm::GlobalAlias *_construct(Type ^Ty, LinkageTypes Linkage, System::String ^Name, Constant ^Aliasee);
 	static llvm::GlobalAlias *_construct(Type ^Ty, LinkageTypes Linkage, System::String ^Name, Constant ^Aliasee, Module ^Parent);
 
 internal:
 	llvm::GlobalAlias *base;
+
+protected:
 	GlobalAlias(llvm::GlobalAlias *base);
+
+internal:
+	static inline GlobalAlias ^_wrap(llvm::GlobalAlias *base);
 
 public:
 	!GlobalAlias();

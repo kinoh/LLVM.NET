@@ -37,9 +37,15 @@ public ref class PassManagerPrettyStackEntry
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::PassManagerPrettyStackEntry *base;
+
+protected:
 	PassManagerPrettyStackEntry(llvm::PassManagerPrettyStackEntry *base);
+
+internal:
+	static inline PassManagerPrettyStackEntry ^_wrap(llvm::PassManagerPrettyStackEntry *base);
 
 public:
 	!PassManagerPrettyStackEntry();
@@ -58,7 +64,12 @@ public ref class PMStack
 {
 internal:
 	llvm::PMStack *base;
+
+protected:
 	PMStack(llvm::PMStack *base);
+
+internal:
+	static inline PMStack ^_wrap(llvm::PMStack *base);
 
 public:
 	!PMStack();
@@ -78,7 +89,12 @@ public ref class PMTopLevelManager
 {
 internal:
 	llvm::PMTopLevelManager *base;
+
+protected:
 	PMTopLevelManager(llvm::PMTopLevelManager *base);
+
+internal:
+	static inline PMTopLevelManager ^_wrap(llvm::PMTopLevelManager *base);
 
 public:
 	!PMTopLevelManager();
@@ -90,7 +106,7 @@ public:
 	AnalysisUsage ^findAnalysisUsage(Pass ^P);
 	// virtual ~PMTopLevelManager();
 	inline void addImmutablePass(ImmutablePass ^P);
-	// inline SmallVectorImpl<ImmutablePass *> &getImmutablePasses();
+	// inline SmallVectorImpl<ImmutablePass *>& getImmutablePasses();
 	void addPassManager(PMDataManager ^Manager);
 	inline void addIndirectPassManager(PMDataManager ^Manager);
 	void dumpPasses();
@@ -103,7 +119,12 @@ public ref class PMDataManager
 {
 internal:
 	llvm::PMDataManager *base;
+
+protected:
 	PMDataManager(llvm::PMDataManager *base);
+
+internal:
+	static inline PMDataManager ^_wrap(llvm::PMDataManager *base);
 
 public:
 	!PMDataManager();
@@ -116,8 +137,8 @@ public:
 	void removeNotPreservedAnalysis(Pass ^P);
 	void removeDeadPasses(Pass ^P, System::String ^Msg, PassDebuggingString string);
 	void freePass(Pass ^P, System::String ^Msg, PassDebuggingString string);
-	virtual void add(Pass ^P) override;
-	virtual void add(Pass ^P, bool ProcessAnalysis) override;
+	void add(Pass ^P);
+	void add(Pass ^P, bool ProcessAnalysis);
 	virtual void addLowerLevelRequiredPass(Pass ^P, Pass ^RequiredPass);
 	virtual Pass ^getOnTheFlyPass(Pass ^P, AnalysisID ^PI, Function ^F);
 	void initializeAnalysisInfo();
@@ -131,12 +152,12 @@ public:
 	void setDepth(unsigned newDepth);
 	void dumpLastUses(Pass ^P, unsigned Offset);
 	void dumpPassArguments();
-	void dumpPassInfo(Pass ^P, PassDebuggingString S1, PassDebuggingString S2, System::String ^Msg);
+	// void dumpPassInfo(Pass *P, enum PassDebuggingString S1, enum PassDebuggingString S2, StringRef Msg);
 	void dumpRequiredSet(Pass ^P);
 	void dumpPreservedSet(Pass ^P);
 	unsigned getNumContainedPasses();
 	virtual PassManagerType getPassManagerType();
-	// DenseMap<AnalysisID, Pass*> *getAvailableAnalysis();
+	// DenseMap<AnalysisID, Pass *> *getAvailableAnalysis();
 	void populateInheritedAnalysis(PMStack ^PMS);
 };
 

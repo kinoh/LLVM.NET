@@ -14,6 +14,10 @@ Argument::Argument(llvm::Argument *base)
 	, constructed(false)
 {
 }
+inline Argument ^Argument::_wrap(llvm::Argument *base)
+{
+	return base ? gcnew Argument(base) : nullptr;
+}
 Argument::!Argument()
 {
 	if (constructed)
@@ -55,7 +59,7 @@ Argument::Argument(Type ^Ty, System::String ^Name, Function ^F)
 }
 inline Function ^Argument::getParent()
 {
-	return gcnew Function(base->getParent());
+	return Function::_wrap(base->getParent());
 }
 unsigned Argument::getArgNo()
 {

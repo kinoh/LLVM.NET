@@ -2,6 +2,7 @@
 #include "llvm/ADT/StringRef.h"
 #include <msclr/marshal.h>
 #include <msclr/marshal_cppstd.h>
+#include <string>
 #include "utils.h"
 
 using namespace LLVM;
@@ -9,6 +10,10 @@ using namespace LLVM;
 raw_ostream::raw_ostream(llvm::raw_ostream *base)
 	: base(base)
 {
+}
+inline raw_ostream ^raw_ostream::_wrap(llvm::raw_ostream *base)
+{
+	return base ? gcnew raw_ostream(base) : nullptr;
 }
 raw_ostream::!raw_ostream()
 {
@@ -45,52 +50,32 @@ void raw_ostream::flush()
 {
 	base->flush();
 }
-raw_ostream ^raw_ostream::write_hex(unsigned long long N)
-{
-	return gcnew raw_ostream(&base->write_hex(N));
-}
 raw_ostream ^raw_ostream::write_escaped(System::String ^Str)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew raw_ostream(&base->write_escaped(ctx.marshal_as<const char *>(Str)));
+	return raw_ostream::_wrap(&base->write_escaped(ctx.marshal_as<const char *>(Str)));
 }
 raw_ostream ^raw_ostream::write_escaped(System::String ^Str, bool UseHexEscapes)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew raw_ostream(&base->write_escaped(ctx.marshal_as<const char *>(Str), UseHexEscapes));
-}
-raw_ostream ^raw_ostream::write(unsigned char C)
-{
-	return gcnew raw_ostream(&base->write(C));
+	return raw_ostream::_wrap(&base->write_escaped(ctx.marshal_as<const char *>(Str), UseHexEscapes));
 }
 raw_ostream ^raw_ostream::write(System::String ^Ptr, size_t Size)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew raw_ostream(&base->write(ctx.marshal_as<const char *>(Ptr), Size));
+	return raw_ostream::_wrap(&base->write(ctx.marshal_as<const char *>(Ptr), Size));
 }
 raw_ostream ^raw_ostream::indent(unsigned NumSpaces)
 {
-	return gcnew raw_ostream(&base->indent(NumSpaces));
-}
-raw_ostream ^raw_ostream::changeColor(Colors Color)
-{
-	return gcnew raw_ostream(&base->changeColor(safe_cast<llvm::raw_ostream::Colors>(Color)));
-}
-raw_ostream ^raw_ostream::changeColor(Colors Color, bool Bold)
-{
-	return gcnew raw_ostream(&base->changeColor(safe_cast<llvm::raw_ostream::Colors>(Color), Bold));
-}
-raw_ostream ^raw_ostream::changeColor(Colors Color, bool Bold, bool BG)
-{
-	return gcnew raw_ostream(&base->changeColor(safe_cast<llvm::raw_ostream::Colors>(Color), Bold, BG));
+	return raw_ostream::_wrap(&base->indent(NumSpaces));
 }
 raw_ostream ^raw_ostream::resetColor()
 {
-	return gcnew raw_ostream(&base->resetColor());
+	return raw_ostream::_wrap(&base->resetColor());
 }
 raw_ostream ^raw_ostream::reverseColor()
 {
-	return gcnew raw_ostream(&base->reverseColor());
+	return raw_ostream::_wrap(&base->reverseColor());
 }
 bool raw_ostream::is_displayed()
 {
@@ -169,27 +154,17 @@ void raw_fd_ostream::clear_error()
 }
 
 
-raw_string_ostream::raw_string_ostream(llvm::raw_string_ostream *base)
-	: base(base)
-	, raw_ostream(base)
-	, constructed(false)
-{
-}
 raw_string_ostream::!raw_string_ostream()
 {
-	if (constructed)
-	{
-		delete base;
-	}
+	delete base;
 }
 raw_string_ostream::~raw_string_ostream()
 {
 	this->!raw_string_ostream();
 }
-raw_string_ostream::raw_string_ostream(std::string O)
-	: base(new llvm::raw_string_ostream(O))
+raw_string_ostream::raw_string_ostream(System::String ^O)
+	: base(new llvm::raw_string_ostream(msclr::interop::marshal_as<std::string>(O)))
 	, raw_ostream(base)
-	, constructed(true)
 {
 }
 System::String ^raw_string_ostream::str()
@@ -198,26 +173,16 @@ System::String ^raw_string_ostream::str()
 }
 
 
-raw_null_ostream::raw_null_ostream(llvm::raw_null_ostream *base)
-	: base(base)
+raw_null_ostream::raw_null_ostream()
+	: base(new llvm::raw_null_ostream())
 	, raw_ostream(base)
-	, constructed(false)
 {
 }
 raw_null_ostream::!raw_null_ostream()
 {
-	if (constructed)
-	{
-		delete base;
-	}
+	delete base;
 }
 raw_null_ostream::~raw_null_ostream()
 {
 	this->!raw_null_ostream();
-}
-raw_null_ostream::raw_null_ostream()
-	: base(new llvm::raw_null_ostream())
-	, raw_ostream(base)
-	, constructed(true)
-{
 }

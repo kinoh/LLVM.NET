@@ -13,15 +13,20 @@ public ref class User
 {
 internal:
 	llvm::User *base;
+
+protected:
 	User(llvm::User *base);
+
+internal:
+	static inline User ^_wrap(llvm::User *base);
 
 public:
 	!User();
 	virtual ~User();
 	//
 	// void operator delete(void *Usr);
-	// void operator delete(void*, unsigned);
-	// void operator delete(void*, unsigned, bool);
+	// void operator delete(void *, unsigned);
+	// void operator delete(void *, unsigned, bool);
 	Value ^getOperand(unsigned i);
 	void setOperand(unsigned i, Value ^Val);
 	// const Use &getOperandUse(unsigned i);

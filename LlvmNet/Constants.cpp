@@ -21,6 +21,10 @@ ConstantInt::ConstantInt(llvm::ConstantInt *base)
 	, Constant(base)
 {
 }
+inline ConstantInt ^ConstantInt::_wrap(llvm::ConstantInt *base)
+{
+	return base ? gcnew ConstantInt(base) : nullptr;
+}
 ConstantInt::!ConstantInt()
 {
 }
@@ -30,48 +34,48 @@ ConstantInt::~ConstantInt()
 }
 ConstantInt ^ConstantInt::getTrue(LLVMContext ^Context)
 {
-	return gcnew ConstantInt(llvm::ConstantInt::getTrue(*Context->base));
+	return ConstantInt::_wrap(llvm::ConstantInt::getTrue(*Context->base));
 }
 ConstantInt ^ConstantInt::getFalse(LLVMContext ^Context)
 {
-	return gcnew ConstantInt(llvm::ConstantInt::getFalse(*Context->base));
+	return ConstantInt::_wrap(llvm::ConstantInt::getFalse(*Context->base));
 }
 Constant ^ConstantInt::getTrue(Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantInt::getTrue(Ty->base));
+	return Constant::_wrap(llvm::ConstantInt::getTrue(Ty->base));
 }
 Constant ^ConstantInt::getFalse(Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantInt::getFalse(Ty->base));
+	return Constant::_wrap(llvm::ConstantInt::getFalse(Ty->base));
 }
 Constant ^ConstantInt::get(Type ^Ty, uint64_t V)
 {
-	return gcnew Constant(llvm::ConstantInt::get(Ty->base, V));
+	return Constant::_wrap(llvm::ConstantInt::get(Ty->base, V));
 }
 Constant ^ConstantInt::get(Type ^Ty, uint64_t V, bool isSigned)
 {
-	return gcnew Constant(llvm::ConstantInt::get(Ty->base, V, isSigned));
+	return Constant::_wrap(llvm::ConstantInt::get(Ty->base, V, isSigned));
 }
 ConstantInt ^ConstantInt::get(IntegerType ^Ty, uint64_t V)
 {
-	return gcnew ConstantInt(llvm::ConstantInt::get(Ty->base, V));
+	return ConstantInt::_wrap(llvm::ConstantInt::get(Ty->base, V));
 }
 ConstantInt ^ConstantInt::get(IntegerType ^Ty, uint64_t V, bool isSigned)
 {
-	return gcnew ConstantInt(llvm::ConstantInt::get(Ty->base, V, isSigned));
+	return ConstantInt::_wrap(llvm::ConstantInt::get(Ty->base, V, isSigned));
 }
 ConstantInt ^ConstantInt::getSigned(IntegerType ^Ty, int64_t V)
 {
-	return gcnew ConstantInt(llvm::ConstantInt::getSigned(Ty->base, V));
+	return ConstantInt::_wrap(llvm::ConstantInt::getSigned(Ty->base, V));
 }
 Constant ^ConstantInt::getSigned(Type ^Ty, int64_t V)
 {
-	return gcnew Constant(llvm::ConstantInt::getSigned(Ty->base, V));
+	return Constant::_wrap(llvm::ConstantInt::getSigned(Ty->base, V));
 }
 ConstantInt ^ConstantInt::get(IntegerType ^Ty, System::String ^Str, uint8_t radix)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew ConstantInt(llvm::ConstantInt::get(Ty->base, ctx.marshal_as<const char *>(Str), radix));
+	return ConstantInt::_wrap(llvm::ConstantInt::get(Ty->base, ctx.marshal_as<const char *>(Str), radix));
 }
 unsigned ConstantInt::getBitWidth()
 {
@@ -91,7 +95,7 @@ bool ConstantInt::equalsInt(uint64_t V)
 }
 inline IntegerType ^ConstantInt::getType()
 {
-	return gcnew IntegerType(base->getType());
+	return IntegerType::_wrap(base->getType());
 }
 bool ConstantInt::isValueValidForType(Type ^Ty, uint64_t V)
 {
@@ -140,6 +144,10 @@ ConstantFP::ConstantFP(llvm::ConstantFP *base)
 	, Constant(base)
 {
 }
+inline ConstantFP ^ConstantFP::_wrap(llvm::ConstantFP *base)
+{
+	return base ? gcnew ConstantFP(base) : nullptr;
+}
 ConstantFP::!ConstantFP()
 {
 }
@@ -149,28 +157,28 @@ ConstantFP::~ConstantFP()
 }
 Constant ^ConstantFP::getZeroValueForNegation(Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantFP::getZeroValueForNegation(Ty->base));
+	return Constant::_wrap(llvm::ConstantFP::getZeroValueForNegation(Ty->base));
 }
 Constant ^ConstantFP::get(Type ^Ty, double V)
 {
-	return gcnew Constant(llvm::ConstantFP::get(Ty->base, V));
+	return Constant::_wrap(llvm::ConstantFP::get(Ty->base, V));
 }
 Constant ^ConstantFP::get(Type ^Ty, System::String ^Str)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(llvm::ConstantFP::get(Ty->base, ctx.marshal_as<const char *>(Str)));
+	return Constant::_wrap(llvm::ConstantFP::get(Ty->base, ctx.marshal_as<const char *>(Str)));
 }
 ConstantFP ^ConstantFP::getNegativeZero(Type ^Ty)
 {
-	return gcnew ConstantFP(llvm::ConstantFP::getNegativeZero(Ty->base));
+	return ConstantFP::_wrap(llvm::ConstantFP::getNegativeZero(Ty->base));
 }
 ConstantFP ^ConstantFP::getInfinity(Type ^Ty)
 {
-	return gcnew ConstantFP(llvm::ConstantFP::getInfinity(Ty->base));
+	return ConstantFP::_wrap(llvm::ConstantFP::getInfinity(Ty->base));
 }
 ConstantFP ^ConstantFP::getInfinity(Type ^Ty, bool Negative)
 {
-	return gcnew ConstantFP(llvm::ConstantFP::getInfinity(Ty->base, Negative));
+	return ConstantFP::_wrap(llvm::ConstantFP::getInfinity(Ty->base, Negative));
 }
 bool ConstantFP::isZero()
 {
@@ -199,6 +207,10 @@ ConstantAggregateZero::ConstantAggregateZero(llvm::ConstantAggregateZero *base)
 	, Constant(base)
 {
 }
+inline ConstantAggregateZero ^ConstantAggregateZero::_wrap(llvm::ConstantAggregateZero *base)
+{
+	return base ? gcnew ConstantAggregateZero(base) : nullptr;
+}
 ConstantAggregateZero::!ConstantAggregateZero()
 {
 }
@@ -208,7 +220,7 @@ ConstantAggregateZero::~ConstantAggregateZero()
 }
 ConstantAggregateZero ^ConstantAggregateZero::get(Type ^Ty)
 {
-	return gcnew ConstantAggregateZero(llvm::ConstantAggregateZero::get(Ty->base));
+	return ConstantAggregateZero::_wrap(llvm::ConstantAggregateZero::get(Ty->base));
 }
 void ConstantAggregateZero::destroyConstant()
 {
@@ -216,19 +228,19 @@ void ConstantAggregateZero::destroyConstant()
 }
 Constant ^ConstantAggregateZero::getSequentialElement()
 {
-	return gcnew Constant(base->getSequentialElement());
+	return Constant::_wrap(base->getSequentialElement());
 }
 Constant ^ConstantAggregateZero::getStructElement(unsigned Elt)
 {
-	return gcnew Constant(base->getStructElement(Elt));
+	return Constant::_wrap(base->getStructElement(Elt));
 }
 Constant ^ConstantAggregateZero::getElementValue(Constant ^C)
 {
-	return gcnew Constant(base->getElementValue(C->base));
+	return Constant::_wrap(base->getElementValue(C->base));
 }
 Constant ^ConstantAggregateZero::getElementValue(unsigned Idx)
 {
-	return gcnew Constant(base->getElementValue(Idx));
+	return Constant::_wrap(base->getElementValue(Idx));
 }
 bool ConstantAggregateZero::classof(Value ^V)
 {
@@ -240,6 +252,10 @@ ConstantArray::ConstantArray(llvm::ConstantArray *base)
 	: base(base)
 	, Constant(base)
 {
+}
+inline ConstantArray ^ConstantArray::_wrap(llvm::ConstantArray *base)
+{
+	return base ? gcnew ConstantArray(base) : nullptr;
 }
 ConstantArray::!ConstantArray()
 {
@@ -254,13 +270,13 @@ Constant ^ConstantArray::get(ArrayType ^T, array<Constant ^> ^V)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantArray::get(T->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantArray::get(T->base, brr));
 	delete b;
 	return r;
 }
 inline ArrayType ^ConstantArray::getType()
 {
-	return gcnew ArrayType(base->getType());
+	return ArrayType::_wrap(base->getType());
 }
 void ConstantArray::destroyConstant()
 {
@@ -281,6 +297,10 @@ ConstantStruct::ConstantStruct(llvm::ConstantStruct *base)
 	, Constant(base)
 {
 }
+inline ConstantStruct ^ConstantStruct::_wrap(llvm::ConstantStruct *base)
+{
+	return base ? gcnew ConstantStruct(base) : nullptr;
+}
 ConstantStruct::!ConstantStruct()
 {
 }
@@ -294,7 +314,7 @@ Constant ^ConstantStruct::get(StructType ^T, array<Constant ^> ^V)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantStruct::get(T->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantStruct::get(T->base, brr));
 	delete b;
 	return r;
 }
@@ -304,7 +324,7 @@ Constant ^ConstantStruct::getAnon(array<Constant ^> ^V)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantStruct::getAnon(brr));
+	auto r = Constant::_wrap(llvm::ConstantStruct::getAnon(brr));
 	delete b;
 	return r;
 }
@@ -314,7 +334,7 @@ Constant ^ConstantStruct::getAnon(array<Constant ^> ^V, bool Packed)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantStruct::getAnon(brr, Packed));
+	auto r = Constant::_wrap(llvm::ConstantStruct::getAnon(brr, Packed));
 	delete b;
 	return r;
 }
@@ -324,7 +344,7 @@ Constant ^ConstantStruct::getAnon(LLVMContext ^Ctx, array<Constant ^> ^V)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantStruct::getAnon(*Ctx->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantStruct::getAnon(*Ctx->base, brr));
 	delete b;
 	return r;
 }
@@ -334,7 +354,7 @@ Constant ^ConstantStruct::getAnon(LLVMContext ^Ctx, array<Constant ^> ^V, bool P
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantStruct::getAnon(*Ctx->base, brr, Packed));
+	auto r = Constant::_wrap(llvm::ConstantStruct::getAnon(*Ctx->base, brr, Packed));
 	delete b;
 	return r;
 }
@@ -344,7 +364,7 @@ StructType ^ConstantStruct::getTypeForElements(array<Constant ^> ^V)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew StructType(llvm::ConstantStruct::getTypeForElements(brr));
+	auto r = StructType::_wrap(llvm::ConstantStruct::getTypeForElements(brr));
 	delete b;
 	return r;
 }
@@ -354,7 +374,7 @@ StructType ^ConstantStruct::getTypeForElements(array<Constant ^> ^V, bool Packed
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew StructType(llvm::ConstantStruct::getTypeForElements(brr, Packed));
+	auto r = StructType::_wrap(llvm::ConstantStruct::getTypeForElements(brr, Packed));
 	delete b;
 	return r;
 }
@@ -364,7 +384,7 @@ StructType ^ConstantStruct::getTypeForElements(LLVMContext ^Ctx, array<Constant 
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew StructType(llvm::ConstantStruct::getTypeForElements(*Ctx->base, brr));
+	auto r = StructType::_wrap(llvm::ConstantStruct::getTypeForElements(*Ctx->base, brr));
 	delete b;
 	return r;
 }
@@ -374,13 +394,13 @@ StructType ^ConstantStruct::getTypeForElements(LLVMContext ^Ctx, array<Constant 
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew StructType(llvm::ConstantStruct::getTypeForElements(*Ctx->base, brr, Packed));
+	auto r = StructType::_wrap(llvm::ConstantStruct::getTypeForElements(*Ctx->base, brr, Packed));
 	delete b;
 	return r;
 }
 inline StructType ^ConstantStruct::getType()
 {
-	return gcnew StructType(base->getType());
+	return StructType::_wrap(base->getType());
 }
 void ConstantStruct::destroyConstant()
 {
@@ -401,6 +421,10 @@ ConstantVector::ConstantVector(llvm::ConstantVector *base)
 	, Constant(base)
 {
 }
+inline ConstantVector ^ConstantVector::_wrap(llvm::ConstantVector *base)
+{
+	return base ? gcnew ConstantVector(base) : nullptr;
+}
 ConstantVector::!ConstantVector()
 {
 }
@@ -414,21 +438,21 @@ Constant ^ConstantVector::get(array<Constant ^> ^V)
 	for (int i = 0; i < V->Length; i++)
 		b[i] = V[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, V->Length);
-	auto r = gcnew Constant(llvm::ConstantVector::get(brr));
+	auto r = Constant::_wrap(llvm::ConstantVector::get(brr));
 	delete b;
 	return r;
 }
 Constant ^ConstantVector::getSplat(unsigned NumElts, Constant ^Elt)
 {
-	return gcnew Constant(llvm::ConstantVector::getSplat(NumElts, Elt->base));
+	return Constant::_wrap(llvm::ConstantVector::getSplat(NumElts, Elt->base));
 }
 inline VectorType ^ConstantVector::getType()
 {
-	return gcnew VectorType(base->getType());
+	return VectorType::_wrap(base->getType());
 }
 Constant ^ConstantVector::getSplatValue()
 {
-	return gcnew Constant(base->getSplatValue());
+	return Constant::_wrap(base->getSplatValue());
 }
 void ConstantVector::destroyConstant()
 {
@@ -449,6 +473,10 @@ ConstantPointerNull::ConstantPointerNull(llvm::ConstantPointerNull *base)
 	, Constant(base)
 {
 }
+inline ConstantPointerNull ^ConstantPointerNull::_wrap(llvm::ConstantPointerNull *base)
+{
+	return base ? gcnew ConstantPointerNull(base) : nullptr;
+}
 ConstantPointerNull::!ConstantPointerNull()
 {
 }
@@ -458,7 +486,7 @@ ConstantPointerNull::~ConstantPointerNull()
 }
 ConstantPointerNull ^ConstantPointerNull::get(PointerType ^T)
 {
-	return gcnew ConstantPointerNull(llvm::ConstantPointerNull::get(T->base));
+	return ConstantPointerNull::_wrap(llvm::ConstantPointerNull::get(T->base));
 }
 void ConstantPointerNull::destroyConstant()
 {
@@ -466,7 +494,7 @@ void ConstantPointerNull::destroyConstant()
 }
 inline PointerType ^ConstantPointerNull::getType()
 {
-	return gcnew PointerType(base->getType());
+	return PointerType::_wrap(base->getType());
 }
 bool ConstantPointerNull::classof(Value ^V)
 {
@@ -478,6 +506,10 @@ ConstantDataSequential::ConstantDataSequential(llvm::ConstantDataSequential *bas
 	: base(base)
 	, Constant(base)
 {
+}
+inline ConstantDataSequential ^ConstantDataSequential::_wrap(llvm::ConstantDataSequential *base)
+{
+	return base ? gcnew ConstantDataSequential(base) : nullptr;
 }
 ConstantDataSequential::!ConstantDataSequential()
 {
@@ -504,15 +536,15 @@ double ConstantDataSequential::getElementAsDouble(unsigned i)
 }
 Constant ^ConstantDataSequential::getElementAsConstant(unsigned i)
 {
-	return gcnew Constant(base->getElementAsConstant(i));
+	return Constant::_wrap(base->getElementAsConstant(i));
 }
 inline SequentialType ^ConstantDataSequential::getType()
 {
-	return gcnew SequentialType(base->getType());
+	return SequentialType::_wrap(base->getType());
 }
 Type ^ConstantDataSequential::getElementType()
 {
-	return gcnew Type(base->getElementType());
+	return Type::_wrap(base->getElementType());
 }
 unsigned ConstantDataSequential::getNumElements()
 {
@@ -557,6 +589,10 @@ ConstantDataArray::ConstantDataArray(llvm::ConstantDataArray *base)
 	, ConstantDataSequential(base)
 {
 }
+inline ConstantDataArray ^ConstantDataArray::_wrap(llvm::ConstantDataArray *base)
+{
+	return base ? gcnew ConstantDataArray(base) : nullptr;
+}
 ConstantDataArray::!ConstantDataArray()
 {
 }
@@ -566,47 +602,47 @@ ConstantDataArray::~ConstantDataArray()
 }
 Constant ^ConstantDataArray::get(LLVMContext ^Context, array<uint8_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataArray::get(LLVMContext ^Context, array<uint16_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataArray::get(LLVMContext ^Context, array<uint32_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataArray::get(LLVMContext ^Context, array<uint64_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataArray::get(LLVMContext ^Context, array<float> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataArray::get(LLVMContext ^Context, array<double> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataArray::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataArray::getString(LLVMContext ^Context, System::String ^Initializer)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(llvm::ConstantDataArray::getString(*Context->base, ctx.marshal_as<const char *>(Initializer)));
+	return Constant::_wrap(llvm::ConstantDataArray::getString(*Context->base, ctx.marshal_as<const char *>(Initializer)));
 }
 Constant ^ConstantDataArray::getString(LLVMContext ^Context, System::String ^Initializer, bool AddNull)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(llvm::ConstantDataArray::getString(*Context->base, ctx.marshal_as<const char *>(Initializer), AddNull));
+	return Constant::_wrap(llvm::ConstantDataArray::getString(*Context->base, ctx.marshal_as<const char *>(Initializer), AddNull));
 }
 inline ArrayType ^ConstantDataArray::getType()
 {
-	return gcnew ArrayType(base->getType());
+	return ArrayType::_wrap(base->getType());
 }
 bool ConstantDataArray::classof(Value ^V)
 {
@@ -619,6 +655,10 @@ ConstantDataVector::ConstantDataVector(llvm::ConstantDataVector *base)
 	, ConstantDataSequential(base)
 {
 }
+inline ConstantDataVector ^ConstantDataVector::_wrap(llvm::ConstantDataVector *base)
+{
+	return base ? gcnew ConstantDataVector(base) : nullptr;
+}
 ConstantDataVector::!ConstantDataVector()
 {
 }
@@ -628,45 +668,45 @@ ConstantDataVector::~ConstantDataVector()
 }
 Constant ^ConstantDataVector::get(LLVMContext ^Context, array<uint8_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataVector::get(LLVMContext ^Context, array<uint16_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataVector::get(LLVMContext ^Context, array<uint32_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataVector::get(LLVMContext ^Context, array<uint64_t> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataVector::get(LLVMContext ^Context, array<float> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataVector::get(LLVMContext ^Context, array<double> ^Elts)
 {
-	auto r = gcnew Constant(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
+	auto r = Constant::_wrap(llvm::ConstantDataVector::get(*Context->base, utils::unmanage_array(Elts)));
 	return r;
 }
 Constant ^ConstantDataVector::getSplat(unsigned NumElts, Constant ^Elt)
 {
-	return gcnew Constant(llvm::ConstantDataVector::getSplat(NumElts, Elt->base));
+	return Constant::_wrap(llvm::ConstantDataVector::getSplat(NumElts, Elt->base));
 }
 Constant ^ConstantDataVector::getSplatValue()
 {
-	return gcnew Constant(base->getSplatValue());
+	return Constant::_wrap(base->getSplatValue());
 }
 inline VectorType ^ConstantDataVector::getType()
 {
-	return gcnew VectorType(base->getType());
+	return VectorType::_wrap(base->getType());
 }
 bool ConstantDataVector::classof(Value ^V)
 {
@@ -679,6 +719,10 @@ BlockAddress::BlockAddress(llvm::BlockAddress *base)
 	, Constant(base)
 {
 }
+inline BlockAddress ^BlockAddress::_wrap(llvm::BlockAddress *base)
+{
+	return base ? gcnew BlockAddress(base) : nullptr;
+}
 BlockAddress::!BlockAddress()
 {
 }
@@ -688,19 +732,19 @@ BlockAddress::~BlockAddress()
 }
 BlockAddress ^BlockAddress::get(Function ^F, BasicBlock ^BB)
 {
-	return gcnew BlockAddress(llvm::BlockAddress::get(F->base, BB->base));
+	return BlockAddress::_wrap(llvm::BlockAddress::get(F->base, BB->base));
 }
 BlockAddress ^BlockAddress::get(BasicBlock ^BB)
 {
-	return gcnew BlockAddress(llvm::BlockAddress::get(BB->base));
+	return BlockAddress::_wrap(llvm::BlockAddress::get(BB->base));
 }
 Function ^BlockAddress::getFunction()
 {
-	return gcnew Function(base->getFunction());
+	return Function::_wrap(base->getFunction());
 }
 BasicBlock ^BlockAddress::getBasicBlock()
 {
-	return gcnew BasicBlock(base->getBasicBlock());
+	return BasicBlock::_wrap(base->getBasicBlock());
 }
 void BlockAddress::destroyConstant()
 {
@@ -721,6 +765,10 @@ ConstantExpr::ConstantExpr(llvm::ConstantExpr *base)
 	, Constant(base)
 {
 }
+inline ConstantExpr ^ConstantExpr::_wrap(llvm::ConstantExpr *base)
+{
+	return base ? gcnew ConstantExpr(base) : nullptr;
+}
 ConstantExpr::!ConstantExpr()
 {
 }
@@ -730,299 +778,299 @@ ConstantExpr::~ConstantExpr()
 }
 Constant ^ConstantExpr::getAlignOf(Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAlignOf(Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getAlignOf(Ty->base));
 }
 Constant ^ConstantExpr::getSizeOf(Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSizeOf(Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSizeOf(Ty->base));
 }
 Constant ^ConstantExpr::getOffsetOf(StructType ^STy, unsigned FieldNo)
 {
-	return gcnew Constant(llvm::ConstantExpr::getOffsetOf(STy->base, FieldNo));
+	return Constant::_wrap(llvm::ConstantExpr::getOffsetOf(STy->base, FieldNo));
 }
 Constant ^ConstantExpr::getOffsetOf(Type ^Ty, Constant ^FieldNo)
 {
-	return gcnew Constant(llvm::ConstantExpr::getOffsetOf(Ty->base, FieldNo->base));
+	return Constant::_wrap(llvm::ConstantExpr::getOffsetOf(Ty->base, FieldNo->base));
 }
 Constant ^ConstantExpr::getNeg(Constant ^C)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNeg(C->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNeg(C->base));
 }
 Constant ^ConstantExpr::getNeg(Constant ^C, bool HasNUW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNeg(C->base, HasNUW));
+	return Constant::_wrap(llvm::ConstantExpr::getNeg(C->base, HasNUW));
 }
 Constant ^ConstantExpr::getNeg(Constant ^C, bool HasNUW, bool HasNSW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNeg(C->base, HasNUW, HasNSW));
+	return Constant::_wrap(llvm::ConstantExpr::getNeg(C->base, HasNUW, HasNSW));
 }
 Constant ^ConstantExpr::getFNeg(Constant ^C)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFNeg(C->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFNeg(C->base));
 }
 Constant ^ConstantExpr::getNot(Constant ^C)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNot(C->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNot(C->base));
 }
 Constant ^ConstantExpr::getAdd(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAdd(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getAdd(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getAdd(Constant ^C1, Constant ^C2, bool HasNUW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAdd(C1->base, C2->base, HasNUW));
+	return Constant::_wrap(llvm::ConstantExpr::getAdd(C1->base, C2->base, HasNUW));
 }
 Constant ^ConstantExpr::getAdd(Constant ^C1, Constant ^C2, bool HasNUW, bool HasNSW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAdd(C1->base, C2->base, HasNUW, HasNSW));
+	return Constant::_wrap(llvm::ConstantExpr::getAdd(C1->base, C2->base, HasNUW, HasNSW));
 }
 Constant ^ConstantExpr::getFAdd(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFAdd(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFAdd(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getSub(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSub(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSub(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getSub(Constant ^C1, Constant ^C2, bool HasNUW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSub(C1->base, C2->base, HasNUW));
+	return Constant::_wrap(llvm::ConstantExpr::getSub(C1->base, C2->base, HasNUW));
 }
 Constant ^ConstantExpr::getSub(Constant ^C1, Constant ^C2, bool HasNUW, bool HasNSW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSub(C1->base, C2->base, HasNUW, HasNSW));
+	return Constant::_wrap(llvm::ConstantExpr::getSub(C1->base, C2->base, HasNUW, HasNSW));
 }
 Constant ^ConstantExpr::getFSub(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFSub(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFSub(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getMul(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getMul(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getMul(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getMul(Constant ^C1, Constant ^C2, bool HasNUW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getMul(C1->base, C2->base, HasNUW));
+	return Constant::_wrap(llvm::ConstantExpr::getMul(C1->base, C2->base, HasNUW));
 }
 Constant ^ConstantExpr::getMul(Constant ^C1, Constant ^C2, bool HasNUW, bool HasNSW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getMul(C1->base, C2->base, HasNUW, HasNSW));
+	return Constant::_wrap(llvm::ConstantExpr::getMul(C1->base, C2->base, HasNUW, HasNSW));
 }
 Constant ^ConstantExpr::getFMul(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFMul(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFMul(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getUDiv(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getUDiv(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getUDiv(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getUDiv(Constant ^C1, Constant ^C2, bool isExact)
 {
-	return gcnew Constant(llvm::ConstantExpr::getUDiv(C1->base, C2->base, isExact));
+	return Constant::_wrap(llvm::ConstantExpr::getUDiv(C1->base, C2->base, isExact));
 }
 Constant ^ConstantExpr::getSDiv(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSDiv(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSDiv(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getSDiv(Constant ^C1, Constant ^C2, bool isExact)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSDiv(C1->base, C2->base, isExact));
+	return Constant::_wrap(llvm::ConstantExpr::getSDiv(C1->base, C2->base, isExact));
 }
 Constant ^ConstantExpr::getFDiv(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFDiv(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFDiv(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getURem(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getURem(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getURem(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getSRem(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSRem(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSRem(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getFRem(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFRem(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFRem(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getAnd(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAnd(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getAnd(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getOr(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getOr(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getOr(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getXor(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getXor(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getXor(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getShl(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getShl(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getShl(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getShl(Constant ^C1, Constant ^C2, bool HasNUW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getShl(C1->base, C2->base, HasNUW));
+	return Constant::_wrap(llvm::ConstantExpr::getShl(C1->base, C2->base, HasNUW));
 }
 Constant ^ConstantExpr::getShl(Constant ^C1, Constant ^C2, bool HasNUW, bool HasNSW)
 {
-	return gcnew Constant(llvm::ConstantExpr::getShl(C1->base, C2->base, HasNUW, HasNSW));
+	return Constant::_wrap(llvm::ConstantExpr::getShl(C1->base, C2->base, HasNUW, HasNSW));
 }
 Constant ^ConstantExpr::getLShr(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getLShr(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getLShr(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getLShr(Constant ^C1, Constant ^C2, bool isExact)
 {
-	return gcnew Constant(llvm::ConstantExpr::getLShr(C1->base, C2->base, isExact));
+	return Constant::_wrap(llvm::ConstantExpr::getLShr(C1->base, C2->base, isExact));
 }
 Constant ^ConstantExpr::getAShr(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAShr(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getAShr(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getAShr(Constant ^C1, Constant ^C2, bool isExact)
 {
-	return gcnew Constant(llvm::ConstantExpr::getAShr(C1->base, C2->base, isExact));
+	return Constant::_wrap(llvm::ConstantExpr::getAShr(C1->base, C2->base, isExact));
 }
 Constant ^ConstantExpr::getTrunc(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getTrunc(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getTrunc(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getSExt(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSExt(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSExt(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getZExt(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getZExt(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getZExt(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getFPTrunc(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFPTrunc(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFPTrunc(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getFPExtend(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFPExtend(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFPExtend(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getUIToFP(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getUIToFP(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getUIToFP(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getSIToFP(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSIToFP(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSIToFP(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getFPToUI(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFPToUI(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFPToUI(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getFPToSI(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFPToSI(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFPToSI(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getPtrToInt(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getPtrToInt(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getPtrToInt(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getIntToPtr(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getIntToPtr(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getIntToPtr(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getBitCast(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getBitCast(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getBitCast(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getNSWNeg(Constant ^C)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNSWNeg(C->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNSWNeg(C->base));
 }
 Constant ^ConstantExpr::getNUWNeg(Constant ^C)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNUWNeg(C->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNUWNeg(C->base));
 }
 Constant ^ConstantExpr::getNSWAdd(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNSWAdd(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNSWAdd(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNUWAdd(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNUWAdd(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNUWAdd(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNSWSub(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNSWSub(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNSWSub(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNUWSub(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNUWSub(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNUWSub(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNSWMul(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNSWMul(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNSWMul(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNUWMul(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNUWMul(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNUWMul(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNSWShl(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNSWShl(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNSWShl(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getNUWShl(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getNUWShl(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getNUWShl(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getExactSDiv(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getExactSDiv(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getExactSDiv(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getExactUDiv(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getExactUDiv(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getExactUDiv(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getExactAShr(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getExactAShr(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getExactAShr(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getExactLShr(Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getExactLShr(C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getExactLShr(C1->base, C2->base));
 }
 Constant ^ConstantExpr::getBinOpIdentity(unsigned Opcode, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getBinOpIdentity(Opcode, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getBinOpIdentity(Opcode, Ty->base));
 }
 Constant ^ConstantExpr::getBinOpAbsorber(unsigned Opcode, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getBinOpAbsorber(Opcode, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getBinOpAbsorber(Opcode, Ty->base));
 }
 Constant ^ConstantExpr::getCast(unsigned ops, Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getCast(ops, C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getCast(ops, C->base, Ty->base));
 }
 Constant ^ConstantExpr::getZExtOrBitCast(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getZExtOrBitCast(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getZExtOrBitCast(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getSExtOrBitCast(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSExtOrBitCast(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSExtOrBitCast(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getTruncOrBitCast(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getTruncOrBitCast(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getTruncOrBitCast(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getPointerCast(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getPointerCast(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getPointerCast(C->base, Ty->base));
 }
 Constant ^ConstantExpr::getIntegerCast(Constant ^C, Type ^Ty, bool isSigned)
 {
-	return gcnew Constant(llvm::ConstantExpr::getIntegerCast(C->base, Ty->base, isSigned));
+	return Constant::_wrap(llvm::ConstantExpr::getIntegerCast(C->base, Ty->base, isSigned));
 }
 Constant ^ConstantExpr::getFPCast(Constant ^C, Type ^Ty)
 {
-	return gcnew Constant(llvm::ConstantExpr::getFPCast(C->base, Ty->base));
+	return Constant::_wrap(llvm::ConstantExpr::getFPCast(C->base, Ty->base));
 }
 bool ConstantExpr::isCast()
 {
@@ -1042,27 +1090,15 @@ bool ConstantExpr::isGEPWithNoNotionalOverIndexing()
 }
 Constant ^ConstantExpr::getSelect(Constant ^C, Constant ^V1, Constant ^V2)
 {
-	return gcnew Constant(llvm::ConstantExpr::getSelect(C->base, V1->base, V2->base));
+	return Constant::_wrap(llvm::ConstantExpr::getSelect(C->base, V1->base, V2->base));
 }
 Constant ^ConstantExpr::get(unsigned Opcode, Constant ^C1, Constant ^C2)
 {
-	return gcnew Constant(llvm::ConstantExpr::get(Opcode, C1->base, C2->base));
+	return Constant::_wrap(llvm::ConstantExpr::get(Opcode, C1->base, C2->base));
 }
 Constant ^ConstantExpr::get(unsigned Opcode, Constant ^C1, Constant ^C2, unsigned Flags)
 {
-	return gcnew Constant(llvm::ConstantExpr::get(Opcode, C1->base, C2->base, Flags));
-}
-Constant ^ConstantExpr::getCompare(unsigned short pred, Constant ^C1, Constant ^C2)
-{
-	return gcnew Constant(llvm::ConstantExpr::getCompare(pred, C1->base, C2->base));
-}
-Constant ^ConstantExpr::getICmp(unsigned short pred, Constant ^LHS, Constant ^RHS)
-{
-	return gcnew Constant(llvm::ConstantExpr::getICmp(pred, LHS->base, RHS->base));
-}
-Constant ^ConstantExpr::getFCmp(unsigned short pred, Constant ^LHS, Constant ^RHS)
-{
-	return gcnew Constant(llvm::ConstantExpr::getFCmp(pred, LHS->base, RHS->base));
+	return Constant::_wrap(llvm::ConstantExpr::get(Opcode, C1->base, C2->base, Flags));
 }
 Constant ^ConstantExpr::getGetElementPtr(Constant ^C, array<Constant ^> ^IdxList)
 {
@@ -1070,7 +1106,7 @@ Constant ^ConstantExpr::getGetElementPtr(Constant ^C, array<Constant ^> ^IdxList
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, IdxList->Length);
-	auto r = gcnew Constant(llvm::ConstantExpr::getGetElementPtr(C->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getGetElementPtr(C->base, brr));
 	delete b;
 	return r;
 }
@@ -1080,17 +1116,17 @@ Constant ^ConstantExpr::getGetElementPtr(Constant ^C, array<Constant ^> ^IdxList
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, IdxList->Length);
-	auto r = gcnew Constant(llvm::ConstantExpr::getGetElementPtr(C->base, brr, InBounds));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getGetElementPtr(C->base, brr, InBounds));
 	delete b;
 	return r;
 }
 Constant ^ConstantExpr::getGetElementPtr(Constant ^C, Constant ^Idx)
 {
-	return gcnew Constant(llvm::ConstantExpr::getGetElementPtr(C->base, Idx->base));
+	return Constant::_wrap(llvm::ConstantExpr::getGetElementPtr(C->base, Idx->base));
 }
 Constant ^ConstantExpr::getGetElementPtr(Constant ^C, Constant ^Idx, bool InBounds)
 {
-	return gcnew Constant(llvm::ConstantExpr::getGetElementPtr(C->base, Idx->base, InBounds));
+	return Constant::_wrap(llvm::ConstantExpr::getGetElementPtr(C->base, Idx->base, InBounds));
 }
 Constant ^ConstantExpr::getGetElementPtr(Constant ^C, array<Value ^> ^IdxList)
 {
@@ -1098,7 +1134,7 @@ Constant ^ConstantExpr::getGetElementPtr(Constant ^C, array<Value ^> ^IdxList)
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew Constant(llvm::ConstantExpr::getGetElementPtr(C->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getGetElementPtr(C->base, brr));
 	delete b;
 	return r;
 }
@@ -1108,7 +1144,7 @@ Constant ^ConstantExpr::getGetElementPtr(Constant ^C, array<Value ^> ^IdxList, b
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew Constant(llvm::ConstantExpr::getGetElementPtr(C->base, brr, InBounds));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getGetElementPtr(C->base, brr, InBounds));
 	delete b;
 	return r;
 }
@@ -1118,13 +1154,13 @@ Constant ^ConstantExpr::getInBoundsGetElementPtr(Constant ^C, array<Constant ^> 
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, IdxList->Length);
-	auto r = gcnew Constant(llvm::ConstantExpr::getInBoundsGetElementPtr(C->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getInBoundsGetElementPtr(C->base, brr));
 	delete b;
 	return r;
 }
 Constant ^ConstantExpr::getInBoundsGetElementPtr(Constant ^C, Constant ^Idx)
 {
-	return gcnew Constant(llvm::ConstantExpr::getInBoundsGetElementPtr(C->base, Idx->base));
+	return Constant::_wrap(llvm::ConstantExpr::getInBoundsGetElementPtr(C->base, Idx->base));
 }
 Constant ^ConstantExpr::getInBoundsGetElementPtr(Constant ^C, array<Value ^> ^IdxList)
 {
@@ -1132,30 +1168,30 @@ Constant ^ConstantExpr::getInBoundsGetElementPtr(Constant ^C, array<Value ^> ^Id
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew Constant(llvm::ConstantExpr::getInBoundsGetElementPtr(C->base, brr));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getInBoundsGetElementPtr(C->base, brr));
 	delete b;
 	return r;
 }
 Constant ^ConstantExpr::getExtractElement(Constant ^Vec, Constant ^Idx)
 {
-	return gcnew Constant(llvm::ConstantExpr::getExtractElement(Vec->base, Idx->base));
+	return Constant::_wrap(llvm::ConstantExpr::getExtractElement(Vec->base, Idx->base));
 }
 Constant ^ConstantExpr::getInsertElement(Constant ^Vec, Constant ^Elt, Constant ^Idx)
 {
-	return gcnew Constant(llvm::ConstantExpr::getInsertElement(Vec->base, Elt->base, Idx->base));
+	return Constant::_wrap(llvm::ConstantExpr::getInsertElement(Vec->base, Elt->base, Idx->base));
 }
 Constant ^ConstantExpr::getShuffleVector(Constant ^V1, Constant ^V2, Constant ^Mask)
 {
-	return gcnew Constant(llvm::ConstantExpr::getShuffleVector(V1->base, V2->base, Mask->base));
+	return Constant::_wrap(llvm::ConstantExpr::getShuffleVector(V1->base, V2->base, Mask->base));
 }
 Constant ^ConstantExpr::getExtractValue(Constant ^Agg, array<unsigned> ^Idxs)
 {
-	auto r = gcnew Constant(llvm::ConstantExpr::getExtractValue(Agg->base, utils::unmanage_array(Idxs)));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getExtractValue(Agg->base, utils::unmanage_array(Idxs)));
 	return r;
 }
 Constant ^ConstantExpr::getInsertValue(Constant ^Agg, Constant ^Val, array<unsigned> ^Idxs)
 {
-	auto r = gcnew Constant(llvm::ConstantExpr::getInsertValue(Agg->base, Val->base, utils::unmanage_array(Idxs)));
+	auto r = Constant::_wrap(llvm::ConstantExpr::getInsertValue(Agg->base, Val->base, utils::unmanage_array(Idxs)));
 	return r;
 }
 unsigned ConstantExpr::getOpcode()
@@ -1180,7 +1216,7 @@ System::String ^ConstantExpr::getOpcodeName()
 }
 Constant ^ConstantExpr::getWithOperandReplaced(unsigned OpNo, Constant ^Op)
 {
-	return gcnew Constant(base->getWithOperandReplaced(OpNo, Op->base));
+	return Constant::_wrap(base->getWithOperandReplaced(OpNo, Op->base));
 }
 Constant ^ConstantExpr::getWithOperands(array<Constant ^> ^Ops)
 {
@@ -1188,7 +1224,7 @@ Constant ^ConstantExpr::getWithOperands(array<Constant ^> ^Ops)
 	for (int i = 0; i < Ops->Length; i++)
 		b[i] = Ops[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, Ops->Length);
-	auto r = gcnew Constant(base->getWithOperands(brr));
+	auto r = Constant::_wrap(base->getWithOperands(brr));
 	delete b;
 	return r;
 }
@@ -1198,13 +1234,13 @@ Constant ^ConstantExpr::getWithOperands(array<Constant ^> ^Ops, Type ^Ty)
 	for (int i = 0; i < Ops->Length; i++)
 		b[i] = Ops[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, Ops->Length);
-	auto r = gcnew Constant(base->getWithOperands(brr, Ty->base));
+	auto r = Constant::_wrap(base->getWithOperands(brr, Ty->base));
 	delete b;
 	return r;
 }
 Instruction ^ConstantExpr::getAsInstruction()
 {
-	return gcnew Instruction(base->getAsInstruction());
+	return Instruction::_wrap(base->getAsInstruction());
 }
 void ConstantExpr::destroyConstant()
 {
@@ -1225,6 +1261,10 @@ UndefValue::UndefValue(llvm::UndefValue *base)
 	, Constant(base)
 {
 }
+inline UndefValue ^UndefValue::_wrap(llvm::UndefValue *base)
+{
+	return base ? gcnew UndefValue(base) : nullptr;
+}
 UndefValue::!UndefValue()
 {
 }
@@ -1234,23 +1274,23 @@ UndefValue::~UndefValue()
 }
 UndefValue ^UndefValue::get(Type ^T)
 {
-	return gcnew UndefValue(llvm::UndefValue::get(T->base));
+	return UndefValue::_wrap(llvm::UndefValue::get(T->base));
 }
 UndefValue ^UndefValue::getSequentialElement()
 {
-	return gcnew UndefValue(base->getSequentialElement());
+	return UndefValue::_wrap(base->getSequentialElement());
 }
 UndefValue ^UndefValue::getStructElement(unsigned Elt)
 {
-	return gcnew UndefValue(base->getStructElement(Elt));
+	return UndefValue::_wrap(base->getStructElement(Elt));
 }
 UndefValue ^UndefValue::getElementValue(Constant ^C)
 {
-	return gcnew UndefValue(base->getElementValue(C->base));
+	return UndefValue::_wrap(base->getElementValue(C->base));
 }
 UndefValue ^UndefValue::getElementValue(unsigned Idx)
 {
-	return gcnew UndefValue(base->getElementValue(Idx));
+	return UndefValue::_wrap(base->getElementValue(Idx));
 }
 void UndefValue::destroyConstant()
 {

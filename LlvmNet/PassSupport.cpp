@@ -57,7 +57,7 @@ bool PassInfo::isCFGOnlyPass()
 }
 Pass ^PassInfo::createPass()
 {
-	return gcnew Pass(base->createPass());
+	return Pass::_wrap(base->createPass());
 }
 void PassInfo::addInterfaceImplemented(PassInfo ^ItfPI)
 {

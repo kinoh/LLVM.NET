@@ -11,6 +11,10 @@ Type::Type(llvm::Type *base)
 	: base(base)
 {
 }
+inline Type ^Type::_wrap(llvm::Type *base)
+{
+	return base ? gcnew Type(base) : nullptr;
+}
 Type::!Type()
 {
 }
@@ -28,7 +32,7 @@ void Type::dump()
 }
 LLVMContext ^Type::getContext()
 {
-	return gcnew LLVMContext(&base->getContext());
+	return LLVMContext::_wrap(&base->getContext());
 }
 Type::TypeID Type::getTypeID()
 {
@@ -164,11 +168,11 @@ int Type::getFPMantissaWidth()
 }
 Type ^Type::getScalarType()
 {
-	return gcnew Type(base->getScalarType());
+	return Type::_wrap(base->getScalarType());
 }
 Type ^Type::getContainedType(unsigned i)
 {
-	return gcnew Type(base->getContainedType(i));
+	return Type::_wrap(base->getContainedType(i));
 }
 unsigned Type::getNumContainedTypes()
 {
@@ -180,7 +184,7 @@ unsigned Type::getIntegerBitWidth()
 }
 Type ^Type::getFunctionParamType(unsigned i)
 {
-	return gcnew Type(base->getFunctionParamType(i));
+	return Type::_wrap(base->getFunctionParamType(i));
 }
 unsigned Type::getFunctionNumParams()
 {
@@ -200,11 +204,11 @@ unsigned Type::getStructNumElements()
 }
 Type ^Type::getStructElementType(unsigned N)
 {
-	return gcnew Type(base->getStructElementType(N));
+	return Type::_wrap(base->getStructElementType(N));
 }
 Type ^Type::getSequentialElementType()
 {
-	return gcnew Type(base->getSequentialElementType());
+	return Type::_wrap(base->getSequentialElementType());
 }
 uint64_t Type::getArrayNumElements()
 {
@@ -212,7 +216,7 @@ uint64_t Type::getArrayNumElements()
 }
 Type ^Type::getArrayElementType()
 {
-	return gcnew Type(base->getArrayElementType());
+	return Type::_wrap(base->getArrayElementType());
 }
 unsigned Type::getVectorNumElements()
 {
@@ -220,11 +224,11 @@ unsigned Type::getVectorNumElements()
 }
 Type ^Type::getVectorElementType()
 {
-	return gcnew Type(base->getVectorElementType());
+	return Type::_wrap(base->getVectorElementType());
 }
 Type ^Type::getPointerElementType()
 {
-	return gcnew Type(base->getPointerElementType());
+	return Type::_wrap(base->getPointerElementType());
 }
 unsigned Type::getPointerAddressSpace()
 {
@@ -232,181 +236,181 @@ unsigned Type::getPointerAddressSpace()
 }
 Type ^Type::getPrimitiveType(LLVMContext ^C, TypeID IDNumber)
 {
-	return gcnew Type(llvm::Type::getPrimitiveType(*C->base, safe_cast<llvm::Type::TypeID>(IDNumber)));
+	return Type::_wrap(llvm::Type::getPrimitiveType(*C->base, safe_cast<llvm::Type::TypeID>(IDNumber)));
 }
 Type ^Type::getVoidTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getVoidTy(*C->base));
+	return Type::_wrap(llvm::Type::getVoidTy(*C->base));
 }
 Type ^Type::getLabelTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getLabelTy(*C->base));
+	return Type::_wrap(llvm::Type::getLabelTy(*C->base));
 }
 Type ^Type::getHalfTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getHalfTy(*C->base));
+	return Type::_wrap(llvm::Type::getHalfTy(*C->base));
 }
 Type ^Type::getFloatTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getFloatTy(*C->base));
+	return Type::_wrap(llvm::Type::getFloatTy(*C->base));
 }
 Type ^Type::getDoubleTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getDoubleTy(*C->base));
+	return Type::_wrap(llvm::Type::getDoubleTy(*C->base));
 }
 Type ^Type::getMetadataTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getMetadataTy(*C->base));
+	return Type::_wrap(llvm::Type::getMetadataTy(*C->base));
 }
 Type ^Type::getX86_FP80Ty(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getX86_FP80Ty(*C->base));
+	return Type::_wrap(llvm::Type::getX86_FP80Ty(*C->base));
 }
 Type ^Type::getFP128Ty(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getFP128Ty(*C->base));
+	return Type::_wrap(llvm::Type::getFP128Ty(*C->base));
 }
 Type ^Type::getPPC_FP128Ty(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getPPC_FP128Ty(*C->base));
+	return Type::_wrap(llvm::Type::getPPC_FP128Ty(*C->base));
 }
 Type ^Type::getX86_MMXTy(LLVMContext ^C)
 {
-	return gcnew Type(llvm::Type::getX86_MMXTy(*C->base));
+	return Type::_wrap(llvm::Type::getX86_MMXTy(*C->base));
 }
 IntegerType ^Type::getIntNTy(LLVMContext ^C, unsigned N)
 {
-	return gcnew IntegerType(llvm::Type::getIntNTy(*C->base, N));
+	return IntegerType::_wrap(llvm::Type::getIntNTy(*C->base, N));
 }
 IntegerType ^Type::getInt1Ty(LLVMContext ^C)
 {
-	return gcnew IntegerType(llvm::Type::getInt1Ty(*C->base));
+	return IntegerType::_wrap(llvm::Type::getInt1Ty(*C->base));
 }
 IntegerType ^Type::getInt8Ty(LLVMContext ^C)
 {
-	return gcnew IntegerType(llvm::Type::getInt8Ty(*C->base));
+	return IntegerType::_wrap(llvm::Type::getInt8Ty(*C->base));
 }
 IntegerType ^Type::getInt16Ty(LLVMContext ^C)
 {
-	return gcnew IntegerType(llvm::Type::getInt16Ty(*C->base));
+	return IntegerType::_wrap(llvm::Type::getInt16Ty(*C->base));
 }
 IntegerType ^Type::getInt32Ty(LLVMContext ^C)
 {
-	return gcnew IntegerType(llvm::Type::getInt32Ty(*C->base));
+	return IntegerType::_wrap(llvm::Type::getInt32Ty(*C->base));
 }
 IntegerType ^Type::getInt64Ty(LLVMContext ^C)
 {
-	return gcnew IntegerType(llvm::Type::getInt64Ty(*C->base));
+	return IntegerType::_wrap(llvm::Type::getInt64Ty(*C->base));
 }
 PointerType ^Type::getHalfPtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getHalfPtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getHalfPtrTy(*C->base));
 }
 PointerType ^Type::getHalfPtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getHalfPtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getHalfPtrTy(*C->base, AS));
 }
 PointerType ^Type::getFloatPtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getFloatPtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getFloatPtrTy(*C->base));
 }
 PointerType ^Type::getFloatPtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getFloatPtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getFloatPtrTy(*C->base, AS));
 }
 PointerType ^Type::getDoublePtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getDoublePtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getDoublePtrTy(*C->base));
 }
 PointerType ^Type::getDoublePtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getDoublePtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getDoublePtrTy(*C->base, AS));
 }
 PointerType ^Type::getX86_FP80PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getX86_FP80PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getX86_FP80PtrTy(*C->base));
 }
 PointerType ^Type::getX86_FP80PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getX86_FP80PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getX86_FP80PtrTy(*C->base, AS));
 }
 PointerType ^Type::getFP128PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getFP128PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getFP128PtrTy(*C->base));
 }
 PointerType ^Type::getFP128PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getFP128PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getFP128PtrTy(*C->base, AS));
 }
 PointerType ^Type::getPPC_FP128PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getPPC_FP128PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getPPC_FP128PtrTy(*C->base));
 }
 PointerType ^Type::getPPC_FP128PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getPPC_FP128PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getPPC_FP128PtrTy(*C->base, AS));
 }
 PointerType ^Type::getX86_MMXPtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getX86_MMXPtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getX86_MMXPtrTy(*C->base));
 }
 PointerType ^Type::getX86_MMXPtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getX86_MMXPtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getX86_MMXPtrTy(*C->base, AS));
 }
 PointerType ^Type::getIntNPtrTy(LLVMContext ^C, unsigned N)
 {
-	return gcnew PointerType(llvm::Type::getIntNPtrTy(*C->base, N));
+	return PointerType::_wrap(llvm::Type::getIntNPtrTy(*C->base, N));
 }
 PointerType ^Type::getIntNPtrTy(LLVMContext ^C, unsigned N, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getIntNPtrTy(*C->base, N, AS));
+	return PointerType::_wrap(llvm::Type::getIntNPtrTy(*C->base, N, AS));
 }
 PointerType ^Type::getInt1PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getInt1PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getInt1PtrTy(*C->base));
 }
 PointerType ^Type::getInt1PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getInt1PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getInt1PtrTy(*C->base, AS));
 }
 PointerType ^Type::getInt8PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getInt8PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getInt8PtrTy(*C->base));
 }
 PointerType ^Type::getInt8PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getInt8PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getInt8PtrTy(*C->base, AS));
 }
 PointerType ^Type::getInt16PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getInt16PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getInt16PtrTy(*C->base));
 }
 PointerType ^Type::getInt16PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getInt16PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getInt16PtrTy(*C->base, AS));
 }
 PointerType ^Type::getInt32PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getInt32PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getInt32PtrTy(*C->base));
 }
 PointerType ^Type::getInt32PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getInt32PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getInt32PtrTy(*C->base, AS));
 }
 PointerType ^Type::getInt64PtrTy(LLVMContext ^C)
 {
-	return gcnew PointerType(llvm::Type::getInt64PtrTy(*C->base));
+	return PointerType::_wrap(llvm::Type::getInt64PtrTy(*C->base));
 }
 PointerType ^Type::getInt64PtrTy(LLVMContext ^C, unsigned AS)
 {
-	return gcnew PointerType(llvm::Type::getInt64PtrTy(*C->base, AS));
+	return PointerType::_wrap(llvm::Type::getInt64PtrTy(*C->base, AS));
 }
 PointerType ^Type::getPointerTo()
 {
-	return gcnew PointerType(base->getPointerTo());
+	return PointerType::_wrap(base->getPointerTo());
 }
 PointerType ^Type::getPointerTo(unsigned AddrSpace)
 {
-	return gcnew PointerType(base->getPointerTo(AddrSpace));
+	return PointerType::_wrap(base->getPointerTo(AddrSpace));
 }

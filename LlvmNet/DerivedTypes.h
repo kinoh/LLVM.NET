@@ -15,7 +15,12 @@ public ref class IntegerType
 {
 internal:
 	llvm::IntegerType *base;
+
+protected:
 	IntegerType(llvm::IntegerType *base);
+
+internal:
+	static inline IntegerType ^_wrap(llvm::IntegerType *base);
 
 public:
 	!IntegerType();
@@ -36,7 +41,12 @@ public ref class FunctionType
 {
 internal:
 	llvm::FunctionType *base;
+
+protected:
 	FunctionType(llvm::FunctionType *base);
+
+internal:
+	static inline FunctionType ^_wrap(llvm::FunctionType *base);
 
 public:
 	!FunctionType();
@@ -61,7 +71,12 @@ public ref class CompositeType
 {
 internal:
 	llvm::CompositeType *base;
+
+protected:
 	CompositeType(llvm::CompositeType *base);
+
+internal:
+	static inline CompositeType ^_wrap(llvm::CompositeType *base);
 
 public:
 	!CompositeType();
@@ -79,7 +94,12 @@ public ref class StructType
 {
 internal:
 	llvm::StructType *base;
+
+protected:
 	StructType(llvm::StructType *base);
+
+internal:
+	static inline StructType ^_wrap(llvm::StructType *base);
 
 public:
 	!StructType();
@@ -125,7 +145,12 @@ public ref class SequentialType
 {
 internal:
 	llvm::SequentialType *base;
+
+protected:
 	SequentialType(llvm::SequentialType *base);
+
+internal:
+	static inline SequentialType ^_wrap(llvm::SequentialType *base);
 
 public:
 	!SequentialType();
@@ -140,7 +165,12 @@ public ref class ArrayType
 {
 internal:
 	llvm::ArrayType *base;
+
+protected:
 	ArrayType(llvm::ArrayType *base);
+
+internal:
+	static inline ArrayType ^_wrap(llvm::ArrayType *base);
 
 public:
 	!ArrayType();
@@ -157,7 +187,12 @@ public ref class VectorType
 {
 internal:
 	llvm::VectorType *base;
+
+protected:
 	VectorType(llvm::VectorType *base);
+
+internal:
+	static inline VectorType ^_wrap(llvm::VectorType *base);
 
 public:
 	!VectorType();
@@ -178,7 +213,12 @@ public ref class PointerType
 {
 internal:
 	llvm::PointerType *base;
+
+protected:
 	PointerType(llvm::PointerType *base);
+
+internal:
+	static inline PointerType ^_wrap(llvm::PointerType *base);
 
 public:
 	!PointerType();

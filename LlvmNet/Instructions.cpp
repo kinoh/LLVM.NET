@@ -29,6 +29,10 @@ AllocaInst::AllocaInst(llvm::AllocaInst *base)
 	, constructed(false)
 {
 }
+inline AllocaInst ^AllocaInst::_wrap(llvm::AllocaInst *base)
+{
+	return base ? gcnew AllocaInst(base) : nullptr;
+}
 AllocaInst::!AllocaInst()
 {
 	if (constructed)
@@ -163,15 +167,15 @@ bool AllocaInst::isArrayAllocation()
 }
 Value ^AllocaInst::getArraySize()
 {
-	return gcnew Value(base->getArraySize());
+	return Value::_wrap(base->getArraySize());
 }
 PointerType ^AllocaInst::getType()
 {
-	return gcnew PointerType(base->getType());
+	return PointerType::_wrap(base->getType());
 }
 Type ^AllocaInst::getAllocatedType()
 {
-	return gcnew Type(base->getAllocatedType());
+	return Type::_wrap(base->getAllocatedType());
 }
 unsigned AllocaInst::getAlignment()
 {
@@ -200,6 +204,10 @@ LoadInst::LoadInst(llvm::LoadInst *base)
 	, UnaryInstruction(base)
 	, constructed(false)
 {
+}
+inline LoadInst ^LoadInst::_wrap(llvm::LoadInst *base)
+{
+	return base ? gcnew LoadInst(base) : nullptr;
 }
 LoadInst::!LoadInst()
 {
@@ -415,7 +423,7 @@ bool LoadInst::isUnordered()
 }
 Value ^LoadInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned LoadInst::getPointerOperandIndex()
 {
@@ -440,6 +448,10 @@ StoreInst::StoreInst(llvm::StoreInst *base)
 	, Instruction(base)
 	, constructed(false)
 {
+}
+inline StoreInst ^StoreInst::_wrap(llvm::StoreInst *base)
+{
+	return base ? gcnew StoreInst(base) : nullptr;
 }
 StoreInst::!StoreInst()
 {
@@ -584,11 +596,11 @@ bool StoreInst::isUnordered()
 }
 Value ^StoreInst::getValueOperand()
 {
-	return gcnew Value(base->getValueOperand());
+	return Value::_wrap(base->getValueOperand());
 }
 Value ^StoreInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned StoreInst::getPointerOperandIndex()
 {
@@ -613,6 +625,10 @@ FenceInst::FenceInst(llvm::FenceInst *base)
 	, Instruction(base)
 	, constructed(false)
 {
+}
+inline FenceInst ^FenceInst::_wrap(llvm::FenceInst *base)
+{
+	return base ? gcnew FenceInst(base) : nullptr;
 }
 FenceInst::!FenceInst()
 {
@@ -681,6 +697,10 @@ AtomicCmpXchgInst::AtomicCmpXchgInst(llvm::AtomicCmpXchgInst *base)
 	, constructed(false)
 {
 }
+inline AtomicCmpXchgInst ^AtomicCmpXchgInst::_wrap(llvm::AtomicCmpXchgInst *base)
+{
+	return base ? gcnew AtomicCmpXchgInst(base) : nullptr;
+}
 AtomicCmpXchgInst::!AtomicCmpXchgInst()
 {
 	if (constructed)
@@ -736,7 +756,7 @@ SynchronizationScope AtomicCmpXchgInst::getSynchScope()
 }
 Value ^AtomicCmpXchgInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned AtomicCmpXchgInst::getPointerOperandIndex()
 {
@@ -744,11 +764,11 @@ unsigned AtomicCmpXchgInst::getPointerOperandIndex()
 }
 Value ^AtomicCmpXchgInst::getCompareOperand()
 {
-	return gcnew Value(base->getCompareOperand());
+	return Value::_wrap(base->getCompareOperand());
 }
 Value ^AtomicCmpXchgInst::getNewValOperand()
 {
-	return gcnew Value(base->getNewValOperand());
+	return Value::_wrap(base->getNewValOperand());
 }
 unsigned AtomicCmpXchgInst::getPointerAddressSpace()
 {
@@ -769,6 +789,10 @@ AtomicRMWInst::AtomicRMWInst(llvm::AtomicRMWInst *base)
 	, Instruction(base)
 	, constructed(false)
 {
+}
+inline AtomicRMWInst ^AtomicRMWInst::_wrap(llvm::AtomicRMWInst *base)
+{
+	return base ? gcnew AtomicRMWInst(base) : nullptr;
 }
 AtomicRMWInst::!AtomicRMWInst()
 {
@@ -833,7 +857,7 @@ SynchronizationScope AtomicRMWInst::getSynchScope()
 }
 Value ^AtomicRMWInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned AtomicRMWInst::getPointerOperandIndex()
 {
@@ -841,7 +865,7 @@ unsigned AtomicRMWInst::getPointerOperandIndex()
 }
 Value ^AtomicRMWInst::getValOperand()
 {
-	return gcnew Value(base->getValOperand());
+	return Value::_wrap(base->getValOperand());
 }
 unsigned AtomicRMWInst::getPointerAddressSpace()
 {
@@ -862,6 +886,10 @@ GetElementPtrInst::GetElementPtrInst(llvm::GetElementPtrInst *base)
 	, Instruction(base)
 {
 }
+inline GetElementPtrInst ^GetElementPtrInst::_wrap(llvm::GetElementPtrInst *base)
+{
+	return base ? gcnew GetElementPtrInst(base) : nullptr;
+}
 GetElementPtrInst::!GetElementPtrInst()
 {
 }
@@ -875,7 +903,7 @@ GetElementPtrInst ^GetElementPtrInst::Create(Value ^Ptr, array<Value ^> ^IdxList
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::Create(Ptr->base, brr));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::Create(Ptr->base, brr));
 	delete b;
 	return r;
 }
@@ -886,7 +914,7 @@ GetElementPtrInst ^GetElementPtrInst::Create(Value ^Ptr, array<Value ^> ^IdxList
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::Create(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr)));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::Create(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr)));
 	delete b;
 	return r;
 }
@@ -897,7 +925,7 @@ GetElementPtrInst ^GetElementPtrInst::Create(Value ^Ptr, array<Value ^> ^IdxList
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::Create(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::Create(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 	delete b;
 	return r;
 }
@@ -908,7 +936,7 @@ GetElementPtrInst ^GetElementPtrInst::Create(Value ^Ptr, array<Value ^> ^IdxList
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::Create(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::Create(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 	delete b;
 	return r;
 }
@@ -918,7 +946,7 @@ GetElementPtrInst ^GetElementPtrInst::CreateInBounds(Value ^Ptr, array<Value ^> 
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr));
 	delete b;
 	return r;
 }
@@ -929,7 +957,7 @@ GetElementPtrInst ^GetElementPtrInst::CreateInBounds(Value ^Ptr, array<Value ^> 
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr)));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr)));
 	delete b;
 	return r;
 }
@@ -940,7 +968,7 @@ GetElementPtrInst ^GetElementPtrInst::CreateInBounds(Value ^Ptr, array<Value ^> 
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 	delete b;
 	return r;
 }
@@ -951,13 +979,13 @@ GetElementPtrInst ^GetElementPtrInst::CreateInBounds(Value ^Ptr, array<Value ^> 
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew GetElementPtrInst(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	auto r = GetElementPtrInst::_wrap(llvm::GetElementPtrInst::CreateInBounds(Ptr->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 	delete b;
 	return r;
 }
 SequentialType ^GetElementPtrInst::getType()
 {
-	return gcnew SequentialType(base->getType());
+	return SequentialType::_wrap(base->getType());
 }
 unsigned GetElementPtrInst::getAddressSpace()
 {
@@ -969,7 +997,7 @@ Type ^GetElementPtrInst::getIndexedType(Type ^Ptr, array<Value ^> ^IdxList)
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew Type(llvm::GetElementPtrInst::getIndexedType(Ptr->base, brr));
+	auto r = Type::_wrap(llvm::GetElementPtrInst::getIndexedType(Ptr->base, brr));
 	delete b;
 	return r;
 }
@@ -979,18 +1007,18 @@ Type ^GetElementPtrInst::getIndexedType(Type ^Ptr, array<Constant ^> ^IdxList)
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Constant*> brr(b, IdxList->Length);
-	auto r = gcnew Type(llvm::GetElementPtrInst::getIndexedType(Ptr->base, brr));
+	auto r = Type::_wrap(llvm::GetElementPtrInst::getIndexedType(Ptr->base, brr));
 	delete b;
 	return r;
 }
 Type ^GetElementPtrInst::getIndexedType(Type ^Ptr, array<uint64_t> ^IdxList)
 {
-	auto r = gcnew Type(llvm::GetElementPtrInst::getIndexedType(Ptr->base, utils::unmanage_array(IdxList)));
+	auto r = Type::_wrap(llvm::GetElementPtrInst::getIndexedType(Ptr->base, utils::unmanage_array(IdxList)));
 	return r;
 }
 Value ^GetElementPtrInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned GetElementPtrInst::getPointerOperandIndex()
 {
@@ -998,7 +1026,7 @@ unsigned GetElementPtrInst::getPointerOperandIndex()
 }
 Type ^GetElementPtrInst::getPointerOperandType()
 {
-	return gcnew Type(base->getPointerOperandType());
+	return Type::_wrap(base->getPointerOperandType());
 }
 unsigned GetElementPtrInst::getPointerAddressSpace()
 {
@@ -1010,7 +1038,7 @@ Type ^GetElementPtrInst::getGEPReturnType(Value ^Ptr, array<Value ^> ^IdxList)
 	for (int i = 0; i < IdxList->Length; i++)
 		b[i] = IdxList[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, IdxList->Length);
-	auto r = gcnew Type(llvm::GetElementPtrInst::getGEPReturnType(Ptr->base, brr));
+	auto r = Type::_wrap(llvm::GetElementPtrInst::getGEPReturnType(Ptr->base, brr));
 	delete b;
 	return r;
 }
@@ -1057,6 +1085,10 @@ ICmpInst::ICmpInst(llvm::ICmpInst *base)
 	, CmpInst(base)
 	, constructed(false)
 {
+}
+inline ICmpInst ^ICmpInst::_wrap(llvm::ICmpInst *base)
+{
+	return base ? gcnew ICmpInst(base) : nullptr;
 }
 ICmpInst::!ICmpInst()
 {
@@ -1176,6 +1208,10 @@ FCmpInst::FCmpInst(llvm::FCmpInst *base)
 	, constructed(false)
 {
 }
+inline FCmpInst ^FCmpInst::_wrap(llvm::FCmpInst *base)
+{
+	return base ? gcnew FCmpInst(base) : nullptr;
+}
 FCmpInst::!FCmpInst()
 {
 	if (constructed)
@@ -1269,6 +1305,10 @@ CallInst::CallInst(llvm::CallInst *base)
 	, Instruction(base)
 {
 }
+inline CallInst ^CallInst::_wrap(llvm::CallInst *base)
+{
+	return base ? gcnew CallInst(base) : nullptr;
+}
 CallInst::!CallInst()
 {
 }
@@ -1282,7 +1322,7 @@ CallInst ^CallInst::Create(Value ^Func, array<Value ^> ^Args)
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew CallInst(llvm::CallInst::Create(Func->base, brr));
+	auto r = CallInst::_wrap(llvm::CallInst::Create(Func->base, brr));
 	delete b;
 	return r;
 }
@@ -1293,7 +1333,7 @@ CallInst ^CallInst::Create(Value ^Func, array<Value ^> ^Args, System::String ^Na
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew CallInst(llvm::CallInst::Create(Func->base, brr, ctx.marshal_as<const char *>(NameStr)));
+	auto r = CallInst::_wrap(llvm::CallInst::Create(Func->base, brr, ctx.marshal_as<const char *>(NameStr)));
 	delete b;
 	return r;
 }
@@ -1304,7 +1344,7 @@ CallInst ^CallInst::Create(Value ^Func, array<Value ^> ^Args, System::String ^Na
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew CallInst(llvm::CallInst::Create(Func->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	auto r = CallInst::_wrap(llvm::CallInst::Create(Func->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 	delete b;
 	return r;
 }
@@ -1315,70 +1355,70 @@ CallInst ^CallInst::Create(Value ^Func, array<Value ^> ^Args, System::String ^Na
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew CallInst(llvm::CallInst::Create(Func->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	auto r = CallInst::_wrap(llvm::CallInst::Create(Func->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 	delete b;
 	return r;
 }
 CallInst ^CallInst::Create(Value ^F)
 {
-	return gcnew CallInst(llvm::CallInst::Create(F->base));
+	return CallInst::_wrap(llvm::CallInst::Create(F->base));
 }
 CallInst ^CallInst::Create(Value ^F, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CallInst(llvm::CallInst::Create(F->base, ctx.marshal_as<const char *>(NameStr)));
+	return CallInst::_wrap(llvm::CallInst::Create(F->base, ctx.marshal_as<const char *>(NameStr)));
 }
 CallInst ^CallInst::Create(Value ^F, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CallInst(llvm::CallInst::Create(F->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	return CallInst::_wrap(llvm::CallInst::Create(F->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 }
 CallInst ^CallInst::Create(Value ^F, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CallInst(llvm::CallInst::Create(F->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	return CallInst::_wrap(llvm::CallInst::Create(F->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 }
 Instruction ^CallInst::CreateMalloc(Instruction ^InsertBefore, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize)
 {
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base));
 }
 Instruction ^CallInst::CreateMalloc(Instruction ^InsertBefore, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize)
 {
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base));
 }
 Instruction ^CallInst::CreateMalloc(Instruction ^InsertBefore, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize, Function ^MallocF)
 {
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base));
 }
 Instruction ^CallInst::CreateMalloc(Instruction ^InsertBefore, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize, Function ^MallocF, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base, ctx.marshal_as<const char *>(Name)));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertBefore->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base, ctx.marshal_as<const char *>(Name)));
 }
 Instruction ^CallInst::CreateMalloc(BasicBlock ^InsertAtEnd, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize)
 {
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base));
 }
 Instruction ^CallInst::CreateMalloc(BasicBlock ^InsertAtEnd, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize)
 {
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base));
 }
 Instruction ^CallInst::CreateMalloc(BasicBlock ^InsertAtEnd, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize, Function ^MallocF)
 {
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base));
 }
 Instruction ^CallInst::CreateMalloc(BasicBlock ^InsertAtEnd, Type ^IntPtrTy, Type ^AllocTy, Value ^AllocSize, Value ^ArraySize, Function ^MallocF, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Instruction(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base, ctx.marshal_as<const char *>(Name)));
+	return Instruction::_wrap(llvm::CallInst::CreateMalloc(InsertAtEnd->base, IntPtrTy->base, AllocTy->base, AllocSize->base, ArraySize->base, MallocF->base, ctx.marshal_as<const char *>(Name)));
 }
 Instruction ^CallInst::CreateFree(Value ^Source, Instruction ^InsertBefore)
 {
-	return gcnew Instruction(llvm::CallInst::CreateFree(Source->base, InsertBefore->base));
+	return Instruction::_wrap(llvm::CallInst::CreateFree(Source->base, InsertBefore->base));
 }
 Instruction ^CallInst::CreateFree(Value ^Source, BasicBlock ^InsertAtEnd)
 {
-	return gcnew Instruction(llvm::CallInst::CreateFree(Source->base, InsertAtEnd->base));
+	return Instruction::_wrap(llvm::CallInst::CreateFree(Source->base, InsertAtEnd->base));
 }
 bool CallInst::isTailCall()
 {
@@ -1398,7 +1438,7 @@ unsigned CallInst::getNumArgOperands()
 }
 Value ^CallInst::getArgOperand(unsigned i)
 {
-	return gcnew Value(base->getArgOperand(i));
+	return Value::_wrap(base->getArgOperand(i));
 }
 void CallInst::setArgOperand(unsigned i, Value ^v)
 {
@@ -1502,11 +1542,11 @@ bool CallInst::hasByValArgument()
 }
 Function ^CallInst::getCalledFunction()
 {
-	return gcnew Function(base->getCalledFunction());
+	return Function::_wrap(base->getCalledFunction());
 }
 Value ^CallInst::getCalledValue()
 {
-	return gcnew Value(base->getCalledValue());
+	return Value::_wrap(base->getCalledValue());
 }
 void CallInst::setCalledFunction(Value ^Fn)
 {
@@ -1531,6 +1571,10 @@ SelectInst::SelectInst(llvm::SelectInst *base)
 	, Instruction(base)
 {
 }
+inline SelectInst ^SelectInst::_wrap(llvm::SelectInst *base)
+{
+	return base ? gcnew SelectInst(base) : nullptr;
+}
 SelectInst::!SelectInst()
 {
 }
@@ -1540,34 +1584,34 @@ SelectInst::~SelectInst()
 }
 SelectInst ^SelectInst::Create(Value ^C, Value ^S1, Value ^S2)
 {
-	return gcnew SelectInst(llvm::SelectInst::Create(C->base, S1->base, S2->base));
+	return SelectInst::_wrap(llvm::SelectInst::Create(C->base, S1->base, S2->base));
 }
 SelectInst ^SelectInst::Create(Value ^C, Value ^S1, Value ^S2, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew SelectInst(llvm::SelectInst::Create(C->base, S1->base, S2->base, ctx.marshal_as<const char *>(NameStr)));
+	return SelectInst::_wrap(llvm::SelectInst::Create(C->base, S1->base, S2->base, ctx.marshal_as<const char *>(NameStr)));
 }
 SelectInst ^SelectInst::Create(Value ^C, Value ^S1, Value ^S2, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew SelectInst(llvm::SelectInst::Create(C->base, S1->base, S2->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	return SelectInst::_wrap(llvm::SelectInst::Create(C->base, S1->base, S2->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 }
 SelectInst ^SelectInst::Create(Value ^C, Value ^S1, Value ^S2, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew SelectInst(llvm::SelectInst::Create(C->base, S1->base, S2->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	return SelectInst::_wrap(llvm::SelectInst::Create(C->base, S1->base, S2->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 }
 Value ^SelectInst::getCondition()
 {
-	return gcnew Value(base->getCondition());
+	return Value::_wrap(base->getCondition());
 }
 Value ^SelectInst::getTrueValue()
 {
-	return gcnew Value(base->getTrueValue());
+	return Value::_wrap(base->getTrueValue());
 }
 Value ^SelectInst::getFalseValue()
 {
-	return gcnew Value(base->getFalseValue());
+	return Value::_wrap(base->getFalseValue());
 }
 System::String ^SelectInst::areInvalidOperands(Value ^Cond, Value ^True, Value ^False)
 {
@@ -1592,6 +1636,10 @@ VAArgInst::VAArgInst(llvm::VAArgInst *base)
 	, UnaryInstruction(base)
 	, constructed(false)
 {
+}
+inline VAArgInst ^VAArgInst::_wrap(llvm::VAArgInst *base)
+{
+	return base ? gcnew VAArgInst(base) : nullptr;
 }
 VAArgInst::!VAArgInst()
 {
@@ -1645,7 +1693,7 @@ VAArgInst::VAArgInst(Value ^List, Type ^Ty, System::String ^NameStr, BasicBlock 
 }
 Value ^VAArgInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned VAArgInst::getPointerOperandIndex()
 {
@@ -1666,6 +1714,10 @@ ExtractElementInst::ExtractElementInst(llvm::ExtractElementInst *base)
 	, Instruction(base)
 {
 }
+inline ExtractElementInst ^ExtractElementInst::_wrap(llvm::ExtractElementInst *base)
+{
+	return base ? gcnew ExtractElementInst(base) : nullptr;
+}
 ExtractElementInst::!ExtractElementInst()
 {
 }
@@ -1675,22 +1727,22 @@ ExtractElementInst::~ExtractElementInst()
 }
 ExtractElementInst ^ExtractElementInst::Create(Value ^Vec, Value ^Idx)
 {
-	return gcnew ExtractElementInst(llvm::ExtractElementInst::Create(Vec->base, Idx->base));
+	return ExtractElementInst::_wrap(llvm::ExtractElementInst::Create(Vec->base, Idx->base));
 }
 ExtractElementInst ^ExtractElementInst::Create(Value ^Vec, Value ^Idx, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew ExtractElementInst(llvm::ExtractElementInst::Create(Vec->base, Idx->base, ctx.marshal_as<const char *>(NameStr)));
+	return ExtractElementInst::_wrap(llvm::ExtractElementInst::Create(Vec->base, Idx->base, ctx.marshal_as<const char *>(NameStr)));
 }
 ExtractElementInst ^ExtractElementInst::Create(Value ^Vec, Value ^Idx, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew ExtractElementInst(llvm::ExtractElementInst::Create(Vec->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	return ExtractElementInst::_wrap(llvm::ExtractElementInst::Create(Vec->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 }
 ExtractElementInst ^ExtractElementInst::Create(Value ^Vec, Value ^Idx, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew ExtractElementInst(llvm::ExtractElementInst::Create(Vec->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	return ExtractElementInst::_wrap(llvm::ExtractElementInst::Create(Vec->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 }
 bool ExtractElementInst::isValidOperands(Value ^Vec, Value ^Idx)
 {
@@ -1698,15 +1750,15 @@ bool ExtractElementInst::isValidOperands(Value ^Vec, Value ^Idx)
 }
 Value ^ExtractElementInst::getVectorOperand()
 {
-	return gcnew Value(base->getVectorOperand());
+	return Value::_wrap(base->getVectorOperand());
 }
 Value ^ExtractElementInst::getIndexOperand()
 {
-	return gcnew Value(base->getIndexOperand());
+	return Value::_wrap(base->getIndexOperand());
 }
 VectorType ^ExtractElementInst::getVectorOperandType()
 {
-	return gcnew VectorType(base->getVectorOperandType());
+	return VectorType::_wrap(base->getVectorOperandType());
 }
 inline bool ExtractElementInst::classof(Instruction ^I)
 {
@@ -1723,6 +1775,10 @@ InsertElementInst::InsertElementInst(llvm::InsertElementInst *base)
 	, Instruction(base)
 {
 }
+inline InsertElementInst ^InsertElementInst::_wrap(llvm::InsertElementInst *base)
+{
+	return base ? gcnew InsertElementInst(base) : nullptr;
+}
 InsertElementInst::!InsertElementInst()
 {
 }
@@ -1732,22 +1788,22 @@ InsertElementInst::~InsertElementInst()
 }
 InsertElementInst ^InsertElementInst::Create(Value ^Vec, Value ^NewElt, Value ^Idx)
 {
-	return gcnew InsertElementInst(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base));
+	return InsertElementInst::_wrap(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base));
 }
 InsertElementInst ^InsertElementInst::Create(Value ^Vec, Value ^NewElt, Value ^Idx, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew InsertElementInst(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base, ctx.marshal_as<const char *>(NameStr)));
+	return InsertElementInst::_wrap(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base, ctx.marshal_as<const char *>(NameStr)));
 }
 InsertElementInst ^InsertElementInst::Create(Value ^Vec, Value ^NewElt, Value ^Idx, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew InsertElementInst(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	return InsertElementInst::_wrap(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 }
 InsertElementInst ^InsertElementInst::Create(Value ^Vec, Value ^NewElt, Value ^Idx, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew InsertElementInst(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	return InsertElementInst::_wrap(llvm::InsertElementInst::Create(Vec->base, NewElt->base, Idx->base, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 }
 bool InsertElementInst::isValidOperands(Value ^Vec, Value ^NewElt, Value ^Idx)
 {
@@ -1755,7 +1811,7 @@ bool InsertElementInst::isValidOperands(Value ^Vec, Value ^NewElt, Value ^Idx)
 }
 VectorType ^InsertElementInst::getType()
 {
-	return gcnew VectorType(base->getType());
+	return VectorType::_wrap(base->getType());
 }
 inline bool InsertElementInst::classof(Instruction ^I)
 {
@@ -1772,6 +1828,10 @@ ShuffleVectorInst::ShuffleVectorInst(llvm::ShuffleVectorInst *base)
 	, Instruction(base)
 	, constructed(false)
 {
+}
+inline ShuffleVectorInst ^ShuffleVectorInst::_wrap(llvm::ShuffleVectorInst *base)
+{
+	return base ? gcnew ShuffleVectorInst(base) : nullptr;
 }
 ShuffleVectorInst::!ShuffleVectorInst()
 {
@@ -1829,11 +1889,11 @@ bool ShuffleVectorInst::isValidOperands(Value ^V1, Value ^V2, Value ^Mask)
 }
 VectorType ^ShuffleVectorInst::getType()
 {
-	return gcnew VectorType(base->getType());
+	return VectorType::_wrap(base->getType());
 }
 Constant ^ShuffleVectorInst::getMask()
 {
-	return gcnew Constant(base->getMask());
+	return Constant::_wrap(base->getMask());
 }
 int ShuffleVectorInst::getMaskValue(Constant ^Mask, unsigned i)
 {
@@ -1876,6 +1936,10 @@ ExtractValueInst::ExtractValueInst(llvm::ExtractValueInst *base)
 	, UnaryInstruction(base)
 {
 }
+inline ExtractValueInst ^ExtractValueInst::_wrap(llvm::ExtractValueInst *base)
+{
+	return base ? gcnew ExtractValueInst(base) : nullptr;
+}
 ExtractValueInst::!ExtractValueInst()
 {
 }
@@ -1885,35 +1949,35 @@ ExtractValueInst::~ExtractValueInst()
 }
 ExtractValueInst ^ExtractValueInst::Create(Value ^Agg, array<unsigned> ^Idxs)
 {
-	auto r = gcnew ExtractValueInst(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs)));
+	auto r = ExtractValueInst::_wrap(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs)));
 	return r;
 }
 ExtractValueInst ^ExtractValueInst::Create(Value ^Agg, array<unsigned> ^Idxs, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	auto r = gcnew ExtractValueInst(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr)));
+	auto r = ExtractValueInst::_wrap(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr)));
 	return r;
 }
 ExtractValueInst ^ExtractValueInst::Create(Value ^Agg, array<unsigned> ^Idxs, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	auto r = gcnew ExtractValueInst(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	auto r = ExtractValueInst::_wrap(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 	return r;
 }
 ExtractValueInst ^ExtractValueInst::Create(Value ^Agg, array<unsigned> ^Idxs, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	auto r = gcnew ExtractValueInst(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	auto r = ExtractValueInst::_wrap(llvm::ExtractValueInst::Create(Agg->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 	return r;
 }
 Type ^ExtractValueInst::getIndexedType(Type ^Agg, array<unsigned> ^Idxs)
 {
-	auto r = gcnew Type(llvm::ExtractValueInst::getIndexedType(Agg->base, utils::unmanage_array(Idxs)));
+	auto r = Type::_wrap(llvm::ExtractValueInst::getIndexedType(Agg->base, utils::unmanage_array(Idxs)));
 	return r;
 }
 Value ^ExtractValueInst::getAggregateOperand()
 {
-	return gcnew Value(base->getAggregateOperand());
+	return Value::_wrap(base->getAggregateOperand());
 }
 unsigned ExtractValueInst::getAggregateOperandIndex()
 {
@@ -1950,6 +2014,10 @@ InsertValueInst::InsertValueInst(llvm::InsertValueInst *base)
 	, Instruction(base)
 {
 }
+inline InsertValueInst ^InsertValueInst::_wrap(llvm::InsertValueInst *base)
+{
+	return base ? gcnew InsertValueInst(base) : nullptr;
+}
 InsertValueInst::!InsertValueInst()
 {
 }
@@ -1959,30 +2027,30 @@ InsertValueInst::~InsertValueInst()
 }
 InsertValueInst ^InsertValueInst::Create(Value ^Agg, Value ^Val, array<unsigned> ^Idxs)
 {
-	auto r = gcnew InsertValueInst(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs)));
+	auto r = InsertValueInst::_wrap(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs)));
 	return r;
 }
 InsertValueInst ^InsertValueInst::Create(Value ^Agg, Value ^Val, array<unsigned> ^Idxs, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	auto r = gcnew InsertValueInst(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr)));
+	auto r = InsertValueInst::_wrap(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr)));
 	return r;
 }
 InsertValueInst ^InsertValueInst::Create(Value ^Agg, Value ^Val, array<unsigned> ^Idxs, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	auto r = gcnew InsertValueInst(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	auto r = InsertValueInst::_wrap(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 	return r;
 }
 InsertValueInst ^InsertValueInst::Create(Value ^Agg, Value ^Val, array<unsigned> ^Idxs, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	auto r = gcnew InsertValueInst(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	auto r = InsertValueInst::_wrap(llvm::InsertValueInst::Create(Agg->base, Val->base, utils::unmanage_array(Idxs), ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 	return r;
 }
 Value ^InsertValueInst::getAggregateOperand()
 {
-	return gcnew Value(base->getAggregateOperand());
+	return Value::_wrap(base->getAggregateOperand());
 }
 unsigned InsertValueInst::getAggregateOperandIndex()
 {
@@ -1990,7 +2058,7 @@ unsigned InsertValueInst::getAggregateOperandIndex()
 }
 Value ^InsertValueInst::getInsertedValueOperand()
 {
-	return gcnew Value(base->getInsertedValueOperand());
+	return Value::_wrap(base->getInsertedValueOperand());
 }
 unsigned InsertValueInst::getInsertedValueOperandIndex()
 {
@@ -2027,6 +2095,10 @@ PHINode::PHINode(llvm::PHINode *base)
 	, Instruction(base)
 {
 }
+inline PHINode ^PHINode::_wrap(llvm::PHINode *base)
+{
+	return base ? gcnew PHINode(base) : nullptr;
+}
 PHINode::!PHINode()
 {
 }
@@ -2036,22 +2108,22 @@ PHINode::~PHINode()
 }
 PHINode ^PHINode::Create(Type ^Ty, unsigned NumReservedValues)
 {
-	return gcnew PHINode(llvm::PHINode::Create(Ty->base, NumReservedValues));
+	return PHINode::_wrap(llvm::PHINode::Create(Ty->base, NumReservedValues));
 }
 PHINode ^PHINode::Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew PHINode(llvm::PHINode::Create(Ty->base, NumReservedValues, ctx.marshal_as<const char *>(NameStr)));
+	return PHINode::_wrap(llvm::PHINode::Create(Ty->base, NumReservedValues, ctx.marshal_as<const char *>(NameStr)));
 }
 PHINode ^PHINode::Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew PHINode(llvm::PHINode::Create(Ty->base, NumReservedValues, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	return PHINode::_wrap(llvm::PHINode::Create(Ty->base, NumReservedValues, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 }
 PHINode ^PHINode::Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew PHINode(llvm::PHINode::Create(Ty->base, NumReservedValues, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	return PHINode::_wrap(llvm::PHINode::Create(Ty->base, NumReservedValues, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 }
 unsigned PHINode::getNumIncomingValues()
 {
@@ -2059,7 +2131,7 @@ unsigned PHINode::getNumIncomingValues()
 }
 Value ^PHINode::getIncomingValue(unsigned i)
 {
-	return gcnew Value(base->getIncomingValue(i));
+	return Value::_wrap(base->getIncomingValue(i));
 }
 void PHINode::setIncomingValue(unsigned i, Value ^V)
 {
@@ -2075,11 +2147,11 @@ unsigned PHINode::getIncomingValueNumForOperand(unsigned i)
 }
 BasicBlock ^PHINode::getIncomingBlock(unsigned i)
 {
-	return gcnew BasicBlock(base->getIncomingBlock(i));
+	return BasicBlock::_wrap(base->getIncomingBlock(i));
 }
 BasicBlock ^PHINode::getIncomingBlock(Use ^U)
 {
-	return gcnew BasicBlock(base->getIncomingBlock(*U->base));
+	return BasicBlock::_wrap(base->getIncomingBlock(*U->base));
 }
 void PHINode::setIncomingBlock(unsigned i, BasicBlock ^BB)
 {
@@ -2091,19 +2163,19 @@ void PHINode::addIncoming(Value ^V, BasicBlock ^BB)
 }
 Value ^PHINode::removeIncomingValue(unsigned Idx)
 {
-	return gcnew Value(base->removeIncomingValue(Idx));
+	return Value::_wrap(base->removeIncomingValue(Idx));
 }
 Value ^PHINode::removeIncomingValue(unsigned Idx, bool DeletePHIIfEmpty)
 {
-	return gcnew Value(base->removeIncomingValue(Idx, DeletePHIIfEmpty));
+	return Value::_wrap(base->removeIncomingValue(Idx, DeletePHIIfEmpty));
 }
 Value ^PHINode::removeIncomingValue(BasicBlock ^BB)
 {
-	return gcnew Value(base->removeIncomingValue(BB->base));
+	return Value::_wrap(base->removeIncomingValue(BB->base));
 }
 Value ^PHINode::removeIncomingValue(BasicBlock ^BB, bool DeletePHIIfEmpty)
 {
-	return gcnew Value(base->removeIncomingValue(BB->base, DeletePHIIfEmpty));
+	return Value::_wrap(base->removeIncomingValue(BB->base, DeletePHIIfEmpty));
 }
 int PHINode::getBasicBlockIndex(BasicBlock ^BB)
 {
@@ -2111,11 +2183,11 @@ int PHINode::getBasicBlockIndex(BasicBlock ^BB)
 }
 Value ^PHINode::getIncomingValueForBlock(BasicBlock ^BB)
 {
-	return gcnew Value(base->getIncomingValueForBlock(BB->base));
+	return Value::_wrap(base->getIncomingValueForBlock(BB->base));
 }
 Value ^PHINode::hasConstantValue()
 {
-	return gcnew Value(base->hasConstantValue());
+	return Value::_wrap(base->hasConstantValue());
 }
 inline bool PHINode::classof(Instruction ^I)
 {
@@ -2132,6 +2204,10 @@ LandingPadInst::LandingPadInst(llvm::LandingPadInst *base)
 	, Instruction(base)
 {
 }
+inline LandingPadInst ^LandingPadInst::_wrap(llvm::LandingPadInst *base)
+{
+	return base ? gcnew LandingPadInst(base) : nullptr;
+}
 LandingPadInst::!LandingPadInst()
 {
 }
@@ -2141,26 +2217,26 @@ LandingPadInst::~LandingPadInst()
 }
 LandingPadInst ^LandingPadInst::Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses)
 {
-	return gcnew LandingPadInst(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses));
+	return LandingPadInst::_wrap(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses));
 }
 LandingPadInst ^LandingPadInst::Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses, System::String ^NameStr)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew LandingPadInst(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses, ctx.marshal_as<const char *>(NameStr)));
+	return LandingPadInst::_wrap(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses, ctx.marshal_as<const char *>(NameStr)));
 }
 LandingPadInst ^LandingPadInst::Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses, System::String ^NameStr, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew LandingPadInst(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	return LandingPadInst::_wrap(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 }
 LandingPadInst ^LandingPadInst::Create(Type ^RetTy, Value ^PersonalityFn, unsigned NumReservedClauses, System::String ^NameStr, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew LandingPadInst(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	return LandingPadInst::_wrap(llvm::LandingPadInst::Create(RetTy->base, PersonalityFn->base, NumReservedClauses, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 }
 Value ^LandingPadInst::getPersonalityFn()
 {
-	return gcnew Value(base->getPersonalityFn());
+	return Value::_wrap(base->getPersonalityFn());
 }
 bool LandingPadInst::isCleanup()
 {
@@ -2176,7 +2252,7 @@ void LandingPadInst::addClause(Value ^ClauseVal)
 }
 Value ^LandingPadInst::getClause(unsigned Idx)
 {
-	return gcnew Value(base->getClause(Idx));
+	return Value::_wrap(base->getClause(Idx));
 }
 bool LandingPadInst::isCatch(unsigned Idx)
 {
@@ -2209,6 +2285,10 @@ ReturnInst::ReturnInst(llvm::ReturnInst *base)
 	, TerminatorInst(base)
 {
 }
+inline ReturnInst ^ReturnInst::_wrap(llvm::ReturnInst *base)
+{
+	return base ? gcnew ReturnInst(base) : nullptr;
+}
 ReturnInst::!ReturnInst()
 {
 }
@@ -2218,27 +2298,27 @@ ReturnInst::~ReturnInst()
 }
 ReturnInst ^ReturnInst::Create(LLVMContext ^C)
 {
-	return gcnew ReturnInst(llvm::ReturnInst::Create(*C->base));
+	return ReturnInst::_wrap(llvm::ReturnInst::Create(*C->base));
 }
 ReturnInst ^ReturnInst::Create(LLVMContext ^C, Value ^retVal)
 {
-	return gcnew ReturnInst(llvm::ReturnInst::Create(*C->base, retVal->base));
+	return ReturnInst::_wrap(llvm::ReturnInst::Create(*C->base, retVal->base));
 }
 ReturnInst ^ReturnInst::Create(LLVMContext ^C, Value ^retVal, Instruction ^InsertBefore)
 {
-	return gcnew ReturnInst(llvm::ReturnInst::Create(*C->base, retVal->base, InsertBefore->base));
+	return ReturnInst::_wrap(llvm::ReturnInst::Create(*C->base, retVal->base, InsertBefore->base));
 }
 ReturnInst ^ReturnInst::Create(LLVMContext ^C, Value ^retVal, BasicBlock ^InsertAtEnd)
 {
-	return gcnew ReturnInst(llvm::ReturnInst::Create(*C->base, retVal->base, InsertAtEnd->base));
+	return ReturnInst::_wrap(llvm::ReturnInst::Create(*C->base, retVal->base, InsertAtEnd->base));
 }
 ReturnInst ^ReturnInst::Create(LLVMContext ^C, BasicBlock ^InsertAtEnd)
 {
-	return gcnew ReturnInst(llvm::ReturnInst::Create(*C->base, InsertAtEnd->base));
+	return ReturnInst::_wrap(llvm::ReturnInst::Create(*C->base, InsertAtEnd->base));
 }
 Value ^ReturnInst::getReturnValue()
 {
-	return gcnew Value(base->getReturnValue());
+	return Value::_wrap(base->getReturnValue());
 }
 unsigned ReturnInst::getNumSuccessors()
 {
@@ -2259,6 +2339,10 @@ BranchInst::BranchInst(llvm::BranchInst *base)
 	, TerminatorInst(base)
 {
 }
+inline BranchInst ^BranchInst::_wrap(llvm::BranchInst *base)
+{
+	return base ? gcnew BranchInst(base) : nullptr;
+}
 BranchInst::!BranchInst()
 {
 }
@@ -2268,27 +2352,27 @@ BranchInst::~BranchInst()
 }
 BranchInst ^BranchInst::Create(BasicBlock ^IfTrue)
 {
-	return gcnew BranchInst(llvm::BranchInst::Create(IfTrue->base));
+	return BranchInst::_wrap(llvm::BranchInst::Create(IfTrue->base));
 }
 BranchInst ^BranchInst::Create(BasicBlock ^IfTrue, Instruction ^InsertBefore)
 {
-	return gcnew BranchInst(llvm::BranchInst::Create(IfTrue->base, InsertBefore->base));
+	return BranchInst::_wrap(llvm::BranchInst::Create(IfTrue->base, InsertBefore->base));
 }
 BranchInst ^BranchInst::Create(BasicBlock ^IfTrue, BasicBlock ^IfFalse, Value ^Cond)
 {
-	return gcnew BranchInst(llvm::BranchInst::Create(IfTrue->base, IfFalse->base, Cond->base));
+	return BranchInst::_wrap(llvm::BranchInst::Create(IfTrue->base, IfFalse->base, Cond->base));
 }
 BranchInst ^BranchInst::Create(BasicBlock ^IfTrue, BasicBlock ^IfFalse, Value ^Cond, Instruction ^InsertBefore)
 {
-	return gcnew BranchInst(llvm::BranchInst::Create(IfTrue->base, IfFalse->base, Cond->base, InsertBefore->base));
+	return BranchInst::_wrap(llvm::BranchInst::Create(IfTrue->base, IfFalse->base, Cond->base, InsertBefore->base));
 }
 BranchInst ^BranchInst::Create(BasicBlock ^IfTrue, BasicBlock ^InsertAtEnd)
 {
-	return gcnew BranchInst(llvm::BranchInst::Create(IfTrue->base, InsertAtEnd->base));
+	return BranchInst::_wrap(llvm::BranchInst::Create(IfTrue->base, InsertAtEnd->base));
 }
 BranchInst ^BranchInst::Create(BasicBlock ^IfTrue, BasicBlock ^IfFalse, Value ^Cond, BasicBlock ^InsertAtEnd)
 {
-	return gcnew BranchInst(llvm::BranchInst::Create(IfTrue->base, IfFalse->base, Cond->base, InsertAtEnd->base));
+	return BranchInst::_wrap(llvm::BranchInst::Create(IfTrue->base, IfFalse->base, Cond->base, InsertAtEnd->base));
 }
 bool BranchInst::isUnconditional()
 {
@@ -2300,7 +2384,7 @@ bool BranchInst::isConditional()
 }
 Value ^BranchInst::getCondition()
 {
-	return gcnew Value(base->getCondition());
+	return Value::_wrap(base->getCondition());
 }
 void BranchInst::setCondition(Value ^V)
 {
@@ -2312,7 +2396,7 @@ unsigned BranchInst::getNumSuccessors()
 }
 BasicBlock ^BranchInst::getSuccessor(unsigned i)
 {
-	return gcnew BasicBlock(base->getSuccessor(i));
+	return BasicBlock::_wrap(base->getSuccessor(i));
 }
 void BranchInst::setSuccessor(unsigned idx, BasicBlock ^NewSucc)
 {
@@ -2337,6 +2421,10 @@ SwitchInst::SwitchInst(llvm::SwitchInst *base)
 	, TerminatorInst(base)
 {
 }
+inline SwitchInst ^SwitchInst::_wrap(llvm::SwitchInst *base)
+{
+	return base ? gcnew SwitchInst(base) : nullptr;
+}
 SwitchInst::!SwitchInst()
 {
 }
@@ -2346,19 +2434,19 @@ SwitchInst::~SwitchInst()
 }
 SwitchInst ^SwitchInst::Create(Value ^Value, BasicBlock ^Default, unsigned NumCases)
 {
-	return gcnew SwitchInst(llvm::SwitchInst::Create(Value->base, Default->base, NumCases));
+	return SwitchInst::_wrap(llvm::SwitchInst::Create(Value->base, Default->base, NumCases));
 }
 SwitchInst ^SwitchInst::Create(Value ^Value, BasicBlock ^Default, unsigned NumCases, Instruction ^InsertBefore)
 {
-	return gcnew SwitchInst(llvm::SwitchInst::Create(Value->base, Default->base, NumCases, InsertBefore->base));
+	return SwitchInst::_wrap(llvm::SwitchInst::Create(Value->base, Default->base, NumCases, InsertBefore->base));
 }
 SwitchInst ^SwitchInst::Create(Value ^Value, BasicBlock ^Default, unsigned NumCases, BasicBlock ^InsertAtEnd)
 {
-	return gcnew SwitchInst(llvm::SwitchInst::Create(Value->base, Default->base, NumCases, InsertAtEnd->base));
+	return SwitchInst::_wrap(llvm::SwitchInst::Create(Value->base, Default->base, NumCases, InsertAtEnd->base));
 }
 Value ^SwitchInst::getCondition()
 {
-	return gcnew Value(base->getCondition());
+	return Value::_wrap(base->getCondition());
 }
 void SwitchInst::setCondition(Value ^V)
 {
@@ -2366,7 +2454,7 @@ void SwitchInst::setCondition(Value ^V)
 }
 BasicBlock ^SwitchInst::getDefaultDest()
 {
-	return gcnew BasicBlock(base->getDefaultDest());
+	return BasicBlock::_wrap(base->getDefaultDest());
 }
 void SwitchInst::setDefaultDest(BasicBlock ^DefaultCase)
 {
@@ -2378,7 +2466,7 @@ unsigned SwitchInst::getNumCases()
 }
 ConstantInt ^SwitchInst::findCaseDest(BasicBlock ^BB)
 {
-	return gcnew ConstantInt(base->findCaseDest(BB->base));
+	return ConstantInt::_wrap(base->findCaseDest(BB->base));
 }
 void SwitchInst::addCase(ConstantInt ^OnVal, BasicBlock ^Dest)
 {
@@ -2390,7 +2478,7 @@ unsigned SwitchInst::getNumSuccessors()
 }
 BasicBlock ^SwitchInst::getSuccessor(unsigned idx)
 {
-	return gcnew BasicBlock(base->getSuccessor(idx));
+	return BasicBlock::_wrap(base->getSuccessor(idx));
 }
 void SwitchInst::setSuccessor(unsigned idx, BasicBlock ^NewSucc)
 {
@@ -2415,6 +2503,10 @@ IndirectBrInst::IndirectBrInst(llvm::IndirectBrInst *base)
 	, TerminatorInst(base)
 {
 }
+inline IndirectBrInst ^IndirectBrInst::_wrap(llvm::IndirectBrInst *base)
+{
+	return base ? gcnew IndirectBrInst(base) : nullptr;
+}
 IndirectBrInst::!IndirectBrInst()
 {
 }
@@ -2424,19 +2516,19 @@ IndirectBrInst::~IndirectBrInst()
 }
 IndirectBrInst ^IndirectBrInst::Create(Value ^Address, unsigned NumDests)
 {
-	return gcnew IndirectBrInst(llvm::IndirectBrInst::Create(Address->base, NumDests));
+	return IndirectBrInst::_wrap(llvm::IndirectBrInst::Create(Address->base, NumDests));
 }
 IndirectBrInst ^IndirectBrInst::Create(Value ^Address, unsigned NumDests, Instruction ^InsertBefore)
 {
-	return gcnew IndirectBrInst(llvm::IndirectBrInst::Create(Address->base, NumDests, InsertBefore->base));
+	return IndirectBrInst::_wrap(llvm::IndirectBrInst::Create(Address->base, NumDests, InsertBefore->base));
 }
 IndirectBrInst ^IndirectBrInst::Create(Value ^Address, unsigned NumDests, BasicBlock ^InsertAtEnd)
 {
-	return gcnew IndirectBrInst(llvm::IndirectBrInst::Create(Address->base, NumDests, InsertAtEnd->base));
+	return IndirectBrInst::_wrap(llvm::IndirectBrInst::Create(Address->base, NumDests, InsertAtEnd->base));
 }
 Value ^IndirectBrInst::getAddress()
 {
-	return gcnew Value(base->getAddress());
+	return Value::_wrap(base->getAddress());
 }
 void IndirectBrInst::setAddress(Value ^V)
 {
@@ -2448,7 +2540,7 @@ unsigned IndirectBrInst::getNumDestinations()
 }
 BasicBlock ^IndirectBrInst::getDestination(unsigned i)
 {
-	return gcnew BasicBlock(base->getDestination(i));
+	return BasicBlock::_wrap(base->getDestination(i));
 }
 void IndirectBrInst::addDestination(BasicBlock ^Dest)
 {
@@ -2464,7 +2556,7 @@ unsigned IndirectBrInst::getNumSuccessors()
 }
 BasicBlock ^IndirectBrInst::getSuccessor(unsigned i)
 {
-	return gcnew BasicBlock(base->getSuccessor(i));
+	return BasicBlock::_wrap(base->getSuccessor(i));
 }
 void IndirectBrInst::setSuccessor(unsigned i, BasicBlock ^NewSucc)
 {
@@ -2485,6 +2577,10 @@ InvokeInst::InvokeInst(llvm::InvokeInst *base)
 	, TerminatorInst(base)
 {
 }
+inline InvokeInst ^InvokeInst::_wrap(llvm::InvokeInst *base)
+{
+	return base ? gcnew InvokeInst(base) : nullptr;
+}
 InvokeInst::!InvokeInst()
 {
 }
@@ -2498,7 +2594,7 @@ InvokeInst ^InvokeInst::Create(Value ^Func, BasicBlock ^IfNormal, BasicBlock ^If
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew InvokeInst(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr));
+	auto r = InvokeInst::_wrap(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr));
 	delete b;
 	return r;
 }
@@ -2509,7 +2605,7 @@ InvokeInst ^InvokeInst::Create(Value ^Func, BasicBlock ^IfNormal, BasicBlock ^If
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew InvokeInst(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr, ctx.marshal_as<const char *>(NameStr)));
+	auto r = InvokeInst::_wrap(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr, ctx.marshal_as<const char *>(NameStr)));
 	delete b;
 	return r;
 }
@@ -2520,7 +2616,7 @@ InvokeInst ^InvokeInst::Create(Value ^Func, BasicBlock ^IfNormal, BasicBlock ^If
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew InvokeInst(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
+	auto r = InvokeInst::_wrap(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr, ctx.marshal_as<const char *>(NameStr), InsertBefore->base));
 	delete b;
 	return r;
 }
@@ -2531,7 +2627,7 @@ InvokeInst ^InvokeInst::Create(Value ^Func, BasicBlock ^IfNormal, BasicBlock ^If
 	for (int i = 0; i < Args->Length; i++)
 		b[i] = Args[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Args->Length);
-	auto r = gcnew InvokeInst(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
+	auto r = InvokeInst::_wrap(llvm::InvokeInst::Create(Func->base, IfNormal->base, IfException->base, brr, ctx.marshal_as<const char *>(NameStr), InsertAtEnd->base));
 	delete b;
 	return r;
 }
@@ -2541,7 +2637,7 @@ unsigned InvokeInst::getNumArgOperands()
 }
 Value ^InvokeInst::getArgOperand(unsigned i)
 {
-	return gcnew Value(base->getArgOperand(i));
+	return Value::_wrap(base->getArgOperand(i));
 }
 void InvokeInst::setArgOperand(unsigned i, Value ^v)
 {
@@ -2629,11 +2725,11 @@ bool InvokeInst::hasByValArgument()
 }
 Function ^InvokeInst::getCalledFunction()
 {
-	return gcnew Function(base->getCalledFunction());
+	return Function::_wrap(base->getCalledFunction());
 }
 Value ^InvokeInst::getCalledValue()
 {
-	return gcnew Value(base->getCalledValue());
+	return Value::_wrap(base->getCalledValue());
 }
 void InvokeInst::setCalledFunction(Value ^Fn)
 {
@@ -2641,11 +2737,11 @@ void InvokeInst::setCalledFunction(Value ^Fn)
 }
 BasicBlock ^InvokeInst::getNormalDest()
 {
-	return gcnew BasicBlock(base->getNormalDest());
+	return BasicBlock::_wrap(base->getNormalDest());
 }
 BasicBlock ^InvokeInst::getUnwindDest()
 {
-	return gcnew BasicBlock(base->getUnwindDest());
+	return BasicBlock::_wrap(base->getUnwindDest());
 }
 void InvokeInst::setNormalDest(BasicBlock ^B)
 {
@@ -2657,11 +2753,11 @@ void InvokeInst::setUnwindDest(BasicBlock ^B)
 }
 LandingPadInst ^InvokeInst::getLandingPadInst()
 {
-	return gcnew LandingPadInst(base->getLandingPadInst());
+	return LandingPadInst::_wrap(base->getLandingPadInst());
 }
 BasicBlock ^InvokeInst::getSuccessor(unsigned i)
 {
-	return gcnew BasicBlock(base->getSuccessor(i));
+	return BasicBlock::_wrap(base->getSuccessor(i));
 }
 void InvokeInst::setSuccessor(unsigned idx, BasicBlock ^NewSucc)
 {
@@ -2686,6 +2782,10 @@ ResumeInst::ResumeInst(llvm::ResumeInst *base)
 	, TerminatorInst(base)
 {
 }
+inline ResumeInst ^ResumeInst::_wrap(llvm::ResumeInst *base)
+{
+	return base ? gcnew ResumeInst(base) : nullptr;
+}
 ResumeInst::!ResumeInst()
 {
 }
@@ -2695,19 +2795,19 @@ ResumeInst::~ResumeInst()
 }
 ResumeInst ^ResumeInst::Create(Value ^Exn)
 {
-	return gcnew ResumeInst(llvm::ResumeInst::Create(Exn->base));
+	return ResumeInst::_wrap(llvm::ResumeInst::Create(Exn->base));
 }
 ResumeInst ^ResumeInst::Create(Value ^Exn, Instruction ^InsertBefore)
 {
-	return gcnew ResumeInst(llvm::ResumeInst::Create(Exn->base, InsertBefore->base));
+	return ResumeInst::_wrap(llvm::ResumeInst::Create(Exn->base, InsertBefore->base));
 }
 ResumeInst ^ResumeInst::Create(Value ^Exn, BasicBlock ^InsertAtEnd)
 {
-	return gcnew ResumeInst(llvm::ResumeInst::Create(Exn->base, InsertAtEnd->base));
+	return ResumeInst::_wrap(llvm::ResumeInst::Create(Exn->base, InsertAtEnd->base));
 }
 Value ^ResumeInst::getValue()
 {
-	return gcnew Value(base->getValue());
+	return Value::_wrap(base->getValue());
 }
 unsigned ResumeInst::getNumSuccessors()
 {
@@ -2728,6 +2828,10 @@ UnreachableInst::UnreachableInst(llvm::UnreachableInst *base)
 	, TerminatorInst(base)
 	, constructed(false)
 {
+}
+inline UnreachableInst ^UnreachableInst::_wrap(llvm::UnreachableInst *base)
+{
+	return base ? gcnew UnreachableInst(base) : nullptr;
 }
 UnreachableInst::!UnreachableInst()
 {
@@ -2777,6 +2881,10 @@ TruncInst::TruncInst(llvm::TruncInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline TruncInst ^TruncInst::_wrap(llvm::TruncInst *base)
+{
+	return base ? gcnew TruncInst(base) : nullptr;
 }
 TruncInst::!TruncInst()
 {
@@ -2844,6 +2952,10 @@ ZExtInst::ZExtInst(llvm::ZExtInst *base)
 	, constructed(false)
 {
 }
+inline ZExtInst ^ZExtInst::_wrap(llvm::ZExtInst *base)
+{
+	return base ? gcnew ZExtInst(base) : nullptr;
+}
 ZExtInst::!ZExtInst()
 {
 	if (constructed)
@@ -2909,6 +3021,10 @@ SExtInst::SExtInst(llvm::SExtInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline SExtInst ^SExtInst::_wrap(llvm::SExtInst *base)
+{
+	return base ? gcnew SExtInst(base) : nullptr;
 }
 SExtInst::!SExtInst()
 {
@@ -2976,6 +3092,10 @@ FPTruncInst::FPTruncInst(llvm::FPTruncInst *base)
 	, constructed(false)
 {
 }
+inline FPTruncInst ^FPTruncInst::_wrap(llvm::FPTruncInst *base)
+{
+	return base ? gcnew FPTruncInst(base) : nullptr;
+}
 FPTruncInst::!FPTruncInst()
 {
 	if (constructed)
@@ -3041,6 +3161,10 @@ FPExtInst::FPExtInst(llvm::FPExtInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline FPExtInst ^FPExtInst::_wrap(llvm::FPExtInst *base)
+{
+	return base ? gcnew FPExtInst(base) : nullptr;
 }
 FPExtInst::!FPExtInst()
 {
@@ -3108,6 +3232,10 @@ UIToFPInst::UIToFPInst(llvm::UIToFPInst *base)
 	, constructed(false)
 {
 }
+inline UIToFPInst ^UIToFPInst::_wrap(llvm::UIToFPInst *base)
+{
+	return base ? gcnew UIToFPInst(base) : nullptr;
+}
 UIToFPInst::!UIToFPInst()
 {
 	if (constructed)
@@ -3173,6 +3301,10 @@ SIToFPInst::SIToFPInst(llvm::SIToFPInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline SIToFPInst ^SIToFPInst::_wrap(llvm::SIToFPInst *base)
+{
+	return base ? gcnew SIToFPInst(base) : nullptr;
 }
 SIToFPInst::!SIToFPInst()
 {
@@ -3240,6 +3372,10 @@ FPToUIInst::FPToUIInst(llvm::FPToUIInst *base)
 	, constructed(false)
 {
 }
+inline FPToUIInst ^FPToUIInst::_wrap(llvm::FPToUIInst *base)
+{
+	return base ? gcnew FPToUIInst(base) : nullptr;
+}
 FPToUIInst::!FPToUIInst()
 {
 	if (constructed)
@@ -3305,6 +3441,10 @@ FPToSIInst::FPToSIInst(llvm::FPToSIInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline FPToSIInst ^FPToSIInst::_wrap(llvm::FPToSIInst *base)
+{
+	return base ? gcnew FPToSIInst(base) : nullptr;
 }
 FPToSIInst::!FPToSIInst()
 {
@@ -3372,6 +3512,10 @@ IntToPtrInst::IntToPtrInst(llvm::IntToPtrInst *base)
 	, constructed(false)
 {
 }
+inline IntToPtrInst ^IntToPtrInst::_wrap(llvm::IntToPtrInst *base)
+{
+	return base ? gcnew IntToPtrInst(base) : nullptr;
+}
 IntToPtrInst::!IntToPtrInst()
 {
 	if (constructed)
@@ -3424,7 +3568,7 @@ IntToPtrInst::IntToPtrInst(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlo
 }
 IntToPtrInst ^IntToPtrInst::clone_impl()
 {
-	return gcnew IntToPtrInst(base->clone_impl());
+	return IntToPtrInst::_wrap(base->clone_impl());
 }
 unsigned IntToPtrInst::getAddressSpace()
 {
@@ -3445,6 +3589,10 @@ PtrToIntInst::PtrToIntInst(llvm::PtrToIntInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline PtrToIntInst ^PtrToIntInst::_wrap(llvm::PtrToIntInst *base)
+{
+	return base ? gcnew PtrToIntInst(base) : nullptr;
 }
 PtrToIntInst::!PtrToIntInst()
 {
@@ -3498,7 +3646,7 @@ PtrToIntInst::PtrToIntInst(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlo
 }
 Value ^PtrToIntInst::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned PtrToIntInst::getPointerOperandIndex()
 {
@@ -3523,6 +3671,10 @@ BitCastInst::BitCastInst(llvm::BitCastInst *base)
 	, CastInst(base)
 	, constructed(false)
 {
+}
+inline BitCastInst ^BitCastInst::_wrap(llvm::BitCastInst *base)
+{
+	return base ? gcnew BitCastInst(base) : nullptr;
 }
 BitCastInst::!BitCastInst()
 {

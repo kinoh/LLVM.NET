@@ -10,6 +10,10 @@ Constant::Constant(llvm::Constant *base)
 	, User(base)
 {
 }
+inline Constant ^Constant::_wrap(llvm::Constant *base)
+{
+	return base ? gcnew Constant(base) : nullptr;
+}
 Constant::!Constant()
 {
 }
@@ -51,15 +55,15 @@ Constant::PossibleRelocationsTy Constant::getRelocationInfo()
 }
 Constant ^Constant::getAggregateElement(unsigned Elt)
 {
-	return gcnew Constant(base->getAggregateElement(Elt));
+	return Constant::_wrap(base->getAggregateElement(Elt));
 }
 Constant ^Constant::getAggregateElement(Constant ^Elt)
 {
-	return gcnew Constant(base->getAggregateElement(Elt->base));
+	return Constant::_wrap(base->getAggregateElement(Elt->base));
 }
 Constant ^Constant::getSplatValue()
 {
-	return gcnew Constant(base->getSplatValue());
+	return Constant::_wrap(base->getSplatValue());
 }
 void Constant::destroyConstant()
 {
@@ -75,11 +79,11 @@ void Constant::replaceUsesOfWithOnConstant(Value ^From, Value ^To, Use ^use)
 }
 Constant ^Constant::getNullValue(Type ^Ty)
 {
-	return gcnew Constant(llvm::Constant::getNullValue(Ty->base));
+	return Constant::_wrap(llvm::Constant::getNullValue(Ty->base));
 }
 Constant ^Constant::getAllOnesValue(Type ^Ty)
 {
-	return gcnew Constant(llvm::Constant::getAllOnesValue(Ty->base));
+	return Constant::_wrap(llvm::Constant::getAllOnesValue(Ty->base));
 }
 void Constant::removeDeadConstantUsers()
 {

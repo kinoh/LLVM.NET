@@ -16,7 +16,12 @@ public ref class Operator
 {
 internal:
 	llvm::Operator *base;
+
+protected:
 	Operator(llvm::Operator *base);
+
+internal:
+	static inline Operator ^_wrap(llvm::Operator *base);
 
 public:
 	!Operator();
@@ -34,7 +39,12 @@ public ref class OverflowingBinaryOperator
 {
 internal:
 	llvm::OverflowingBinaryOperator *base;
+
+protected:
 	OverflowingBinaryOperator(llvm::OverflowingBinaryOperator *base);
+
+internal:
+	static inline OverflowingBinaryOperator ^_wrap(llvm::OverflowingBinaryOperator *base);
 
 public:
 	!OverflowingBinaryOperator();
@@ -53,7 +63,12 @@ public ref class PossiblyExactOperator
 {
 internal:
 	llvm::PossiblyExactOperator *base;
+
+protected:
 	PossiblyExactOperator(llvm::PossiblyExactOperator *base);
+
+internal:
+	static inline PossiblyExactOperator ^_wrap(llvm::PossiblyExactOperator *base);
 
 public:
 	!PossiblyExactOperator();
@@ -71,9 +86,15 @@ public ref class FastMathFlags
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::FastMathFlags *base;
+
+protected:
 	FastMathFlags(llvm::FastMathFlags *base);
+
+internal:
+	static inline FastMathFlags ^_wrap(llvm::FastMathFlags *base);
 
 public:
 	!FastMathFlags();
@@ -100,7 +121,12 @@ public ref class FPMathOperator
 {
 internal:
 	llvm::FPMathOperator *base;
+
+protected:
 	FPMathOperator(llvm::FPMathOperator *base);
+
+internal:
+	static inline FPMathOperator ^_wrap(llvm::FPMathOperator *base);
 
 public:
 	!FPMathOperator();
@@ -121,7 +147,12 @@ public ref class AddOperator
 {
 internal:
 	llvm::AddOperator *base;
+
+protected:
 	AddOperator(llvm::AddOperator *base);
+
+internal:
+	static inline AddOperator ^_wrap(llvm::AddOperator *base);
 
 public:
 	!AddOperator();
@@ -133,7 +164,12 @@ public ref class SubOperator
 {
 internal:
 	llvm::SubOperator *base;
+
+protected:
 	SubOperator(llvm::SubOperator *base);
+
+internal:
+	static inline SubOperator ^_wrap(llvm::SubOperator *base);
 
 public:
 	!SubOperator();
@@ -145,7 +181,12 @@ public ref class MulOperator
 {
 internal:
 	llvm::MulOperator *base;
+
+protected:
 	MulOperator(llvm::MulOperator *base);
+
+internal:
+	static inline MulOperator ^_wrap(llvm::MulOperator *base);
 
 public:
 	!MulOperator();
@@ -157,7 +198,12 @@ public ref class ShlOperator
 {
 internal:
 	llvm::ShlOperator *base;
+
+protected:
 	ShlOperator(llvm::ShlOperator *base);
+
+internal:
+	static inline ShlOperator ^_wrap(llvm::ShlOperator *base);
 
 public:
 	!ShlOperator();
@@ -169,7 +215,12 @@ public ref class SDivOperator
 {
 internal:
 	llvm::SDivOperator *base;
+
+protected:
 	SDivOperator(llvm::SDivOperator *base);
+
+internal:
+	static inline SDivOperator ^_wrap(llvm::SDivOperator *base);
 
 public:
 	!SDivOperator();
@@ -181,7 +232,12 @@ public ref class UDivOperator
 {
 internal:
 	llvm::UDivOperator *base;
+
+protected:
 	UDivOperator(llvm::UDivOperator *base);
+
+internal:
+	static inline UDivOperator ^_wrap(llvm::UDivOperator *base);
 
 public:
 	!UDivOperator();
@@ -193,7 +249,12 @@ public ref class AShrOperator
 {
 internal:
 	llvm::AShrOperator *base;
+
+protected:
 	AShrOperator(llvm::AShrOperator *base);
+
+internal:
+	static inline AShrOperator ^_wrap(llvm::AShrOperator *base);
 
 public:
 	!AShrOperator();
@@ -205,7 +266,12 @@ public ref class LShrOperator
 {
 internal:
 	llvm::LShrOperator *base;
+
+protected:
 	LShrOperator(llvm::LShrOperator *base);
+
+internal:
+	static inline LShrOperator ^_wrap(llvm::LShrOperator *base);
 
 public:
 	!LShrOperator();
@@ -217,7 +283,12 @@ public ref class GEPOperator
 {
 internal:
 	llvm::GEPOperator *base;
+
+protected:
 	GEPOperator(llvm::GEPOperator *base);
+
+internal:
+	static inline GEPOperator ^_wrap(llvm::GEPOperator *base);
 
 public:
 	!GEPOperator();

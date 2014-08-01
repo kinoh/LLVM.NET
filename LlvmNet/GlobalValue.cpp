@@ -12,6 +12,10 @@ GlobalValue::GlobalValue(llvm::GlobalValue *base)
 	, Constant(base)
 {
 }
+inline GlobalValue ^GlobalValue::_wrap(llvm::GlobalValue *base)
+{
+	return base ? gcnew GlobalValue(base) : nullptr;
+}
 GlobalValue::!GlobalValue()
 {
 }
@@ -66,7 +70,7 @@ void GlobalValue::setSection(System::String ^S)
 }
 inline PointerType ^GlobalValue::getType()
 {
-	return gcnew PointerType(base->getType());
+	return PointerType::_wrap(base->getType());
 }
 GlobalValue::LinkageTypes GlobalValue::getLinkOnceLinkage(bool ODR)
 {
@@ -266,7 +270,7 @@ void GlobalValue::eraseFromParent()
 }
 inline Module ^GlobalValue::getParent()
 {
-	return gcnew Module(base->getParent());
+	return Module::_wrap(base->getParent());
 }
 inline bool GlobalValue::classof(Value ^V)
 {

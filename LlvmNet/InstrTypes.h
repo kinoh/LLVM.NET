@@ -16,7 +16,12 @@ public ref class TerminatorInst
 {
 internal:
 	llvm::TerminatorInst *base;
+
+protected:
 	TerminatorInst(llvm::TerminatorInst *base);
+
+internal:
+	static inline TerminatorInst ^_wrap(llvm::TerminatorInst *base);
 
 public:
 	!TerminatorInst();
@@ -34,7 +39,12 @@ public ref class UnaryInstruction
 {
 internal:
 	llvm::UnaryInstruction *base;
+
+protected:
 	UnaryInstruction(llvm::UnaryInstruction *base);
+
+internal:
+	static inline UnaryInstruction ^_wrap(llvm::UnaryInstruction *base);
 
 public:
 	!UnaryInstruction();
@@ -51,7 +61,12 @@ public ref class BinaryOperator
 {
 internal:
 	llvm::BinaryOperator *base;
+
+protected:
 	BinaryOperator(llvm::BinaryOperator *base);
+
+internal:
+	static inline BinaryOperator ^_wrap(llvm::BinaryOperator *base);
 
 public:
 	!BinaryOperator();
@@ -157,7 +172,12 @@ public ref class CastInst
 {
 internal:
 	llvm::CastInst *base;
+
+protected:
 	CastInst(llvm::CastInst *base);
+
+internal:
+	static inline CastInst ^_wrap(llvm::CastInst *base);
 
 public:
 	!CastInst();
@@ -248,16 +268,19 @@ public:
 
 internal:
 	llvm::CmpInst *base;
+
+protected:
 	CmpInst(llvm::CmpInst *base);
+
+internal:
+	static inline CmpInst ^_wrap(llvm::CmpInst *base);
 
 public:
 	!CmpInst();
 	virtual ~CmpInst();
 	// void *operator new(size_t s);
-	static CmpInst ^Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2);
-	static CmpInst ^Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2, System::String ^Name);
-	static CmpInst ^Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2, System::String ^Name, Instruction ^InsertBefore);
-	static CmpInst ^Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2, System::String ^Name, BasicBlock ^InsertAtEnd);
+	// static CmpInst *Create(OtherOps Op, unsigned short predicate, Value *S1, Value *S2, const Twine &Name = "", Instruction *InsertBefore = 0);
+	// static CmpInst *Create(OtherOps Op, unsigned short predicate, Value *S1, Value *S2, const Twine &Name, BasicBlock *InsertAtEnd);
 	Instruction::OtherOps getOpcode();
 	CmpInst::Predicate getPredicate();
 	void setPredicate(Predicate P);
@@ -277,12 +300,12 @@ public:
 	bool isUnsigned();
 	bool isTrueWhenEqual();
 	bool isFalseWhenEqual();
-	static bool isUnsigned(unsigned short predicate);
-	static bool isSigned(unsigned short predicate);
-	static bool isOrdered(unsigned short predicate);
-	static bool isUnordered(unsigned short predicate);
-	static bool isTrueWhenEqual(unsigned short predicate);
-	static bool isFalseWhenEqual(unsigned short predicate);
+	// static bool isUnsigned(unsigned short predicate);
+	// static bool isSigned(unsigned short predicate);
+	// static bool isOrdered(unsigned short predicate);
+	// static bool isUnordered(unsigned short predicate);
+	// static bool isTrueWhenEqual(unsigned short predicate);
+	// static bool isFalseWhenEqual(unsigned short predicate);
 	static inline bool classof(Instruction ^I);
 	static inline bool classof(Value ^V);
 	static Type ^makeCmpResultType(Type ^opnd_type);

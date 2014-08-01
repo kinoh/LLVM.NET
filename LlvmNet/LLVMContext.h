@@ -11,9 +11,15 @@ public ref class LLVMContext
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::LLVMContext *base;
+
+protected:
 	LLVMContext(llvm::LLVMContext *base);
+
+internal:
+	static inline LLVMContext ^_wrap(llvm::LLVMContext *base);
 
 public:
 	!LLVMContext();
@@ -23,7 +29,7 @@ public:
 	// enum;
 	unsigned getMDKindID(System::String ^Name);
 	array<System::String ^> ^getMDKindNamesArray();
-	// typedef void(*InlineAsmDiagHandlerTy)(const SMDiagnostic&, void *Context, unsigned LocCookie);
+	// typedef void(*InlineAsmDiagHandlerTy)(const SMDiagnostic &, void *Context, unsigned LocCookie);
 	// void setInlineAsmDiagnosticHandler(InlineAsmDiagHandlerTy DiagHandler, void *DiagContext = 0);
 	// InlineAsmDiagHandlerTy getInlineAsmDiagnosticHandler();
 	void *getInlineAsmDiagnosticContext();

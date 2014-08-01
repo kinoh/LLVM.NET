@@ -18,6 +18,10 @@ Value::Value(llvm::Value *base)
 	: base(base)
 {
 }
+inline Value ^Value::_wrap(llvm::Value *base)
+{
+	return base ? gcnew Value(base) : nullptr;
+}
 Value::!Value()
 {
 }
@@ -39,11 +43,11 @@ void Value::print(raw_ostream ^O, AssemblyAnnotationWriter ^AAW)
 }
 Type ^Value::getType()
 {
-	return gcnew Type(base->getType());
+	return Type::_wrap(base->getType());
 }
 LLVMContext ^Value::getContext()
 {
-	return gcnew LLVMContext(&base->getContext());
+	return LLVMContext::_wrap(&base->getContext());
 }
 bool Value::hasName()
 {
@@ -52,7 +56,7 @@ bool Value::hasName()
 ValueName ^Value::getValueName()
 {
 	auto a = base->getValueName();
-	return gcnew ValueName(utils::manage_str(a->getKey()), gcnew Value(a->getValue()));
+	return gcnew ValueName(utils::manage_str(a->getKey()), Value::_wrap(a->getValue()));
 }
 void Value::setValueName(ValueName ^VN)
 {
@@ -86,7 +90,7 @@ bool Value::use_empty()
 }
 User ^Value::use_back()
 {
-	return gcnew User(base->use_back());
+	return User::_wrap(base->use_back());
 }
 bool Value::hasOneUse()
 {
@@ -138,19 +142,19 @@ bool Value::hasValueHandle()
 }
 Value ^Value::stripPointerCasts()
 {
-	return gcnew Value(base->stripPointerCasts());
+	return Value::_wrap(base->stripPointerCasts());
 }
 Value ^Value::stripPointerCastsNoFollowAliases()
 {
-	return gcnew Value(base->stripPointerCastsNoFollowAliases());
+	return Value::_wrap(base->stripPointerCastsNoFollowAliases());
 }
 Value ^Value::stripInBoundsConstantOffsets()
 {
-	return gcnew Value(base->stripInBoundsConstantOffsets());
+	return Value::_wrap(base->stripInBoundsConstantOffsets());
 }
 Value ^Value::stripInBoundsOffsets()
 {
-	return gcnew Value(base->stripInBoundsOffsets());
+	return Value::_wrap(base->stripInBoundsOffsets());
 }
 bool Value::isDereferenceablePointer()
 {
@@ -158,7 +162,7 @@ bool Value::isDereferenceablePointer()
 }
 Value ^Value::DoPHITranslation(BasicBlock ^CurBB, BasicBlock ^PredBB)
 {
-	return gcnew Value(base->DoPHITranslation(CurBB->base, PredBB->base));
+	return Value::_wrap(base->DoPHITranslation(CurBB->base, PredBB->base));
 }
 void Value::mutateType(Type ^Ty)
 {

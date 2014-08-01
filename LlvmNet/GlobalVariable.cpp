@@ -16,6 +16,10 @@ GlobalVariable::GlobalVariable(llvm::GlobalVariable *base)
 	, constructed(false)
 {
 }
+inline GlobalVariable ^GlobalVariable::_wrap(llvm::GlobalVariable *base)
+{
+	return base ? gcnew GlobalVariable(base) : nullptr;
+}
 GlobalVariable::!GlobalVariable()
 {
 	if (constructed)
@@ -158,7 +162,7 @@ inline bool GlobalVariable::hasUniqueInitializer()
 }
 inline Constant ^GlobalVariable::getInitializer()
 {
-	return gcnew Constant(base->getInitializer());
+	return Constant::_wrap(base->getInitializer());
 }
 void GlobalVariable::setInitializer(Constant ^InitVal)
 {

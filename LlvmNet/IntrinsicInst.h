@@ -19,7 +19,12 @@ public ref class IntrinsicInst
 {
 internal:
 	llvm::IntrinsicInst *base;
+
+protected:
 	IntrinsicInst(llvm::IntrinsicInst *base);
+
+internal:
+	static inline IntrinsicInst ^_wrap(llvm::IntrinsicInst *base);
 
 public:
 	!IntrinsicInst();
@@ -35,7 +40,12 @@ public ref class DbgInfoIntrinsic
 {
 internal:
 	llvm::DbgInfoIntrinsic *base;
+
+protected:
 	DbgInfoIntrinsic(llvm::DbgInfoIntrinsic *base);
+
+internal:
+	static inline DbgInfoIntrinsic ^_wrap(llvm::DbgInfoIntrinsic *base);
 
 public:
 	!DbgInfoIntrinsic();
@@ -51,7 +61,12 @@ public ref class DbgDeclareInst
 {
 internal:
 	llvm::DbgDeclareInst *base;
+
+protected:
 	DbgDeclareInst(llvm::DbgDeclareInst *base);
+
+internal:
+	static inline DbgDeclareInst ^_wrap(llvm::DbgDeclareInst *base);
 
 public:
 	!DbgDeclareInst();
@@ -68,7 +83,12 @@ public ref class DbgValueInst
 {
 internal:
 	llvm::DbgValueInst *base;
+
+protected:
 	DbgValueInst(llvm::DbgValueInst *base);
+
+internal:
+	static inline DbgValueInst ^_wrap(llvm::DbgValueInst *base);
 
 public:
 	!DbgValueInst();
@@ -87,7 +107,12 @@ public ref class MemIntrinsic
 {
 internal:
 	llvm::MemIntrinsic *base;
+
+protected:
 	MemIntrinsic(llvm::MemIntrinsic *base);
+
+internal:
+	static inline MemIntrinsic ^_wrap(llvm::MemIntrinsic *base);
 
 public:
 	!MemIntrinsic();
@@ -115,7 +140,12 @@ public ref class MemSetInst
 {
 internal:
 	llvm::MemSetInst *base;
+
+protected:
 	MemSetInst(llvm::MemSetInst *base);
+
+internal:
+	static inline MemSetInst ^_wrap(llvm::MemSetInst *base);
 
 public:
 	!MemSetInst();
@@ -132,7 +162,12 @@ public ref class MemTransferInst
 {
 internal:
 	llvm::MemTransferInst *base;
+
+protected:
 	MemTransferInst(llvm::MemTransferInst *base);
+
+internal:
+	static inline MemTransferInst ^_wrap(llvm::MemTransferInst *base);
 
 public:
 	!MemTransferInst();
@@ -151,7 +186,12 @@ public ref class MemCpyInst
 {
 internal:
 	llvm::MemCpyInst *base;
+
+protected:
 	MemCpyInst(llvm::MemCpyInst *base);
+
+internal:
+	static inline MemCpyInst ^_wrap(llvm::MemCpyInst *base);
 
 public:
 	!MemCpyInst();
@@ -166,7 +206,12 @@ public ref class MemMoveInst
 {
 internal:
 	llvm::MemMoveInst *base;
+
+protected:
 	MemMoveInst(llvm::MemMoveInst *base);
+
+internal:
+	static inline MemMoveInst ^_wrap(llvm::MemMoveInst *base);
 
 public:
 	!MemMoveInst();
@@ -181,7 +226,12 @@ public ref class VAStartInst
 {
 internal:
 	llvm::VAStartInst *base;
+
+protected:
 	VAStartInst(llvm::VAStartInst *base);
+
+internal:
+	static inline VAStartInst ^_wrap(llvm::VAStartInst *base);
 
 public:
 	!VAStartInst();
@@ -197,7 +247,12 @@ public ref class VAEndInst
 {
 internal:
 	llvm::VAEndInst *base;
+
+protected:
 	VAEndInst(llvm::VAEndInst *base);
+
+internal:
+	static inline VAEndInst ^_wrap(llvm::VAEndInst *base);
 
 public:
 	!VAEndInst();
@@ -213,7 +268,12 @@ public ref class VACopyInst
 {
 internal:
 	llvm::VACopyInst *base;
+
+protected:
 	VACopyInst(llvm::VACopyInst *base);
+
+internal:
+	static inline VACopyInst ^_wrap(llvm::VACopyInst *base);
 
 public:
 	!VACopyInst();

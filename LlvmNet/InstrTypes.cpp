@@ -14,6 +14,10 @@ TerminatorInst::TerminatorInst(llvm::TerminatorInst *base)
 	, Instruction(base)
 {
 }
+inline TerminatorInst ^TerminatorInst::_wrap(llvm::TerminatorInst *base)
+{
+	return base ? gcnew TerminatorInst(base) : nullptr;
+}
 TerminatorInst::!TerminatorInst()
 {
 }
@@ -27,7 +31,7 @@ unsigned TerminatorInst::getNumSuccessors()
 }
 BasicBlock ^TerminatorInst::getSuccessor(unsigned idx)
 {
-	return gcnew BasicBlock(base->getSuccessor(idx));
+	return BasicBlock::_wrap(base->getSuccessor(idx));
 }
 void TerminatorInst::setSuccessor(unsigned idx, BasicBlock ^B)
 {
@@ -47,6 +51,10 @@ UnaryInstruction::UnaryInstruction(llvm::UnaryInstruction *base)
 	: base(base)
 	, Instruction(base)
 {
+}
+inline UnaryInstruction ^UnaryInstruction::_wrap(llvm::UnaryInstruction *base)
+{
+	return base ? gcnew UnaryInstruction(base) : nullptr;
 }
 UnaryInstruction::!UnaryInstruction()
 {
@@ -70,6 +78,10 @@ BinaryOperator::BinaryOperator(llvm::BinaryOperator *base)
 	, Instruction(base)
 {
 }
+inline BinaryOperator ^BinaryOperator::_wrap(llvm::BinaryOperator *base)
+{
+	return base ? gcnew BinaryOperator(base) : nullptr;
+}
 BinaryOperator::!BinaryOperator()
 {
 }
@@ -79,174 +91,174 @@ BinaryOperator::~BinaryOperator()
 }
 BinaryOperator ^BinaryOperator::Create(BinaryOps Op, Value ^S1, Value ^S2)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base));
 }
 BinaryOperator ^BinaryOperator::Create(BinaryOps Op, Value ^S1, Value ^S2, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::Create(BinaryOps Op, Value ^S1, Value ^S2, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 BinaryOperator ^BinaryOperator::Create(BinaryOps Op, Value ^S1, Value ^S2, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::Create(safe_cast<llvm::BinaryOperator::BinaryOps>(Op), S1->base, S2->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 BinaryOperator ^BinaryOperator::CreateNSW(BinaryOps Opc, Value ^V1, Value ^V2)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base));
 }
 BinaryOperator ^BinaryOperator::CreateNSW(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateNSW(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name, BasicBlock ^BB)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), BB->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), BB->base));
 }
 BinaryOperator ^BinaryOperator::CreateNSW(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name, Instruction ^I)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), I->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), I->base));
 }
 BinaryOperator ^BinaryOperator::CreateNUW(BinaryOps Opc, Value ^V1, Value ^V2)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base));
 }
 BinaryOperator ^BinaryOperator::CreateNUW(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateNUW(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name, BasicBlock ^BB)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), BB->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), BB->base));
 }
 BinaryOperator ^BinaryOperator::CreateNUW(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name, Instruction ^I)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), I->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUW(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), I->base));
 }
 BinaryOperator ^BinaryOperator::CreateExact(BinaryOps Opc, Value ^V1, Value ^V2)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base));
 }
 BinaryOperator ^BinaryOperator::CreateExact(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateExact(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name, BasicBlock ^BB)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), BB->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), BB->base));
 }
 BinaryOperator ^BinaryOperator::CreateExact(BinaryOps Opc, Value ^V1, Value ^V2, System::String ^Name, Instruction ^I)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), I->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateExact(safe_cast<llvm::BinaryOperator::BinaryOps>(Opc), V1->base, V2->base, ctx.marshal_as<const char *>(Name), I->base));
 }
 BinaryOperator ^BinaryOperator::CreateNeg(Value ^Op)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNeg(Op->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNeg(Op->base));
 }
 BinaryOperator ^BinaryOperator::CreateNeg(Value ^Op, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNeg(Op->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNeg(Op->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateNeg(Value ^Op, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 BinaryOperator ^BinaryOperator::CreateNeg(Value ^Op, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 BinaryOperator ^BinaryOperator::CreateNSWNeg(Value ^Op)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSWNeg(Op->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSWNeg(Op->base));
 }
 BinaryOperator ^BinaryOperator::CreateNSWNeg(Value ^Op, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSWNeg(Op->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSWNeg(Op->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateNSWNeg(Value ^Op, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 BinaryOperator ^BinaryOperator::CreateNSWNeg(Value ^Op, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNSWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNSWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 BinaryOperator ^BinaryOperator::CreateNUWNeg(Value ^Op)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUWNeg(Op->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUWNeg(Op->base));
 }
 BinaryOperator ^BinaryOperator::CreateNUWNeg(Value ^Op, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUWNeg(Op->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUWNeg(Op->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateNUWNeg(Value ^Op, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 BinaryOperator ^BinaryOperator::CreateNUWNeg(Value ^Op, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNUWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNUWNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 BinaryOperator ^BinaryOperator::CreateFNeg(Value ^Op)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateFNeg(Op->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateFNeg(Op->base));
 }
 BinaryOperator ^BinaryOperator::CreateFNeg(Value ^Op, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateFNeg(Op->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateFNeg(Op->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateFNeg(Value ^Op, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateFNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateFNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 BinaryOperator ^BinaryOperator::CreateFNeg(Value ^Op, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateFNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateFNeg(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 BinaryOperator ^BinaryOperator::CreateNot(Value ^Op)
 {
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNot(Op->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNot(Op->base));
 }
 BinaryOperator ^BinaryOperator::CreateNot(Value ^Op, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNot(Op->base, ctx.marshal_as<const char *>(Name)));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNot(Op->base, ctx.marshal_as<const char *>(Name)));
 }
 BinaryOperator ^BinaryOperator::CreateNot(Value ^Op, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNot(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNot(Op->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 BinaryOperator ^BinaryOperator::CreateNot(Value ^Op, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew BinaryOperator(llvm::BinaryOperator::CreateNot(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return BinaryOperator::_wrap(llvm::BinaryOperator::CreateNot(Op->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 bool BinaryOperator::isNeg(Value ^V)
 {
@@ -323,6 +335,10 @@ CastInst::CastInst(llvm::CastInst *base)
 	, UnaryInstruction(base)
 {
 }
+inline CastInst ^CastInst::_wrap(llvm::CastInst *base)
+{
+	return base ? gcnew CastInst(base) : nullptr;
+}
 CastInst::!CastInst()
 {
 }
@@ -332,136 +348,136 @@ CastInst::~CastInst()
 }
 CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base));
+	return CastInst::_wrap(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base));
 }
 CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::Create(Instruction::CastOps ops, Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::Create(safe_cast<llvm::Instruction::CastOps>(ops), S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreateZExtOrBitCast(Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base));
+	return CastInst::_wrap(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base));
 }
 CastInst ^CastInst::CreateZExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::CreateZExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::CreateZExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::CreateZExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreateSExtOrBitCast(Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base));
+	return CastInst::_wrap(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base));
 }
 CastInst ^CastInst::CreateSExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::CreateSExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::CreateSExtOrBitCast(Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::CreateSExtOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreatePointerCast(Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreatePointerCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::CreatePointerCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreatePointerCast(Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::CreatePointerCast(S->base, Ty->base));
+	return CastInst::_wrap(llvm::CastInst::CreatePointerCast(S->base, Ty->base));
 }
 CastInst ^CastInst::CreatePointerCast(Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreatePointerCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::CreatePointerCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::CreatePointerCast(Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreatePointerCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::CreatePointerCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::CreateIntegerCast(Value ^S, Type ^Ty, bool isSigned)
 {
-	return gcnew CastInst(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned));
+	return CastInst::_wrap(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned));
 }
 CastInst ^CastInst::CreateIntegerCast(Value ^S, Type ^Ty, bool isSigned, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::CreateIntegerCast(Value ^S, Type ^Ty, bool isSigned, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::CreateIntegerCast(Value ^S, Type ^Ty, bool isSigned, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::CreateIntegerCast(S->base, Ty->base, isSigned, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreateFPCast(Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::CreateFPCast(S->base, Ty->base));
+	return CastInst::_wrap(llvm::CastInst::CreateFPCast(S->base, Ty->base));
 }
 CastInst ^CastInst::CreateFPCast(Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateFPCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::CreateFPCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::CreateFPCast(Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateFPCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::CreateFPCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::CreateFPCast(Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateFPCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::CreateFPCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 CastInst ^CastInst::CreateTruncOrBitCast(Value ^S, Type ^Ty)
 {
-	return gcnew CastInst(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base));
+	return CastInst::_wrap(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base));
 }
 CastInst ^CastInst::CreateTruncOrBitCast(Value ^S, Type ^Ty, System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
+	return CastInst::_wrap(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name)));
 }
 CastInst ^CastInst::CreateTruncOrBitCast(Value ^S, Type ^Ty, System::String ^Name, Instruction ^InsertBefore)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
+	return CastInst::_wrap(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
 }
 CastInst ^CastInst::CreateTruncOrBitCast(Value ^S, Type ^Ty, System::String ^Name, BasicBlock ^InsertAtEnd)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew CastInst(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
+	return CastInst::_wrap(llvm::CastInst::CreateTruncOrBitCast(S->base, Ty->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 bool CastInst::isCastable(Type ^SrcTy, Type ^DestTy)
 {
@@ -497,11 +513,11 @@ Instruction::CastOps CastInst::getOpcode()
 }
 Type ^CastInst::getSrcTy()
 {
-	return gcnew Type(base->getSrcTy());
+	return Type::_wrap(base->getSrcTy());
 }
 Type ^CastInst::getDestTy()
 {
-	return gcnew Type(base->getDestTy());
+	return Type::_wrap(base->getDestTy());
 }
 bool CastInst::castIsValid(Instruction::CastOps op, Value ^S, Type ^DstTy)
 {
@@ -522,31 +538,16 @@ CmpInst::CmpInst(llvm::CmpInst *base)
 	, Instruction(base)
 {
 }
+inline CmpInst ^CmpInst::_wrap(llvm::CmpInst *base)
+{
+	return base ? gcnew CmpInst(base) : nullptr;
+}
 CmpInst::!CmpInst()
 {
 }
 CmpInst::~CmpInst()
 {
 	this->!CmpInst();
-}
-CmpInst ^CmpInst::Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2)
-{
-	return gcnew CmpInst(llvm::CmpInst::Create(safe_cast<llvm::CmpInst::OtherOps>(Op), predicate, S1->base, S2->base));
-}
-CmpInst ^CmpInst::Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2, System::String ^Name)
-{
-	msclr::interop::marshal_context ctx;
-	return gcnew CmpInst(llvm::CmpInst::Create(safe_cast<llvm::CmpInst::OtherOps>(Op), predicate, S1->base, S2->base, ctx.marshal_as<const char *>(Name)));
-}
-CmpInst ^CmpInst::Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2, System::String ^Name, Instruction ^InsertBefore)
-{
-	msclr::interop::marshal_context ctx;
-	return gcnew CmpInst(llvm::CmpInst::Create(safe_cast<llvm::CmpInst::OtherOps>(Op), predicate, S1->base, S2->base, ctx.marshal_as<const char *>(Name), InsertBefore->base));
-}
-CmpInst ^CmpInst::Create(OtherOps Op, unsigned short predicate, Value ^S1, Value ^S2, System::String ^Name, BasicBlock ^InsertAtEnd)
-{
-	msclr::interop::marshal_context ctx;
-	return gcnew CmpInst(llvm::CmpInst::Create(safe_cast<llvm::CmpInst::OtherOps>(Op), predicate, S1->base, S2->base, ctx.marshal_as<const char *>(Name), InsertAtEnd->base));
 }
 Instruction::OtherOps CmpInst::getOpcode()
 {
@@ -620,30 +621,6 @@ bool CmpInst::isFalseWhenEqual()
 {
 	return base->isFalseWhenEqual();
 }
-bool CmpInst::isUnsigned(unsigned short predicate)
-{
-	return llvm::CmpInst::isUnsigned(predicate);
-}
-bool CmpInst::isSigned(unsigned short predicate)
-{
-	return llvm::CmpInst::isSigned(predicate);
-}
-bool CmpInst::isOrdered(unsigned short predicate)
-{
-	return llvm::CmpInst::isOrdered(predicate);
-}
-bool CmpInst::isUnordered(unsigned short predicate)
-{
-	return llvm::CmpInst::isUnordered(predicate);
-}
-bool CmpInst::isTrueWhenEqual(unsigned short predicate)
-{
-	return llvm::CmpInst::isTrueWhenEqual(predicate);
-}
-bool CmpInst::isFalseWhenEqual(unsigned short predicate)
-{
-	return llvm::CmpInst::isFalseWhenEqual(predicate);
-}
 inline bool CmpInst::classof(Instruction ^I)
 {
 	return llvm::CmpInst::classof(I->base);
@@ -654,5 +631,5 @@ inline bool CmpInst::classof(Value ^V)
 }
 Type ^CmpInst::makeCmpResultType(Type ^opnd_type)
 {
-	return gcnew Type(llvm::CmpInst::makeCmpResultType(opnd_type->base));
+	return Type::_wrap(llvm::CmpInst::makeCmpResultType(opnd_type->base));
 }

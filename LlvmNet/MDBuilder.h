@@ -13,9 +13,15 @@ public ref class MDBuilder
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::MDBuilder *base;
+
+protected:
 	MDBuilder(llvm::MDBuilder *base);
+
+internal:
+	static inline MDBuilder ^_wrap(llvm::MDBuilder *base);
 
 public:
 	!MDBuilder();
@@ -32,7 +38,7 @@ public:
 	MDNode ^createTBAANode(System::String ^Name, MDNode ^Parent, bool isConstant);
 	// struct TBAAStructField;
 	// MDNode *createTBAAStructNode(ArrayRef<TBAAStructField> Fields);
-	// MDNode *createTBAAStructTypeNode(StringRef Name, ArrayRef<std::pair<MDNode*, uint64_t> > Fields);
+	// MDNode *createTBAAStructTypeNode(StringRef Name, ArrayRef<std::pair<MDNode *, uint64_t> > Fields);
 	MDNode ^createTBAAScalarTypeNode(System::String ^Name, MDNode ^Parent);
 	MDNode ^createTBAAScalarTypeNode(System::String ^Name, MDNode ^Parent, uint64_t Offset);
 	MDNode ^createTBAAStructTagNode(MDNode ^BaseType, MDNode ^AccessType, uint64_t Offset);

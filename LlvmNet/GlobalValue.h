@@ -42,7 +42,12 @@ public:
 
 internal:
 	llvm::GlobalValue *base;
+
+protected:
 	GlobalValue(llvm::GlobalValue *base);
+
+internal:
+	static inline GlobalValue ^_wrap(llvm::GlobalValue *base);
 
 public:
 	!GlobalValue();

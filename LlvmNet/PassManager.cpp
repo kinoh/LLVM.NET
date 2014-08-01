@@ -9,6 +9,10 @@ PassManagerBase::PassManagerBase(llvm::PassManagerBase *base)
 	: base(base)
 {
 }
+inline PassManagerBase ^PassManagerBase::_wrap(llvm::PassManagerBase *base)
+{
+	return base ? gcnew PassManagerBase(base) : nullptr;
+}
 PassManagerBase::!PassManagerBase()
 {
 }
@@ -27,6 +31,10 @@ PassManager::PassManager(llvm::PassManager *base)
 	, PassManagerBase(base)
 	, constructed(false)
 {
+}
+inline PassManager ^PassManager::_wrap(llvm::PassManager *base)
+{
+	return base ? gcnew PassManager(base) : nullptr;
 }
 PassManager::!PassManager()
 {
@@ -60,6 +68,10 @@ FunctionPassManager::FunctionPassManager(llvm::FunctionPassManager *base)
 	, PassManagerBase(base)
 	, constructed(false)
 {
+}
+inline FunctionPassManager ^FunctionPassManager::_wrap(llvm::FunctionPassManager *base)
+{
+	return base ? gcnew FunctionPassManager(base) : nullptr;
 }
 FunctionPassManager::!FunctionPassManager()
 {

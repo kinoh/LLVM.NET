@@ -43,9 +43,15 @@ public ref class IRBuilderBase
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::IRBuilderBase *base;
+
+protected:
 	IRBuilderBase(llvm::IRBuilderBase *base);
+
+internal:
+	static inline IRBuilderBase ^_wrap(llvm::IRBuilderBase *base);
 
 public:
 	!IRBuilderBase();
@@ -122,9 +128,15 @@ public ref class IRBuilder
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::IRBuilder<> *base;
+
+protected:
 	IRBuilder(llvm::IRBuilder<> *base);
+
+internal:
+	static inline IRBuilder ^_wrap(llvm::IRBuilder<> *base);
 
 public:
 	!IRBuilder();

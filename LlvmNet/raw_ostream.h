@@ -23,7 +23,12 @@ public:
 
 internal:
 	llvm::raw_ostream *base;
+
+protected:
 	raw_ostream(llvm::raw_ostream *base);
+
+internal:
+	static inline raw_ostream ^_wrap(llvm::raw_ostream *base);
 
 public:
 	!raw_ostream();
@@ -52,16 +57,14 @@ public:
 	// raw_ostream &operator<<(unsigned int N);
 	// raw_ostream &operator<<(int N);
 	// raw_ostream &operator<<(double N);
-	raw_ostream ^write_hex(unsigned long long N);
+	// raw_ostream &write_hex(unsigned long long N);
 	raw_ostream ^write_escaped(System::String ^Str);
 	raw_ostream ^write_escaped(System::String ^Str, bool UseHexEscapes);
-	raw_ostream ^write(unsigned char C);
+	// raw_ostream &write(unsigned char C);
 	raw_ostream ^write(System::String ^Ptr, size_t Size);
 	// raw_ostream &operator<<(const format_object_base &Fmt);
 	raw_ostream ^indent(unsigned NumSpaces);
-	virtual raw_ostream ^changeColor(Colors Color);
-	virtual raw_ostream ^changeColor(Colors Color, bool Bold);
-	virtual raw_ostream ^changeColor(Colors Color, bool Bold, bool BG);
+	// virtual raw_ostream &changeColor(enum Colors Color, bool Bold = false, bool BG = false);
 	virtual raw_ostream ^resetColor();
 	virtual raw_ostream ^reverseColor();
 	virtual bool is_displayed();
@@ -108,16 +111,13 @@ public:
 public ref class raw_string_ostream
 	: public raw_ostream
 {
-private:
-	bool constructed;
 internal:
 	llvm::raw_string_ostream *base;
-	raw_string_ostream(llvm::raw_string_ostream *base);
 
 public:
 	!raw_string_ostream();
 	virtual ~raw_string_ostream();
-	raw_string_ostream(std::string O);
+	raw_string_ostream(System::String ^O);
 	System::String ^str();
 };
 
@@ -125,16 +125,13 @@ public:
 public ref class raw_null_ostream
 	: public raw_ostream
 {
-private:
-	bool constructed;
 internal:
 	llvm::raw_null_ostream *base;
-	raw_null_ostream(llvm::raw_null_ostream *base);
 
 public:
+	raw_null_ostream();
 	!raw_null_ostream();
 	virtual ~raw_null_ostream();
-	raw_null_ostream();
 };
 
 }

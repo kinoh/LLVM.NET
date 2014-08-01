@@ -12,6 +12,10 @@ Operator::Operator(llvm::Operator *base)
 	, User(base)
 {
 }
+inline Operator ^Operator::_wrap(llvm::Operator *base)
+{
+	return base ? gcnew Operator(base) : nullptr;
+}
 Operator::!Operator()
 {
 }
@@ -45,6 +49,10 @@ OverflowingBinaryOperator::OverflowingBinaryOperator(llvm::OverflowingBinaryOper
 	: base(base)
 	, Operator(base)
 {
+}
+inline OverflowingBinaryOperator ^OverflowingBinaryOperator::_wrap(llvm::OverflowingBinaryOperator *base)
+{
+	return base ? gcnew OverflowingBinaryOperator(base) : nullptr;
 }
 OverflowingBinaryOperator::!OverflowingBinaryOperator()
 {
@@ -80,6 +88,10 @@ PossiblyExactOperator::PossiblyExactOperator(llvm::PossiblyExactOperator *base)
 	, Operator(base)
 {
 }
+inline PossiblyExactOperator ^PossiblyExactOperator::_wrap(llvm::PossiblyExactOperator *base)
+{
+	return base ? gcnew PossiblyExactOperator(base) : nullptr;
+}
 PossiblyExactOperator::!PossiblyExactOperator()
 {
 }
@@ -113,6 +125,10 @@ FastMathFlags::FastMathFlags(llvm::FastMathFlags *base)
 	: base(base)
 	, constructed(false)
 {
+}
+inline FastMathFlags ^FastMathFlags::_wrap(llvm::FastMathFlags *base)
+{
+	return base ? gcnew FastMathFlags(base) : nullptr;
 }
 FastMathFlags::!FastMathFlags()
 {
@@ -185,6 +201,10 @@ FPMathOperator::FPMathOperator(llvm::FPMathOperator *base)
 	, Operator(base)
 {
 }
+inline FPMathOperator ^FPMathOperator::_wrap(llvm::FPMathOperator *base)
+{
+	return base ? gcnew FPMathOperator(base) : nullptr;
+}
 FPMathOperator::!FPMathOperator()
 {
 }
@@ -214,7 +234,7 @@ bool FPMathOperator::hasAllowReciprocal()
 }
 FastMathFlags ^FPMathOperator::getFastMathFlags()
 {
-	return gcnew FastMathFlags(&base->getFastMathFlags());
+	return FastMathFlags::_wrap(&base->getFastMathFlags());
 }
 float FPMathOperator::getFPAccuracy()
 {
@@ -234,6 +254,10 @@ AddOperator::AddOperator(llvm::AddOperator *base)
 	: base(base)
 {
 }
+inline AddOperator ^AddOperator::_wrap(llvm::AddOperator *base)
+{
+	return base ? gcnew AddOperator(base) : nullptr;
+}
 AddOperator::!AddOperator()
 {
 }
@@ -246,6 +270,10 @@ AddOperator::~AddOperator()
 SubOperator::SubOperator(llvm::SubOperator *base)
 	: base(base)
 {
+}
+inline SubOperator ^SubOperator::_wrap(llvm::SubOperator *base)
+{
+	return base ? gcnew SubOperator(base) : nullptr;
 }
 SubOperator::!SubOperator()
 {
@@ -260,6 +288,10 @@ MulOperator::MulOperator(llvm::MulOperator *base)
 	: base(base)
 {
 }
+inline MulOperator ^MulOperator::_wrap(llvm::MulOperator *base)
+{
+	return base ? gcnew MulOperator(base) : nullptr;
+}
 MulOperator::!MulOperator()
 {
 }
@@ -272,6 +304,10 @@ MulOperator::~MulOperator()
 ShlOperator::ShlOperator(llvm::ShlOperator *base)
 	: base(base)
 {
+}
+inline ShlOperator ^ShlOperator::_wrap(llvm::ShlOperator *base)
+{
+	return base ? gcnew ShlOperator(base) : nullptr;
 }
 ShlOperator::!ShlOperator()
 {
@@ -286,6 +322,10 @@ SDivOperator::SDivOperator(llvm::SDivOperator *base)
 	: base(base)
 {
 }
+inline SDivOperator ^SDivOperator::_wrap(llvm::SDivOperator *base)
+{
+	return base ? gcnew SDivOperator(base) : nullptr;
+}
 SDivOperator::!SDivOperator()
 {
 }
@@ -298,6 +338,10 @@ SDivOperator::~SDivOperator()
 UDivOperator::UDivOperator(llvm::UDivOperator *base)
 	: base(base)
 {
+}
+inline UDivOperator ^UDivOperator::_wrap(llvm::UDivOperator *base)
+{
+	return base ? gcnew UDivOperator(base) : nullptr;
 }
 UDivOperator::!UDivOperator()
 {
@@ -312,6 +356,10 @@ AShrOperator::AShrOperator(llvm::AShrOperator *base)
 	: base(base)
 {
 }
+inline AShrOperator ^AShrOperator::_wrap(llvm::AShrOperator *base)
+{
+	return base ? gcnew AShrOperator(base) : nullptr;
+}
 AShrOperator::!AShrOperator()
 {
 }
@@ -324,6 +372,10 @@ AShrOperator::~AShrOperator()
 LShrOperator::LShrOperator(llvm::LShrOperator *base)
 	: base(base)
 {
+}
+inline LShrOperator ^LShrOperator::_wrap(llvm::LShrOperator *base)
+{
+	return base ? gcnew LShrOperator(base) : nullptr;
 }
 LShrOperator::!LShrOperator()
 {
@@ -338,6 +390,10 @@ GEPOperator::GEPOperator(llvm::GEPOperator *base)
 	: base(base)
 {
 }
+inline GEPOperator ^GEPOperator::_wrap(llvm::GEPOperator *base)
+{
+	return base ? gcnew GEPOperator(base) : nullptr;
+}
 GEPOperator::!GEPOperator()
 {
 }
@@ -351,7 +407,7 @@ bool GEPOperator::isInBounds()
 }
 Value ^GEPOperator::getPointerOperand()
 {
-	return gcnew Value(base->getPointerOperand());
+	return Value::_wrap(base->getPointerOperand());
 }
 unsigned GEPOperator::getPointerOperandIndex()
 {
@@ -359,7 +415,7 @@ unsigned GEPOperator::getPointerOperandIndex()
 }
 Type ^GEPOperator::getPointerOperandType()
 {
-	return gcnew Type(base->getPointerOperandType());
+	return Type::_wrap(base->getPointerOperandType());
 }
 unsigned GEPOperator::getPointerAddressSpace()
 {

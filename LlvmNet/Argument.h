@@ -15,12 +15,18 @@ public ref class Argument
 	: public Value
 {
 private:
-	bool constructed;	static llvm::Argument *_construct(Type ^Ty, System::String ^Name);
+	bool constructed;
+	static llvm::Argument *_construct(Type ^Ty, System::String ^Name);
 	static llvm::Argument *_construct(Type ^Ty, System::String ^Name, Function ^F);
 
 internal:
 	llvm::Argument *base;
+
+protected:
 	Argument(llvm::Argument *base);
+
+internal:
+	static inline Argument ^_wrap(llvm::Argument *base);
 
 public:
 	!Argument();

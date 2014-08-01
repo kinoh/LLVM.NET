@@ -14,6 +14,10 @@ GlobalAlias::GlobalAlias(llvm::GlobalAlias *base)
 	, constructed(false)
 {
 }
+inline GlobalAlias ^GlobalAlias::_wrap(llvm::GlobalAlias *base)
+{
+	return base ? gcnew GlobalAlias(base) : nullptr;
+}
 GlobalAlias::!GlobalAlias()
 {
 	if (constructed)
@@ -78,7 +82,7 @@ void GlobalAlias::setAliasee(Constant ^GV)
 }
 Constant ^GlobalAlias::getAliasee()
 {
-	return gcnew Constant(base->getAliasee());
+	return Constant::_wrap(base->getAliasee());
 }
 inline bool GlobalAlias::classof(Value ^V)
 {

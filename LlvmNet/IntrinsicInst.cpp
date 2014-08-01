@@ -14,6 +14,10 @@ IntrinsicInst::IntrinsicInst(llvm::IntrinsicInst *base)
 	, CallInst(base)
 {
 }
+inline IntrinsicInst ^IntrinsicInst::_wrap(llvm::IntrinsicInst *base)
+{
+	return base ? gcnew IntrinsicInst(base) : nullptr;
+}
 IntrinsicInst::!IntrinsicInst()
 {
 }
@@ -40,6 +44,10 @@ DbgInfoIntrinsic::DbgInfoIntrinsic(llvm::DbgInfoIntrinsic *base)
 	, IntrinsicInst(base)
 {
 }
+inline DbgInfoIntrinsic ^DbgInfoIntrinsic::_wrap(llvm::DbgInfoIntrinsic *base)
+{
+	return base ? gcnew DbgInfoIntrinsic(base) : nullptr;
+}
 DbgInfoIntrinsic::!DbgInfoIntrinsic()
 {
 }
@@ -57,7 +65,7 @@ inline bool DbgInfoIntrinsic::classof(Value ^V)
 }
 Value ^DbgInfoIntrinsic::StripCast(Value ^C)
 {
-	return gcnew Value(llvm::DbgInfoIntrinsic::StripCast(C->base));
+	return Value::_wrap(llvm::DbgInfoIntrinsic::StripCast(C->base));
 }
 
 
@@ -65,6 +73,10 @@ DbgDeclareInst::DbgDeclareInst(llvm::DbgDeclareInst *base)
 	: base(base)
 	, DbgInfoIntrinsic(base)
 {
+}
+inline DbgDeclareInst ^DbgDeclareInst::_wrap(llvm::DbgDeclareInst *base)
+{
+	return base ? gcnew DbgDeclareInst(base) : nullptr;
 }
 DbgDeclareInst::!DbgDeclareInst()
 {
@@ -75,11 +87,11 @@ DbgDeclareInst::~DbgDeclareInst()
 }
 Value ^DbgDeclareInst::getAddress()
 {
-	return gcnew Value(base->getAddress());
+	return Value::_wrap(base->getAddress());
 }
 MDNode ^DbgDeclareInst::getVariable()
 {
-	return gcnew MDNode(base->getVariable());
+	return MDNode::_wrap(base->getVariable());
 }
 inline bool DbgDeclareInst::classof(IntrinsicInst ^I)
 {
@@ -96,6 +108,10 @@ DbgValueInst::DbgValueInst(llvm::DbgValueInst *base)
 	, DbgInfoIntrinsic(base)
 {
 }
+inline DbgValueInst ^DbgValueInst::_wrap(llvm::DbgValueInst *base)
+{
+	return base ? gcnew DbgValueInst(base) : nullptr;
+}
 DbgValueInst::!DbgValueInst()
 {
 }
@@ -105,7 +121,7 @@ DbgValueInst::~DbgValueInst()
 }
 Value ^DbgValueInst::getValue()
 {
-	return gcnew Value(base->getValue());
+	return Value::_wrap(base->getValue());
 }
 uint64_t DbgValueInst::getOffset()
 {
@@ -113,7 +129,7 @@ uint64_t DbgValueInst::getOffset()
 }
 MDNode ^DbgValueInst::getVariable()
 {
-	return gcnew MDNode(base->getVariable());
+	return MDNode::_wrap(base->getVariable());
 }
 inline bool DbgValueInst::classof(IntrinsicInst ^I)
 {
@@ -130,6 +146,10 @@ MemIntrinsic::MemIntrinsic(llvm::MemIntrinsic *base)
 	, IntrinsicInst(base)
 {
 }
+inline MemIntrinsic ^MemIntrinsic::_wrap(llvm::MemIntrinsic *base)
+{
+	return base ? gcnew MemIntrinsic(base) : nullptr;
+}
 MemIntrinsic::!MemIntrinsic()
 {
 }
@@ -139,15 +159,15 @@ MemIntrinsic::~MemIntrinsic()
 }
 Value ^MemIntrinsic::getRawDest()
 {
-	return gcnew Value(base->getRawDest());
+	return Value::_wrap(base->getRawDest());
 }
 Value ^MemIntrinsic::getLength()
 {
-	return gcnew Value(base->getLength());
+	return Value::_wrap(base->getLength());
 }
 ConstantInt ^MemIntrinsic::getAlignmentCst()
 {
-	return gcnew ConstantInt(base->getAlignmentCst());
+	return ConstantInt::_wrap(base->getAlignmentCst());
 }
 unsigned MemIntrinsic::getAlignment()
 {
@@ -155,7 +175,7 @@ unsigned MemIntrinsic::getAlignment()
 }
 ConstantInt ^MemIntrinsic::getVolatileCst()
 {
-	return gcnew ConstantInt(base->getVolatileCst());
+	return ConstantInt::_wrap(base->getVolatileCst());
 }
 bool MemIntrinsic::isVolatile()
 {
@@ -167,7 +187,7 @@ unsigned MemIntrinsic::getDestAddressSpace()
 }
 Value ^MemIntrinsic::getDest()
 {
-	return gcnew Value(base->getDest());
+	return Value::_wrap(base->getDest());
 }
 void MemIntrinsic::setDest(Value ^Ptr)
 {
@@ -187,7 +207,7 @@ void MemIntrinsic::setVolatile(Constant ^V)
 }
 Type ^MemIntrinsic::getAlignmentType()
 {
-	return gcnew Type(base->getAlignmentType());
+	return Type::_wrap(base->getAlignmentType());
 }
 inline bool MemIntrinsic::classof(IntrinsicInst ^I)
 {
@@ -204,6 +224,10 @@ MemSetInst::MemSetInst(llvm::MemSetInst *base)
 	, MemIntrinsic(base)
 {
 }
+inline MemSetInst ^MemSetInst::_wrap(llvm::MemSetInst *base)
+{
+	return base ? gcnew MemSetInst(base) : nullptr;
+}
 MemSetInst::!MemSetInst()
 {
 }
@@ -213,7 +237,7 @@ MemSetInst::~MemSetInst()
 }
 Value ^MemSetInst::getValue()
 {
-	return gcnew Value(base->getValue());
+	return Value::_wrap(base->getValue());
 }
 void MemSetInst::setValue(Value ^Val)
 {
@@ -234,6 +258,10 @@ MemTransferInst::MemTransferInst(llvm::MemTransferInst *base)
 	, MemIntrinsic(base)
 {
 }
+inline MemTransferInst ^MemTransferInst::_wrap(llvm::MemTransferInst *base)
+{
+	return base ? gcnew MemTransferInst(base) : nullptr;
+}
 MemTransferInst::!MemTransferInst()
 {
 }
@@ -243,11 +271,11 @@ MemTransferInst::~MemTransferInst()
 }
 Value ^MemTransferInst::getRawSource()
 {
-	return gcnew Value(base->getRawSource());
+	return Value::_wrap(base->getRawSource());
 }
 Value ^MemTransferInst::getSource()
 {
-	return gcnew Value(base->getSource());
+	return Value::_wrap(base->getSource());
 }
 unsigned MemTransferInst::getSourceAddressSpace()
 {
@@ -272,6 +300,10 @@ MemCpyInst::MemCpyInst(llvm::MemCpyInst *base)
 	, MemTransferInst(base)
 {
 }
+inline MemCpyInst ^MemCpyInst::_wrap(llvm::MemCpyInst *base)
+{
+	return base ? gcnew MemCpyInst(base) : nullptr;
+}
 MemCpyInst::!MemCpyInst()
 {
 }
@@ -293,6 +325,10 @@ MemMoveInst::MemMoveInst(llvm::MemMoveInst *base)
 	: base(base)
 	, MemTransferInst(base)
 {
+}
+inline MemMoveInst ^MemMoveInst::_wrap(llvm::MemMoveInst *base)
+{
+	return base ? gcnew MemMoveInst(base) : nullptr;
 }
 MemMoveInst::!MemMoveInst()
 {
@@ -316,6 +352,10 @@ VAStartInst::VAStartInst(llvm::VAStartInst *base)
 	, IntrinsicInst(base)
 {
 }
+inline VAStartInst ^VAStartInst::_wrap(llvm::VAStartInst *base)
+{
+	return base ? gcnew VAStartInst(base) : nullptr;
+}
 VAStartInst::!VAStartInst()
 {
 }
@@ -333,7 +373,7 @@ inline bool VAStartInst::classof(Value ^V)
 }
 Value ^VAStartInst::getArgList()
 {
-	return gcnew Value(base->getArgList());
+	return Value::_wrap(base->getArgList());
 }
 
 
@@ -341,6 +381,10 @@ VAEndInst::VAEndInst(llvm::VAEndInst *base)
 	: base(base)
 	, IntrinsicInst(base)
 {
+}
+inline VAEndInst ^VAEndInst::_wrap(llvm::VAEndInst *base)
+{
+	return base ? gcnew VAEndInst(base) : nullptr;
 }
 VAEndInst::!VAEndInst()
 {
@@ -359,7 +403,7 @@ inline bool VAEndInst::classof(Value ^V)
 }
 Value ^VAEndInst::getArgList()
 {
-	return gcnew Value(base->getArgList());
+	return Value::_wrap(base->getArgList());
 }
 
 
@@ -367,6 +411,10 @@ VACopyInst::VACopyInst(llvm::VACopyInst *base)
 	: base(base)
 	, IntrinsicInst(base)
 {
+}
+inline VACopyInst ^VACopyInst::_wrap(llvm::VACopyInst *base)
+{
+	return base ? gcnew VACopyInst(base) : nullptr;
 }
 VACopyInst::!VACopyInst()
 {
@@ -385,9 +433,9 @@ inline bool VACopyInst::classof(Value ^V)
 }
 Value ^VACopyInst::getDest()
 {
-	return gcnew Value(base->getDest());
+	return Value::_wrap(base->getDest());
 }
 Value ^VACopyInst::getSrc()
 {
-	return gcnew Value(base->getSrc());
+	return Value::_wrap(base->getSrc());
 }

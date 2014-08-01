@@ -6,6 +6,8 @@
 #include "Pass.h"
 #include "Function.h"
 #include "BasicBlock.h"
+#include <msclr/marshal_cppstd.h>
+#include <string>
 #include "utils.h"
 
 using namespace LLVM;
@@ -13,6 +15,10 @@ using namespace LLVM;
 Pass::Pass(llvm::Pass *base)
 	: base(base)
 {
+}
+inline Pass ^Pass::_wrap(llvm::Pass *base)
+{
+	return base ? gcnew Pass(base) : nullptr;
 }
 Pass::!Pass()
 {
@@ -67,7 +73,7 @@ void Pass::setResolver(AnalysisResolver ^AR)
 }
 AnalysisResolver ^Pass::getResolver()
 {
-	return gcnew AnalysisResolver(base->getResolver());
+	return AnalysisResolver::_wrap(base->getResolver());
 }
 void Pass::getAnalysisUsage(AnalysisUsage ^usage)
 {
@@ -83,11 +89,11 @@ void *Pass::getAdjustedAnalysisPointer(AnalysisID ^ID)
 }
 ImmutablePass ^Pass::getAsImmutablePass()
 {
-	return gcnew ImmutablePass(base->getAsImmutablePass());
+	return ImmutablePass::_wrap(base->getAsImmutablePass());
 }
 PMDataManager ^Pass::getAsPMDataManager()
 {
-	return gcnew PMDataManager(base->getAsPMDataManager());
+	return PMDataManager::_wrap(base->getAsPMDataManager());
 }
 void Pass::verifyAnalysis()
 {
@@ -103,7 +109,7 @@ void Pass::dumpPassStructure(unsigned Offset)
 }
 Pass ^Pass::createPass(AnalysisID ^ID)
 {
-	return gcnew Pass(llvm::Pass::createPass(ID->base));
+	return Pass::_wrap(llvm::Pass::createPass(ID->base));
 }
 bool Pass::mustPreserveAnalysisID(char AID)
 {
@@ -116,12 +122,20 @@ ModulePass::ModulePass(llvm::ModulePass *base)
 	, Pass(base)
 {
 }
+inline ModulePass ^ModulePass::_wrap(llvm::ModulePass *base)
+{
+	return base ? gcnew ModulePass(base) : nullptr;
+}
 ModulePass::!ModulePass()
 {
 }
 ModulePass::~ModulePass()
 {
 	this->!ModulePass();
+}
+Pass ^ModulePass::createPrinterPass(raw_ostream ^O, System::String ^Banner)
+{
+	return Pass::_wrap(base->createPrinterPass(*O->base, msclr::interop::marshal_as<std::string>(Banner)));
 }
 bool ModulePass::runOnModule(Module ^M)
 {
@@ -143,6 +157,10 @@ ImmutablePass::ImmutablePass(llvm::ImmutablePass *base)
 	, constructed(false)
 {
 }
+inline ImmutablePass ^ImmutablePass::_wrap(llvm::ImmutablePass *base)
+{
+	return base ? gcnew ImmutablePass(base) : nullptr;
+}
 ImmutablePass::!ImmutablePass()
 {
 	if (constructed)
@@ -160,7 +178,7 @@ void ImmutablePass::initializePass()
 }
 ImmutablePass ^ImmutablePass::getAsImmutablePass()
 {
-	return gcnew ImmutablePass(base->getAsImmutablePass());
+	return ImmutablePass::_wrap(base->getAsImmutablePass());
 }
 bool ImmutablePass::runOnModule(Module ^module)
 {
@@ -179,12 +197,20 @@ FunctionPass::FunctionPass(llvm::FunctionPass *base)
 	, Pass(base)
 {
 }
+inline FunctionPass ^FunctionPass::_wrap(llvm::FunctionPass *base)
+{
+	return base ? gcnew FunctionPass(base) : nullptr;
+}
 FunctionPass::!FunctionPass()
 {
 }
 FunctionPass::~FunctionPass()
 {
 	this->!FunctionPass();
+}
+Pass ^FunctionPass::createPrinterPass(raw_ostream ^O, System::String ^Banner)
+{
+	return Pass::_wrap(base->createPrinterPass(*O->base, msclr::interop::marshal_as<std::string>(Banner)));
 }
 bool FunctionPass::runOnFunction(Function ^F)
 {
@@ -205,12 +231,20 @@ BasicBlockPass::BasicBlockPass(llvm::BasicBlockPass *base)
 	, Pass(base)
 {
 }
+inline BasicBlockPass ^BasicBlockPass::_wrap(llvm::BasicBlockPass *base)
+{
+	return base ? gcnew BasicBlockPass(base) : nullptr;
+}
 BasicBlockPass::!BasicBlockPass()
 {
 }
 BasicBlockPass::~BasicBlockPass()
 {
 	this->!BasicBlockPass();
+}
+Pass ^BasicBlockPass::createPrinterPass(raw_ostream ^O, System::String ^Banner)
+{
+	return Pass::_wrap(base->createPrinterPass(*O->base, msclr::interop::marshal_as<std::string>(Banner)));
 }
 bool BasicBlockPass::doInitialization(Function ^function)
 {

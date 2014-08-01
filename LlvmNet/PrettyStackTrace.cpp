@@ -7,6 +7,10 @@ PrettyStackTraceEntry::PrettyStackTraceEntry(llvm::PrettyStackTraceEntry *base)
 	: base(base)
 {
 }
+inline PrettyStackTraceEntry ^PrettyStackTraceEntry::_wrap(llvm::PrettyStackTraceEntry *base)
+{
+	return base ? gcnew PrettyStackTraceEntry(base) : nullptr;
+}
 PrettyStackTraceEntry::!PrettyStackTraceEntry()
 {
 }
@@ -21,6 +25,10 @@ PrettyStackTraceString::PrettyStackTraceString(llvm::PrettyStackTraceString *bas
 	, PrettyStackTraceEntry(base)
 	, constructed(false)
 {
+}
+inline PrettyStackTraceString ^PrettyStackTraceString::_wrap(llvm::PrettyStackTraceString *base)
+{
+	return base ? gcnew PrettyStackTraceString(base) : nullptr;
 }
 PrettyStackTraceString::!PrettyStackTraceString()
 {
@@ -50,6 +58,10 @@ PrettyStackTraceProgram::PrettyStackTraceProgram(llvm::PrettyStackTraceProgram *
 	: base(base)
 	, PrettyStackTraceEntry(base)
 {
+}
+inline PrettyStackTraceProgram ^PrettyStackTraceProgram::_wrap(llvm::PrettyStackTraceProgram *base)
+{
+	return base ? gcnew PrettyStackTraceProgram(base) : nullptr;
 }
 PrettyStackTraceProgram::!PrettyStackTraceProgram()
 {

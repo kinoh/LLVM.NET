@@ -8,6 +8,10 @@ Use::Use(llvm::Use *base)
 	: base(base)
 {
 }
+inline Use ^Use::_wrap(llvm::Use *base)
+{
+	return base ? gcnew Use(base) : nullptr;
+}
 Use::!Use()
 {
 }
@@ -21,11 +25,11 @@ void Use::swap(Use ^RHS)
 }
 Value ^Use::get()
 {
-	return gcnew Value(base->get());
+	return Value::_wrap(base->get());
 }
 User ^Use::getUser()
 {
-	return gcnew User(base->getUser());
+	return User::_wrap(base->getUser());
 }
 inline void Use::set(Value ^Val)
 {
@@ -33,11 +37,11 @@ inline void Use::set(Value ^Val)
 }
 Use ^Use::getNext()
 {
-	return gcnew Use(base->getNext());
+	return Use::_wrap(base->getNext());
 }
 Use ^Use::initTags(Use ^Start, Use ^Stop)
 {
-	return gcnew Use(llvm::Use::initTags(Start->base, Stop->base));
+	return Use::_wrap(llvm::Use::initTags(Start->base, Stop->base));
 }
 void Use::zap(Use ^Start, Use ^Stop)
 {

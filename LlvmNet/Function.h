@@ -24,7 +24,12 @@ public ref class Function
 {
 internal:
 	llvm::Function *base;
+
+protected:
 	Function(llvm::Function *base);
+
+internal:
+	static inline Function ^_wrap(llvm::Function *base);
 
 public:
 	!Function();
@@ -84,10 +89,10 @@ public:
 	virtual void eraseFromParent() override;
 	// const ArgumentListType &getArgumentList();
 	System::Collections::Generic::List<Argument ^> ^getArgumentList();
-	// static iplist<Argument> Function::*getSublistAccess(Argument*);
+	// static iplist<Argument> Function::*getSublistAccess(Argument *);
 	// const BasicBlockListType &getBasicBlockList();
 	System::Collections::Generic::List<BasicBlock ^> ^getBasicBlockList();
-	// static iplist<BasicBlock> Function::*getSublistAccess(BasicBlock*);
+	// static iplist<BasicBlock> Function::*getSublistAccess(BasicBlock *);
 	// const BasicBlock       &getEntryBlock();
 	BasicBlock ^getEntryBlock();
 	inline ValueSymbolTable ^getValueSymbolTable();
@@ -112,7 +117,7 @@ public:
 	void viewCFGOnly();
 	static inline bool classof(Value ^V);
 	void dropAllReferences();
-	// bool hasAddressTaken(const User* *= 0);
+	// bool hasAddressTaken(const User ** = 0);
 	bool isDefTriviallyDead();
 	bool callsFunctionThatReturnsTwice();
 };

@@ -26,7 +26,12 @@ public ref class ConstantInt
 {
 internal:
 	llvm::ConstantInt *base;
+
+protected:
 	ConstantInt(llvm::ConstantInt *base);
+
+internal:
+	static inline ConstantInt ^_wrap(llvm::ConstantInt *base);
 
 public:
 	!ConstantInt();
@@ -69,7 +74,12 @@ public ref class ConstantFP
 {
 internal:
 	llvm::ConstantFP *base;
+
+protected:
 	ConstantFP(llvm::ConstantFP *base);
+
+internal:
+	static inline ConstantFP ^_wrap(llvm::ConstantFP *base);
 
 public:
 	!ConstantFP();
@@ -97,7 +107,12 @@ public ref class ConstantAggregateZero
 {
 internal:
 	llvm::ConstantAggregateZero *base;
+
+protected:
 	ConstantAggregateZero(llvm::ConstantAggregateZero *base);
+
+internal:
+	static inline ConstantAggregateZero ^_wrap(llvm::ConstantAggregateZero *base);
 
 public:
 	!ConstantAggregateZero();
@@ -117,7 +132,12 @@ public ref class ConstantArray
 {
 internal:
 	llvm::ConstantArray *base;
+
+protected:
 	ConstantArray(llvm::ConstantArray *base);
+
+internal:
+	static inline ConstantArray ^_wrap(llvm::ConstantArray *base);
 
 public:
 	!ConstantArray();
@@ -136,7 +156,12 @@ public ref class ConstantStruct
 {
 internal:
 	llvm::ConstantStruct *base;
+
+protected:
 	ConstantStruct(llvm::ConstantStruct *base);
+
+internal:
+	static inline ConstantStruct ^_wrap(llvm::ConstantStruct *base);
 
 public:
 	!ConstantStruct();
@@ -164,7 +189,12 @@ public ref class ConstantVector
 {
 internal:
 	llvm::ConstantVector *base;
+
+protected:
 	ConstantVector(llvm::ConstantVector *base);
+
+internal:
+	static inline ConstantVector ^_wrap(llvm::ConstantVector *base);
 
 public:
 	!ConstantVector();
@@ -185,7 +215,12 @@ public ref class ConstantPointerNull
 {
 internal:
 	llvm::ConstantPointerNull *base;
+
+protected:
 	ConstantPointerNull(llvm::ConstantPointerNull *base);
+
+internal:
+	static inline ConstantPointerNull ^_wrap(llvm::ConstantPointerNull *base);
 
 public:
 	!ConstantPointerNull();
@@ -202,7 +237,12 @@ public ref class ConstantDataSequential
 {
 internal:
 	llvm::ConstantDataSequential *base;
+
+protected:
 	ConstantDataSequential(llvm::ConstantDataSequential *base);
+
+internal:
+	static inline ConstantDataSequential ^_wrap(llvm::ConstantDataSequential *base);
 
 public:
 	!ConstantDataSequential();
@@ -232,7 +272,12 @@ public ref class ConstantDataArray
 {
 internal:
 	llvm::ConstantDataArray *base;
+
+protected:
 	ConstantDataArray(llvm::ConstantDataArray *base);
+
+internal:
+	static inline ConstantDataArray ^_wrap(llvm::ConstantDataArray *base);
 
 public:
 	!ConstantDataArray();
@@ -255,7 +300,12 @@ public ref class ConstantDataVector
 {
 internal:
 	llvm::ConstantDataVector *base;
+
+protected:
 	ConstantDataVector(llvm::ConstantDataVector *base);
+
+internal:
+	static inline ConstantDataVector ^_wrap(llvm::ConstantDataVector *base);
 
 public:
 	!ConstantDataVector();
@@ -278,7 +328,12 @@ public ref class BlockAddress
 {
 internal:
 	llvm::BlockAddress *base;
+
+protected:
 	BlockAddress(llvm::BlockAddress *base);
+
+internal:
+	static inline BlockAddress ^_wrap(llvm::BlockAddress *base);
 
 public:
 	!BlockAddress();
@@ -299,7 +354,12 @@ public ref class ConstantExpr
 {
 internal:
 	llvm::ConstantExpr *base;
+
+protected:
 	ConstantExpr(llvm::ConstantExpr *base);
+
+internal:
+	static inline ConstantExpr ^_wrap(llvm::ConstantExpr *base);
 
 public:
 	!ConstantExpr();
@@ -386,9 +446,9 @@ public:
 	static Constant ^getSelect(Constant ^C, Constant ^V1, Constant ^V2);
 	static Constant ^get(unsigned Opcode, Constant ^C1, Constant ^C2);
 	static Constant ^get(unsigned Opcode, Constant ^C1, Constant ^C2, unsigned Flags);
-	static Constant ^getCompare(unsigned short pred, Constant ^C1, Constant ^C2);
-	static Constant ^getICmp(unsigned short pred, Constant ^LHS, Constant ^RHS);
-	static Constant ^getFCmp(unsigned short pred, Constant ^LHS, Constant ^RHS);
+	// static Constant *getCompare(unsigned short pred, Constant *C1, Constant *C2);
+	// static Constant *getICmp(unsigned short pred, Constant *LHS, Constant *RHS);
+	// static Constant *getFCmp(unsigned short pred, Constant *LHS, Constant *RHS);
 	static Constant ^getGetElementPtr(Constant ^C, array<Constant ^> ^IdxList);
 	static Constant ^getGetElementPtr(Constant ^C, array<Constant ^> ^IdxList, bool InBounds);
 	static Constant ^getGetElementPtr(Constant ^C, Constant ^Idx);
@@ -422,7 +482,12 @@ public ref class UndefValue
 {
 internal:
 	llvm::UndefValue *base;
+
+protected:
 	UndefValue(llvm::UndefValue *base);
+
+internal:
+	static inline UndefValue ^_wrap(llvm::UndefValue *base);
 
 public:
 	!UndefValue();

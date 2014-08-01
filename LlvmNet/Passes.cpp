@@ -9,35 +9,35 @@ using namespace LLVM;
 
 ModulePass ^Passes::createPrintModulePass(raw_ostream ^OS)
 {
-	return gcnew ModulePass(llvm::createPrintModulePass(OS->base));
+	return ModulePass::_wrap(llvm::createPrintModulePass(OS->base));
 }
 ModulePass ^Passes::createPrintModulePass(raw_ostream ^OS, bool DeleteStream)
 {
-	return gcnew ModulePass(llvm::createPrintModulePass(OS->base, DeleteStream));
+	return ModulePass::_wrap(llvm::createPrintModulePass(OS->base, DeleteStream));
 }
 ModulePass ^Passes::createPrintModulePass(raw_ostream ^OS, bool DeleteStream, System::String ^Banner)
 {
-	return gcnew ModulePass(llvm::createPrintModulePass(OS->base, DeleteStream, msclr::interop::marshal_as<std::string>(Banner)));
+	return ModulePass::_wrap(llvm::createPrintModulePass(OS->base, DeleteStream, msclr::interop::marshal_as<std::string>(Banner)));
 }
 FunctionPass ^Passes::createPrintFunctionPass(System::String ^Banner, raw_ostream ^OS)
 {
-	return gcnew FunctionPass(llvm::createPrintFunctionPass(msclr::interop::marshal_as<std::string>(Banner), OS->base));
+	return FunctionPass::_wrap(llvm::createPrintFunctionPass(msclr::interop::marshal_as<std::string>(Banner), OS->base));
 }
 FunctionPass ^Passes::createPrintFunctionPass(System::String ^Banner, raw_ostream ^OS, bool DeleteStream)
 {
-	return gcnew FunctionPass(llvm::createPrintFunctionPass(msclr::interop::marshal_as<std::string>(Banner), OS->base, DeleteStream));
+	return FunctionPass::_wrap(llvm::createPrintFunctionPass(msclr::interop::marshal_as<std::string>(Banner), OS->base, DeleteStream));
 }
 BasicBlockPass ^Passes::createPrintBasicBlockPass(raw_ostream ^OS)
 {
-	return gcnew BasicBlockPass(llvm::createPrintBasicBlockPass(OS->base));
+	return BasicBlockPass::_wrap(llvm::createPrintBasicBlockPass(OS->base));
 }
 BasicBlockPass ^Passes::createPrintBasicBlockPass(raw_ostream ^OS, bool DeleteStream)
 {
-	return gcnew BasicBlockPass(llvm::createPrintBasicBlockPass(OS->base, DeleteStream));
+	return BasicBlockPass::_wrap(llvm::createPrintBasicBlockPass(OS->base, DeleteStream));
 }
 BasicBlockPass ^Passes::createPrintBasicBlockPass(raw_ostream ^OS, bool DeleteStream, System::String ^Banner)
 {
-	return gcnew BasicBlockPass(llvm::createPrintBasicBlockPass(OS->base, DeleteStream, msclr::interop::marshal_as<std::string>(Banner)));
+	return BasicBlockPass::_wrap(llvm::createPrintBasicBlockPass(OS->base, DeleteStream, msclr::interop::marshal_as<std::string>(Banner)));
 }
 
 void Passes::initializeCore(PassRegistry ^registry)

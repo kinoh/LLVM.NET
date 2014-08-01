@@ -9,6 +9,10 @@ DebugLoc::DebugLoc(llvm::DebugLoc *base)
 	, constructed(false)
 {
 }
+inline DebugLoc ^DebugLoc::_wrap(llvm::DebugLoc *base)
+{
+	return base ? gcnew DebugLoc(base) : nullptr;
+}
 DebugLoc::!DebugLoc()
 {
 	if (constructed)
@@ -27,19 +31,19 @@ DebugLoc::DebugLoc()
 }
 DebugLoc ^DebugLoc::get(unsigned Line, unsigned Col, MDNode ^Scope)
 {
-	return gcnew DebugLoc(&llvm::DebugLoc::get(Line, Col, Scope->base));
+	return DebugLoc::_wrap(&llvm::DebugLoc::get(Line, Col, Scope->base));
 }
 DebugLoc ^DebugLoc::get(unsigned Line, unsigned Col, MDNode ^Scope, MDNode ^InlinedAt)
 {
-	return gcnew DebugLoc(&llvm::DebugLoc::get(Line, Col, Scope->base, InlinedAt->base));
+	return DebugLoc::_wrap(&llvm::DebugLoc::get(Line, Col, Scope->base, InlinedAt->base));
 }
 DebugLoc ^DebugLoc::getFromDILocation(MDNode ^N)
 {
-	return gcnew DebugLoc(&llvm::DebugLoc::getFromDILocation(N->base));
+	return DebugLoc::_wrap(&llvm::DebugLoc::getFromDILocation(N->base));
 }
 DebugLoc ^DebugLoc::getFromDILexicalBlock(MDNode ^N)
 {
-	return gcnew DebugLoc(&llvm::DebugLoc::getFromDILexicalBlock(N->base));
+	return DebugLoc::_wrap(&llvm::DebugLoc::getFromDILexicalBlock(N->base));
 }
 bool DebugLoc::isUnknown()
 {
@@ -55,15 +59,15 @@ unsigned DebugLoc::getCol()
 }
 MDNode ^DebugLoc::getScope(LLVMContext ^Ctx)
 {
-	return gcnew MDNode(base->getScope(*Ctx->base));
+	return MDNode::_wrap(base->getScope(*Ctx->base));
 }
 MDNode ^DebugLoc::getInlinedAt(LLVMContext ^Ctx)
 {
-	return gcnew MDNode(base->getInlinedAt(*Ctx->base));
+	return MDNode::_wrap(base->getInlinedAt(*Ctx->base));
 }
 MDNode ^DebugLoc::getAsMDNode(LLVMContext ^Ctx)
 {
-	return gcnew MDNode(base->getAsMDNode(*Ctx->base));
+	return MDNode::_wrap(base->getAsMDNode(*Ctx->base));
 }
 void DebugLoc::dump(LLVMContext ^Ctx)
 {

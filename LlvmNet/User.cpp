@@ -9,6 +9,10 @@ User::User(llvm::User *base)
 	, Value(base)
 {
 }
+inline User ^User::_wrap(llvm::User *base)
+{
+	return base ? gcnew User(base) : nullptr;
+}
 User::!User()
 {
 }
@@ -18,7 +22,7 @@ User::~User()
 }
 Value ^User::getOperand(unsigned i)
 {
-	return gcnew Value(base->getOperand(i));
+	return Value::_wrap(base->getOperand(i));
 }
 void User::setOperand(unsigned i, Value ^Val)
 {
@@ -26,7 +30,7 @@ void User::setOperand(unsigned i, Value ^Val)
 }
 Use ^User::getOperandUse(unsigned i)
 {
-	return gcnew Use(&base->getOperandUse(i));
+	return Use::_wrap(&base->getOperandUse(i));
 }
 unsigned User::getNumOperands()
 {

@@ -22,7 +22,12 @@ public:
 
 internal:
 	llvm::Constant *base;
+
+protected:
 	Constant(llvm::Constant *base);
+
+internal:
+	static inline Constant ^_wrap(llvm::Constant *base);
 
 public:
 	!Constant();

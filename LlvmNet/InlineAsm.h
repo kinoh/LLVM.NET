@@ -28,7 +28,12 @@ public:
 
 internal:
 	llvm::InlineAsm *base;
+
+protected:
 	InlineAsm(llvm::InlineAsm *base);
+
+internal:
+	static inline InlineAsm ^_wrap(llvm::InlineAsm *base);
 
 public:
 	!InlineAsm();

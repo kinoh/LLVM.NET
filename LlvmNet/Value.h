@@ -49,7 +49,12 @@ public:
 
 internal:
 	llvm::Value *base;
+
+protected:
 	Value(llvm::Value *base);
+
+internal:
+	static inline Value ^_wrap(llvm::Value *base);
 
 public:
 	!Value();

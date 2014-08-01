@@ -1078,7 +1078,7 @@ if ($#code >= 0)
 		print C "#include \"$_\"\n";
 	}
 	print C "#include <msclr/marshal.h>\n" if ($use_marshal);
-	print C "#include <msclr/marshal_cpp.h>\n"
+	print C "#include <msclr/marshal_cppstd.h>\n"
 		. "#include <string>\n" if ($use_marshal_cpp);
 	print C "#include \"utils.h\"\n" if ($use_utils);
 	print C "\n";
@@ -1213,8 +1213,8 @@ value class ModuleFlagEntry
 	internal:
 		ModuleFlagEntry(llvm::Module::ModuleFlagEntry *base)
 			: Behavior(safe_cast<ModFlagBehavior>(base->Behavior))
-			, Key(gcnew MDString(base->Key))
-			, Val(gcnew Value(base->Val))
+			, Key(MDString::_wrap(base->Key))
+			, Val(Value::_wrap(base->Val))
 		{
 		}
 	};
@@ -1251,19 +1251,28 @@ EOF
 	if (@member_private or $has_constr)
 	{
 		$pre_header .= "private:\n";
-		$pre_header .= "\tbool constructed;" if ($has_constr);
+		$pre_header .= "\tbool constructed;\n" if ($has_constr);
 		$pre_header .= join '', @member_private;
 		$pre_header .= "\n";
 	}
-	if ($static_class) {
-		$pre_header .= "public:\n";
-	} else {
+	unless ($static_class)
+	{
 		$pre_header .=
 			"internal:\n"
-			. "\t$original *base;\n"
-			. "\t$class($original *base);\n\n"
-			. "public:\n"
-			. "\t!$class();\n"
+			. "\t$original *base;\n\n";
+	}
+	unless ($static_class)
+	{
+		$pre_header .= "protected:\n";
+		$pre_header .= "\t$class($original *base);\n\n";
+		$pre_header .= "internal:\n";
+		$pre_header .= "\tstatic inline $class ^_wrap($original *base);\n\n";
+	}
+	$pre_header .= "public:\n";
+	unless ($static_class)
+	{
+		$pre_header .=
+			"\t!$class();\n"
 			. "\tvirtual ~$class();\n";
 	}
 
@@ -1273,10 +1282,13 @@ EOF
 		$pre_code .=
 			"${class}::$class($original *base)\n"
 			. "\t: base(base)\n"
-			. &reduce_indent($constr_inhr);
-		$pre_code .= "\t, constructed(false)\n" if ($has_constr);
-		$pre_code .=
-			"{\n}\n"
+			. &reduce_indent($constr_inhr)
+			. ($has_constr ? "\t, constructed(false)\n" : '')
+			. "{\n}\n"
+			. "inline $class ^${class}::_wrap($original *base)\n"
+			. "{\n"
+			. "\treturn base ? gcnew $class(base) : nullptr;\n"
+			. "}\n"
 			. "${class}::!$class()\n"
 			. "{\n";
 		if ($has_constr)
@@ -1353,7 +1365,7 @@ sub trans_func
 ValueName ^Value::getValueName()
 {
 	auto a = base->getValueName();
-	return gcnew ValueName(utils::manage_str(a->getKey()), gcnew Value(a->getValue()));
+	return gcnew ValueName(utils::manage_str(a->getKey()), Value::_wrap(a->getValue()));
 }
 EOF
 		my @h = ("\tValueName ^getValueName();\n");
@@ -1468,7 +1480,7 @@ EOF
 			else
 			{
 				my $h = (&is_ref_class($t) ? '' : '&');
-				$c = "gcnew $t($h$c)";
+				$c = "${t}::_wrap($h$c)";
 				if ($t !~ /\^$/) {
 					$t = "$t ^";
 				}
@@ -1517,7 +1529,7 @@ EOF
 		$post =
 			"\tauto s = gcnew System::Collections::Generic::List<$t ^>(r->size());\n"
 			. "\tfor (auto it = r->begin(); it != r->end(); ++it)\n"
-			. "\t\ts->Add(gcnew $t(it));\n"
+			. "\t\ts->Add(${t}::_wrap(it));\n"
 			. $post;
 		$ptr = '&';
 		$array = 1;
@@ -1555,7 +1567,7 @@ EOF
 			$need_cast = 1;
 		}
 		$mod .= "$type " . ($ptr ? ($type eq 'void' ? '*' : '^') : '');
-		$call_by = ($static ? "llvm::${class}::" : 'base->');
+		$call_by = ($static ? ($class eq 'Passes' ? 'llvm::' : "llvm::${class}::") : 'base->');
 	}
 	my $mod_c = $mod;
 	$mod_c =~ s/virtual |explicit //;
@@ -1620,7 +1632,7 @@ EOF
 					$use_utils = 1;
 					$call = "utils::manage_str($call)";
 				} elsif ((not $array) and ($type ne 'void')) {
-					$call = "gcnew $type($call)";
+					$call = "${type}::_wrap($call)";
 				}
 			}
 			$call = "safe_cast<$type>($call)" if ($need_cast);
@@ -1722,7 +1734,7 @@ sub manage_arg
 		$r = "System::String ^$n";
 		if ($cpp) {
 			$use_marshal_cpp = 1;
-			$call = "marshal_as<std::string>($n)";
+			$call = "msclr::interop::marshal_as<std::string>($n)";
 		} else {
 			$use_marshal = 1;
 			$call = "ctx.marshal_as<const char *>($n)";

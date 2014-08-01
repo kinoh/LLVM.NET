@@ -15,6 +15,10 @@ Instruction::Instruction(llvm::Instruction *base)
 	, User(base)
 {
 }
+inline Instruction ^Instruction::_wrap(llvm::Instruction *base)
+{
+	return base ? gcnew Instruction(base) : nullptr;
+}
 Instruction::!Instruction()
 {
 }
@@ -24,11 +28,11 @@ Instruction::~Instruction()
 }
 Instruction ^Instruction::use_back()
 {
-	return gcnew Instruction(base->use_back());
+	return Instruction::_wrap(base->use_back());
 }
 inline BasicBlock ^Instruction::getParent()
 {
-	return gcnew BasicBlock(base->getParent());
+	return BasicBlock::_wrap(base->getParent());
 }
 void Instruction::removeFromParent()
 {
@@ -112,12 +116,12 @@ bool Instruction::hasMetadataOtherThanDebugLoc()
 }
 MDNode ^Instruction::getMetadata(unsigned KindID)
 {
-	return gcnew MDNode(base->getMetadata(KindID));
+	return MDNode::_wrap(base->getMetadata(KindID));
 }
 MDNode ^Instruction::getMetadata(System::String ^Kind)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew MDNode(base->getMetadata(ctx.marshal_as<const char *>(Kind)));
+	return MDNode::_wrap(base->getMetadata(ctx.marshal_as<const char *>(Kind)));
 }
 void Instruction::setMetadata(unsigned KindID, MDNode ^Node)
 {
@@ -178,7 +182,7 @@ bool Instruction::hasAllowReciprocal()
 }
 FastMathFlags ^Instruction::getFastMathFlags()
 {
-	return gcnew FastMathFlags(&base->getFastMathFlags());
+	return FastMathFlags::_wrap(&base->getFastMathFlags());
 }
 void Instruction::copyFastMathFlags(Instruction ^I)
 {
@@ -242,7 +246,7 @@ bool Instruction::mayHaveSideEffects()
 }
 Instruction ^Instruction::clone()
 {
-	return gcnew Instruction(base->clone());
+	return Instruction::_wrap(base->clone());
 }
 bool Instruction::isIdenticalTo(Instruction ^I)
 {

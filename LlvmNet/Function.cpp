@@ -24,6 +24,10 @@ Function::Function(llvm::Function *base)
 	, GlobalValue(base)
 {
 }
+inline Function ^Function::_wrap(llvm::Function *base)
+{
+	return base ? gcnew Function(base) : nullptr;
+}
 Function::!Function()
 {
 }
@@ -33,29 +37,29 @@ Function::~Function()
 }
 Function ^Function::Create(FunctionType ^Ty, LinkageTypes Linkage)
 {
-	return gcnew Function(llvm::Function::Create(Ty->base, safe_cast<llvm::Function::LinkageTypes>(Linkage)));
+	return Function::_wrap(llvm::Function::Create(Ty->base, safe_cast<llvm::Function::LinkageTypes>(Linkage)));
 }
 Function ^Function::Create(FunctionType ^Ty, LinkageTypes Linkage, System::String ^N)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Function(llvm::Function::Create(Ty->base, safe_cast<llvm::Function::LinkageTypes>(Linkage), ctx.marshal_as<const char *>(N)));
+	return Function::_wrap(llvm::Function::Create(Ty->base, safe_cast<llvm::Function::LinkageTypes>(Linkage), ctx.marshal_as<const char *>(N)));
 }
 Function ^Function::Create(FunctionType ^Ty, LinkageTypes Linkage, System::String ^N, Module ^M)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Function(llvm::Function::Create(Ty->base, safe_cast<llvm::Function::LinkageTypes>(Linkage), ctx.marshal_as<const char *>(N), M->base));
+	return Function::_wrap(llvm::Function::Create(Ty->base, safe_cast<llvm::Function::LinkageTypes>(Linkage), ctx.marshal_as<const char *>(N), M->base));
 }
 Type ^Function::getReturnType()
 {
-	return gcnew Type(base->getReturnType());
+	return Type::_wrap(base->getReturnType());
 }
 FunctionType ^Function::getFunctionType()
 {
-	return gcnew FunctionType(base->getFunctionType());
+	return FunctionType::_wrap(base->getFunctionType());
 }
 LLVMContext ^Function::getContext()
 {
-	return gcnew LLVMContext(&base->getContext());
+	return LLVMContext::_wrap(&base->getContext());
 }
 bool Function::isVarArg()
 {
@@ -75,7 +79,7 @@ void Function::setCallingConv(CallingConv::ID CC)
 }
 AttributeSet ^Function::getAttributes()
 {
-	return gcnew AttributeSet(&base->getAttributes());
+	return AttributeSet::_wrap(&base->getAttributes());
 }
 void Function::setAttributes(AttributeSet ^attrs)
 {
@@ -225,7 +229,7 @@ System::Collections::Generic::List<Argument ^> ^Function::getArgumentList()
 	auto r = &base->getArgumentList();
 	auto s = gcnew System::Collections::Generic::List<Argument ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew Argument(it));
+		s->Add(Argument::_wrap(it));
 	return s;
 }
 System::Collections::Generic::List<BasicBlock ^> ^Function::getBasicBlockList()
@@ -233,16 +237,16 @@ System::Collections::Generic::List<BasicBlock ^> ^Function::getBasicBlockList()
 	auto r = &base->getBasicBlockList();
 	auto s = gcnew System::Collections::Generic::List<BasicBlock ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew BasicBlock(it));
+		s->Add(BasicBlock::_wrap(it));
 	return s;
 }
 BasicBlock ^Function::getEntryBlock()
 {
-	return gcnew BasicBlock(&base->getEntryBlock());
+	return BasicBlock::_wrap(&base->getEntryBlock());
 }
 inline ValueSymbolTable ^Function::getValueSymbolTable()
 {
-	return gcnew ValueSymbolTable(&base->getValueSymbolTable());
+	return ValueSymbolTable::_wrap(&base->getValueSymbolTable());
 }
 size_t Function::size()
 {
@@ -254,11 +258,11 @@ bool Function::empty()
 }
 BasicBlock ^Function::front()
 {
-	return gcnew BasicBlock(&base->front());
+	return BasicBlock::_wrap(&base->front());
 }
 BasicBlock ^Function::back()
 {
-	return gcnew BasicBlock(&base->back());
+	return BasicBlock::_wrap(&base->back());
 }
 size_t Function::arg_size()
 {

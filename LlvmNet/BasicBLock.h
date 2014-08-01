@@ -19,7 +19,12 @@ public ref class BasicBlock
 {
 internal:
 	llvm::BasicBlock *base;
+
+protected:
 	BasicBlock(llvm::BasicBlock *base);
+
+internal:
+	static inline BasicBlock ^_wrap(llvm::BasicBlock *base);
 
 public:
 	!BasicBlock();
@@ -70,7 +75,7 @@ public:
 	inline Instruction ^back();
 	// const InstListType &getInstList();
 	System::Collections::Generic::List<Instruction ^> ^getInstList();
-	// static iplist<Instruction> BasicBlock::*getSublistAccess(Instruction*);
+	// static iplist<Instruction> BasicBlock::*getSublistAccess(Instruction *);
 	ValueSymbolTable ^getValueSymbolTable();
 	static inline bool classof(Value ^V);
 	void dropAllReferences();

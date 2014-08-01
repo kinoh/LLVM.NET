@@ -56,9 +56,15 @@ public:
 
 private:
 	bool constructed;
+
 internal:
 	llvm::Attribute *base;
+
+protected:
 	Attribute(llvm::Attribute *base);
+
+internal:
+	static inline Attribute ^_wrap(llvm::Attribute *base);
 
 public:
 	!Attribute();
@@ -101,9 +107,15 @@ public:
 
 private:
 	bool constructed;
+
 internal:
 	llvm::AttributeSet *base;
+
+protected:
 	AttributeSet(llvm::AttributeSet *base);
+
+internal:
+	static inline AttributeSet ^_wrap(llvm::AttributeSet *base);
 
 public:
 	!AttributeSet();
@@ -150,9 +162,15 @@ public ref class AttrBuilder
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::AttrBuilder *base;
+
+protected:
 	AttrBuilder(llvm::AttrBuilder *base);
+
+internal:
+	static inline AttrBuilder ^_wrap(llvm::AttrBuilder *base);
 
 public:
 	!AttrBuilder();

@@ -8,7 +8,12 @@ public ref class AssemblyAnnotationWriter
 {
 internal:
 	llvm::AssemblyAnnotationWriter *base;
+
+protected:
 	AssemblyAnnotationWriter(llvm::AssemblyAnnotationWriter *base);
+
+internal:
+	static inline AssemblyAnnotationWriter ^_wrap(llvm::AssemblyAnnotationWriter *base);
 
 public:
 	!AssemblyAnnotationWriter();

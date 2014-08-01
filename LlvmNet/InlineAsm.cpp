@@ -11,6 +11,10 @@ InlineAsm::InlineAsm(llvm::InlineAsm *base)
 	, Value(base)
 {
 }
+inline InlineAsm ^InlineAsm::_wrap(llvm::InlineAsm *base)
+{
+	return base ? gcnew InlineAsm(base) : nullptr;
+}
 InlineAsm::!InlineAsm()
 {
 }
@@ -21,17 +25,17 @@ InlineAsm::~InlineAsm()
 InlineAsm ^InlineAsm::get(FunctionType ^Ty, System::String ^AsmString, System::String ^Constraints, bool hasSideEffects)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew InlineAsm(llvm::InlineAsm::get(Ty->base, ctx.marshal_as<const char *>(AsmString), ctx.marshal_as<const char *>(Constraints), hasSideEffects));
+	return InlineAsm::_wrap(llvm::InlineAsm::get(Ty->base, ctx.marshal_as<const char *>(AsmString), ctx.marshal_as<const char *>(Constraints), hasSideEffects));
 }
 InlineAsm ^InlineAsm::get(FunctionType ^Ty, System::String ^AsmString, System::String ^Constraints, bool hasSideEffects, bool isAlignStack)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew InlineAsm(llvm::InlineAsm::get(Ty->base, ctx.marshal_as<const char *>(AsmString), ctx.marshal_as<const char *>(Constraints), hasSideEffects, isAlignStack));
+	return InlineAsm::_wrap(llvm::InlineAsm::get(Ty->base, ctx.marshal_as<const char *>(AsmString), ctx.marshal_as<const char *>(Constraints), hasSideEffects, isAlignStack));
 }
 InlineAsm ^InlineAsm::get(FunctionType ^Ty, System::String ^AsmString, System::String ^Constraints, bool hasSideEffects, bool isAlignStack, AsmDialect asmDialect)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew InlineAsm(llvm::InlineAsm::get(Ty->base, ctx.marshal_as<const char *>(AsmString), ctx.marshal_as<const char *>(Constraints), hasSideEffects, isAlignStack, safe_cast<llvm::InlineAsm::AsmDialect>(asmDialect)));
+	return InlineAsm::_wrap(llvm::InlineAsm::get(Ty->base, ctx.marshal_as<const char *>(AsmString), ctx.marshal_as<const char *>(Constraints), hasSideEffects, isAlignStack, safe_cast<llvm::InlineAsm::AsmDialect>(asmDialect)));
 }
 bool InlineAsm::hasSideEffects()
 {
@@ -47,11 +51,11 @@ InlineAsm::AsmDialect InlineAsm::getDialect()
 }
 PointerType ^InlineAsm::getType()
 {
-	return gcnew PointerType(base->getType());
+	return PointerType::_wrap(base->getType());
 }
 FunctionType ^InlineAsm::getFunctionType()
 {
-	return gcnew FunctionType(base->getFunctionType());
+	return FunctionType::_wrap(base->getFunctionType());
 }
 bool InlineAsm::Verify(FunctionType ^Ty, System::String ^Constraints)
 {

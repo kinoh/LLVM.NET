@@ -11,7 +11,12 @@ public ref class GVMaterializer
 {
 internal:
 	llvm::GVMaterializer *base;
+
+protected:
 	GVMaterializer(llvm::GVMaterializer *base);
+
+internal:
+	static inline GVMaterializer ^_wrap(llvm::GVMaterializer *base);
 
 public:
 	!GVMaterializer();

@@ -11,9 +11,15 @@ public ref class DebugLoc
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::DebugLoc *base;
+
+protected:
 	DebugLoc(llvm::DebugLoc *base);
+
+internal:
+	static inline DebugLoc ^_wrap(llvm::DebugLoc *base);
 
 public:
 	!DebugLoc();

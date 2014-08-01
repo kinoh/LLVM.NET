@@ -10,6 +10,10 @@ AnalysisUsage::AnalysisUsage(llvm::AnalysisUsage *base)
 	, constructed(false)
 {
 }
+inline AnalysisUsage ^AnalysisUsage::_wrap(llvm::AnalysisUsage *base)
+{
+	return base ? gcnew AnalysisUsage(base) : nullptr;
+}
 AnalysisUsage::!AnalysisUsage()
 {
 	if (constructed)
@@ -28,23 +32,23 @@ AnalysisUsage::AnalysisUsage()
 }
 AnalysisUsage ^AnalysisUsage::addRequiredID(void *ID)
 {
-	return gcnew AnalysisUsage(&base->addRequiredID(ID));
+	return AnalysisUsage::_wrap(&base->addRequiredID(ID));
 }
 AnalysisUsage ^AnalysisUsage::addRequiredID(char ID)
 {
-	return gcnew AnalysisUsage(&base->addRequiredID(ID));
+	return AnalysisUsage::_wrap(&base->addRequiredID(ID));
 }
 AnalysisUsage ^AnalysisUsage::addRequiredTransitiveID(char ID)
 {
-	return gcnew AnalysisUsage(&base->addRequiredTransitiveID(ID));
+	return AnalysisUsage::_wrap(&base->addRequiredTransitiveID(ID));
 }
 AnalysisUsage ^AnalysisUsage::addPreservedID(void *ID)
 {
-	return gcnew AnalysisUsage(&base->addPreservedID(ID));
+	return AnalysisUsage::_wrap(&base->addPreservedID(ID));
 }
 AnalysisUsage ^AnalysisUsage::addPreservedID(char ID)
 {
-	return gcnew AnalysisUsage(&base->addPreservedID(ID));
+	return AnalysisUsage::_wrap(&base->addPreservedID(ID));
 }
 void AnalysisUsage::setPreservesAll()
 {
@@ -65,6 +69,10 @@ AnalysisResolver::AnalysisResolver(llvm::AnalysisResolver *base)
 	, constructed(false)
 {
 }
+inline AnalysisResolver ^AnalysisResolver::_wrap(llvm::AnalysisResolver *base)
+{
+	return base ? gcnew AnalysisResolver(base) : nullptr;
+}
 AnalysisResolver::!AnalysisResolver()
 {
 	if (constructed)
@@ -83,15 +91,15 @@ AnalysisResolver::AnalysisResolver(PMDataManager ^P)
 }
 inline PMDataManager ^AnalysisResolver::getPMDataManager()
 {
-	return gcnew PMDataManager(&base->getPMDataManager());
+	return PMDataManager::_wrap(&base->getPMDataManager());
 }
 Pass ^AnalysisResolver::findImplPass(AnalysisID ^PI)
 {
-	return gcnew Pass(base->findImplPass(PI->base));
+	return Pass::_wrap(base->findImplPass(PI->base));
 }
 Pass ^AnalysisResolver::findImplPass(Pass ^P, AnalysisID ^PI, Function ^F)
 {
-	return gcnew Pass(base->findImplPass(P->base, PI->base, *F->base));
+	return Pass::_wrap(base->findImplPass(P->base, PI->base, *F->base));
 }
 void AnalysisResolver::addAnalysisImplsPair(AnalysisID ^PI, Pass ^P)
 {

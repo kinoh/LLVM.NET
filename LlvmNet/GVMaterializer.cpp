@@ -8,6 +8,10 @@ GVMaterializer::GVMaterializer(llvm::GVMaterializer *base)
 	: base(base)
 {
 }
+inline GVMaterializer ^GVMaterializer::_wrap(llvm::GVMaterializer *base)
+{
+	return base ? gcnew GVMaterializer(base) : nullptr;
+}
 GVMaterializer::!GVMaterializer()
 {
 }

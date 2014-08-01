@@ -13,6 +13,10 @@ Attribute::Attribute(llvm::Attribute *base)
 	, constructed(false)
 {
 }
+inline Attribute ^Attribute::_wrap(llvm::Attribute *base)
+{
+	return base ? gcnew Attribute(base) : nullptr;
+}
 Attribute::!Attribute()
 {
 	if (constructed)
@@ -31,29 +35,29 @@ Attribute::Attribute()
 }
 Attribute ^Attribute::get(LLVMContext ^Context, AttrKind Kind)
 {
-	return gcnew Attribute(&llvm::Attribute::get(*Context->base, safe_cast<llvm::Attribute::AttrKind>(Kind)));
+	return Attribute::_wrap(&llvm::Attribute::get(*Context->base, safe_cast<llvm::Attribute::AttrKind>(Kind)));
 }
 Attribute ^Attribute::get(LLVMContext ^Context, AttrKind Kind, uint64_t Val)
 {
-	return gcnew Attribute(&llvm::Attribute::get(*Context->base, safe_cast<llvm::Attribute::AttrKind>(Kind), Val));
+	return Attribute::_wrap(&llvm::Attribute::get(*Context->base, safe_cast<llvm::Attribute::AttrKind>(Kind), Val));
 }
 Attribute ^Attribute::get(LLVMContext ^Context, System::String ^Kind)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Attribute(&llvm::Attribute::get(*Context->base, ctx.marshal_as<const char *>(Kind)));
+	return Attribute::_wrap(&llvm::Attribute::get(*Context->base, ctx.marshal_as<const char *>(Kind)));
 }
 Attribute ^Attribute::get(LLVMContext ^Context, System::String ^Kind, System::String ^Val)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Attribute(&llvm::Attribute::get(*Context->base, ctx.marshal_as<const char *>(Kind), ctx.marshal_as<const char *>(Val)));
+	return Attribute::_wrap(&llvm::Attribute::get(*Context->base, ctx.marshal_as<const char *>(Kind), ctx.marshal_as<const char *>(Val)));
 }
 Attribute ^Attribute::getWithAlignment(LLVMContext ^Context, uint64_t Align)
 {
-	return gcnew Attribute(&llvm::Attribute::getWithAlignment(*Context->base, Align));
+	return Attribute::_wrap(&llvm::Attribute::getWithAlignment(*Context->base, Align));
 }
 Attribute ^Attribute::getWithStackAlignment(LLVMContext ^Context, uint64_t Align)
 {
-	return gcnew Attribute(&llvm::Attribute::getWithStackAlignment(*Context->base, Align));
+	return Attribute::_wrap(&llvm::Attribute::getWithStackAlignment(*Context->base, Align));
 }
 bool Attribute::isEnumAttribute()
 {
@@ -115,6 +119,10 @@ AttributeSet::AttributeSet(llvm::AttributeSet *base)
 	, constructed(false)
 {
 }
+inline AttributeSet ^AttributeSet::_wrap(llvm::AttributeSet *base)
+{
+	return base ? gcnew AttributeSet(base) : nullptr;
+}
 AttributeSet::!AttributeSet()
 {
 	if (constructed)
@@ -137,7 +145,7 @@ AttributeSet ^AttributeSet::get(LLVMContext ^C, array<AttributeSet ^> ^Attrs)
 	for (int i = 0; i < Attrs->Length; i++)
 		b[i] = *Attrs[i]->base;
 	llvm::ArrayRef<llvm::AttributeSet> brr(b, Attrs->Length);
-	auto r = gcnew AttributeSet(&llvm::AttributeSet::get(*C->base, brr));
+	auto r = AttributeSet::_wrap(&llvm::AttributeSet::get(*C->base, brr));
 	delete b;
 	return r;
 }
@@ -147,50 +155,50 @@ AttributeSet ^AttributeSet::get(LLVMContext ^C, unsigned Index, array<Attribute:
 	for (int i = 0; i < Kind->Length; i++)
 		b[i] = safe_cast<llvm::Attribute::AttrKind>(Kind[i]);
 	llvm::ArrayRef<llvm::Attribute::AttrKind> brr(b, Kind->Length);
-	auto r = gcnew AttributeSet(&llvm::AttributeSet::get(*C->base, Index, brr));
+	auto r = AttributeSet::_wrap(&llvm::AttributeSet::get(*C->base, Index, brr));
 	delete b;
 	return r;
 }
 AttributeSet ^AttributeSet::get(LLVMContext ^C, unsigned Index, AttrBuilder ^B)
 {
-	return gcnew AttributeSet(&llvm::AttributeSet::get(*C->base, Index, *B->base));
+	return AttributeSet::_wrap(&llvm::AttributeSet::get(*C->base, Index, *B->base));
 }
 AttributeSet ^AttributeSet::addAttribute(LLVMContext ^C, unsigned Index, Attribute::AttrKind Attr)
 {
-	return gcnew AttributeSet(&base->addAttribute(*C->base, Index, safe_cast<llvm::Attribute::AttrKind>(Attr)));
+	return AttributeSet::_wrap(&base->addAttribute(*C->base, Index, safe_cast<llvm::Attribute::AttrKind>(Attr)));
 }
 AttributeSet ^AttributeSet::addAttribute(LLVMContext ^C, unsigned Index, System::String ^Kind)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew AttributeSet(&base->addAttribute(*C->base, Index, ctx.marshal_as<const char *>(Kind)));
+	return AttributeSet::_wrap(&base->addAttribute(*C->base, Index, ctx.marshal_as<const char *>(Kind)));
 }
 AttributeSet ^AttributeSet::addAttributes(LLVMContext ^C, unsigned Index, AttributeSet ^Attrs)
 {
-	return gcnew AttributeSet(&base->addAttributes(*C->base, Index, *Attrs->base));
+	return AttributeSet::_wrap(&base->addAttributes(*C->base, Index, *Attrs->base));
 }
 AttributeSet ^AttributeSet::removeAttribute(LLVMContext ^C, unsigned Index, Attribute::AttrKind Attr)
 {
-	return gcnew AttributeSet(&base->removeAttribute(*C->base, Index, safe_cast<llvm::Attribute::AttrKind>(Attr)));
+	return AttributeSet::_wrap(&base->removeAttribute(*C->base, Index, safe_cast<llvm::Attribute::AttrKind>(Attr)));
 }
 AttributeSet ^AttributeSet::removeAttributes(LLVMContext ^C, unsigned Index, AttributeSet ^Attrs)
 {
-	return gcnew AttributeSet(&base->removeAttributes(*C->base, Index, *Attrs->base));
+	return AttributeSet::_wrap(&base->removeAttributes(*C->base, Index, *Attrs->base));
 }
 LLVMContext ^AttributeSet::getContext()
 {
-	return gcnew LLVMContext(&base->getContext());
+	return LLVMContext::_wrap(&base->getContext());
 }
 AttributeSet ^AttributeSet::getParamAttributes(unsigned Index)
 {
-	return gcnew AttributeSet(&base->getParamAttributes(Index));
+	return AttributeSet::_wrap(&base->getParamAttributes(Index));
 }
 AttributeSet ^AttributeSet::getRetAttributes()
 {
-	return gcnew AttributeSet(&base->getRetAttributes());
+	return AttributeSet::_wrap(&base->getRetAttributes());
 }
 AttributeSet ^AttributeSet::getFnAttributes()
 {
-	return gcnew AttributeSet(&base->getFnAttributes());
+	return AttributeSet::_wrap(&base->getFnAttributes());
 }
 bool AttributeSet::hasAttribute(unsigned Index, Attribute::AttrKind Kind)
 {
@@ -211,12 +219,12 @@ bool AttributeSet::hasAttrSomewhere(Attribute::AttrKind Attr)
 }
 Attribute ^AttributeSet::getAttribute(unsigned Index, Attribute::AttrKind Kind)
 {
-	return gcnew Attribute(&base->getAttribute(Index, safe_cast<llvm::Attribute::AttrKind>(Kind)));
+	return Attribute::_wrap(&base->getAttribute(Index, safe_cast<llvm::Attribute::AttrKind>(Kind)));
 }
 Attribute ^AttributeSet::getAttribute(unsigned Index, System::String ^Kind)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Attribute(&base->getAttribute(Index, ctx.marshal_as<const char *>(Kind)));
+	return Attribute::_wrap(&base->getAttribute(Index, ctx.marshal_as<const char *>(Kind)));
 }
 unsigned AttributeSet::getParamAlignment(unsigned Index)
 {
@@ -256,7 +264,7 @@ unsigned AttributeSet::getSlotIndex(unsigned Slot)
 }
 AttributeSet ^AttributeSet::getSlotAttributes(unsigned Slot)
 {
-	return gcnew AttributeSet(&base->getSlotAttributes(Slot));
+	return AttributeSet::_wrap(&base->getSlotAttributes(Slot));
 }
 void AttributeSet::dump()
 {
@@ -268,6 +276,10 @@ AttrBuilder::AttrBuilder(llvm::AttrBuilder *base)
 	: base(base)
 	, constructed(false)
 {
+}
+inline AttrBuilder ^AttrBuilder::_wrap(llvm::AttrBuilder *base)
+{
+	return base ? gcnew AttrBuilder(base) : nullptr;
 }
 AttrBuilder::!AttrBuilder()
 {
@@ -311,38 +323,38 @@ void AttrBuilder::clear()
 }
 AttrBuilder ^AttrBuilder::addAttribute(Attribute::AttrKind Val)
 {
-	return gcnew AttrBuilder(&base->addAttribute(safe_cast<llvm::Attribute::AttrKind>(Val)));
+	return AttrBuilder::_wrap(&base->addAttribute(safe_cast<llvm::Attribute::AttrKind>(Val)));
 }
 AttrBuilder ^AttrBuilder::addAttribute(Attribute ^A)
 {
-	return gcnew AttrBuilder(&base->addAttribute(*A->base));
+	return AttrBuilder::_wrap(&base->addAttribute(*A->base));
 }
 AttrBuilder ^AttrBuilder::addAttribute(System::String ^A)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew AttrBuilder(&base->addAttribute(ctx.marshal_as<const char *>(A)));
+	return AttrBuilder::_wrap(&base->addAttribute(ctx.marshal_as<const char *>(A)));
 }
 AttrBuilder ^AttrBuilder::addAttribute(System::String ^A, System::String ^V)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew AttrBuilder(&base->addAttribute(ctx.marshal_as<const char *>(A), ctx.marshal_as<const char *>(V)));
+	return AttrBuilder::_wrap(&base->addAttribute(ctx.marshal_as<const char *>(A), ctx.marshal_as<const char *>(V)));
 }
 AttrBuilder ^AttrBuilder::removeAttribute(Attribute::AttrKind Val)
 {
-	return gcnew AttrBuilder(&base->removeAttribute(safe_cast<llvm::Attribute::AttrKind>(Val)));
+	return AttrBuilder::_wrap(&base->removeAttribute(safe_cast<llvm::Attribute::AttrKind>(Val)));
 }
 AttrBuilder ^AttrBuilder::removeAttributes(AttributeSet ^A, uint64_t Index)
 {
-	return gcnew AttrBuilder(&base->removeAttributes(*A->base, Index));
+	return AttrBuilder::_wrap(&base->removeAttributes(*A->base, Index));
 }
 AttrBuilder ^AttrBuilder::removeAttribute(System::String ^A)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew AttrBuilder(&base->removeAttribute(ctx.marshal_as<const char *>(A)));
+	return AttrBuilder::_wrap(&base->removeAttribute(ctx.marshal_as<const char *>(A)));
 }
 AttrBuilder ^AttrBuilder::merge(AttrBuilder ^B)
 {
-	return gcnew AttrBuilder(&base->merge(*B->base));
+	return AttrBuilder::_wrap(&base->merge(*B->base));
 }
 bool AttrBuilder::contains(Attribute::AttrKind A)
 {
@@ -375,11 +387,11 @@ uint64_t AttrBuilder::getStackAlignment()
 }
 AttrBuilder ^AttrBuilder::addAlignmentAttr(unsigned Align)
 {
-	return gcnew AttrBuilder(&base->addAlignmentAttr(Align));
+	return AttrBuilder::_wrap(&base->addAlignmentAttr(Align));
 }
 AttrBuilder ^AttrBuilder::addStackAlignmentAttr(unsigned Align)
 {
-	return gcnew AttrBuilder(&base->addStackAlignmentAttr(Align));
+	return AttrBuilder::_wrap(&base->addStackAlignmentAttr(Align));
 }
 bool AttrBuilder::empty()
 {
@@ -391,5 +403,5 @@ bool AttrBuilder::td_empty()
 }
 AttrBuilder ^AttrBuilder::addRawValue(uint64_t Val)
 {
-	return gcnew AttrBuilder(&base->addRawValue(Val));
+	return AttrBuilder::_wrap(&base->addRawValue(Val));
 }

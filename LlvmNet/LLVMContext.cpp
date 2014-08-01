@@ -13,6 +13,10 @@ LLVMContext::LLVMContext(llvm::LLVMContext *base)
 	, constructed(false)
 {
 }
+inline LLVMContext ^LLVMContext::_wrap(llvm::LLVMContext *base)
+{
+	return base ? gcnew LLVMContext(base) : nullptr;
+}
 LLVMContext::!LLVMContext()
 {
 	if (constructed)

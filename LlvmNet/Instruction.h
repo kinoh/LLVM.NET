@@ -59,7 +59,12 @@ public:
 
 internal:
 	llvm::Instruction *base;
+
+protected:
 	Instruction(llvm::Instruction *base);
+
+internal:
+	static inline Instruction ^_wrap(llvm::Instruction *base);
 
 public:
 	!Instruction();
@@ -91,8 +96,8 @@ public:
 	bool hasMetadataOtherThanDebugLoc();
 	MDNode ^getMetadata(unsigned KindID);
 	MDNode ^getMetadata(System::String ^Kind);
-	// void getAllMetadata(SmallVectorImpl<std::pair<unsigned, MDNode*> > &MDs)const;
-	// void getAllMetadataOtherThanDebugLoc(SmallVectorImpl<std::pair<unsigned, MDNode*> > &MDs);
+	// void getAllMetadata(SmallVectorImpl<std::pair<unsigned, MDNode *> > &MDs)const;
+	// void getAllMetadataOtherThanDebugLoc(SmallVectorImpl<std::pair<unsigned, MDNode *> > &MDs);
 	void setMetadata(unsigned KindID, MDNode ^Node);
 	void setMetadata(System::String ^Kind, MDNode ^Node);
 	void setDebugLoc(DebugLoc ^Loc);

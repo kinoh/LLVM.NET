@@ -18,7 +18,12 @@ public ref class MDString
 {
 internal:
 	llvm::MDString *base;
+
+protected:
 	MDString(llvm::MDString *base);
+
+internal:
+	static inline MDString ^_wrap(llvm::MDString *base);
 
 public:
 	!MDString();
@@ -38,7 +43,12 @@ public ref class MDNode
 {
 internal:
 	llvm::MDNode *base;
+
+protected:
 	MDNode(llvm::MDNode *base);
+
+internal:
+	static inline MDNode ^_wrap(llvm::MDNode *base);
 
 public:
 	!MDNode();
@@ -65,7 +75,12 @@ public ref class NamedMDNode
 {
 internal:
 	llvm::NamedMDNode *base;
+
+protected:
 	NamedMDNode(llvm::NamedMDNode *base);
+
+internal:
+	static inline NamedMDNode ^_wrap(llvm::NamedMDNode *base);
 
 public:
 	!NamedMDNode();

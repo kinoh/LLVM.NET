@@ -28,6 +28,10 @@ Module::Module(llvm::Module *base)
 	, constructed(false)
 {
 }
+inline Module ^Module::_wrap(llvm::Module *base)
+{
+	return base ? gcnew Module(base) : nullptr;
+}
 Module::!Module()
 {
 	if (constructed)
@@ -59,7 +63,7 @@ Module::PointerSize Module::getPointerSize()
 }
 LLVMContext ^Module::getContext()
 {
-	return gcnew LLVMContext(&base->getContext());
+	return LLVMContext::_wrap(&base->getContext());
 }
 void Module::setModuleIdentifier(System::String ^ID)
 {
@@ -89,7 +93,7 @@ void Module::appendModuleInlineAsm(System::String ^Asm)
 GlobalValue ^Module::getNamedValue(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew GlobalValue(base->getNamedValue(ctx.marshal_as<const char *>(Name)));
+	return GlobalValue::_wrap(base->getNamedValue(ctx.marshal_as<const char *>(Name)));
 }
 unsigned Module::getMDKindID(System::String ^Name)
 {
@@ -108,62 +112,62 @@ array<System::String ^> ^Module::getMDKindNamesArray()
 StructType ^Module::getTypeByName(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew StructType(base->getTypeByName(ctx.marshal_as<const char *>(Name)));
+	return StructType::_wrap(base->getTypeByName(ctx.marshal_as<const char *>(Name)));
 }
 Constant ^Module::getOrInsertFunction(System::String ^Name, FunctionType ^T, AttributeSet ^AttributeList)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(base->getOrInsertFunction(ctx.marshal_as<const char *>(Name), T->base, *AttributeList->base));
+	return Constant::_wrap(base->getOrInsertFunction(ctx.marshal_as<const char *>(Name), T->base, *AttributeList->base));
 }
 Constant ^Module::getOrInsertFunction(System::String ^Name, FunctionType ^T)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(base->getOrInsertFunction(ctx.marshal_as<const char *>(Name), T->base));
+	return Constant::_wrap(base->getOrInsertFunction(ctx.marshal_as<const char *>(Name), T->base));
 }
 Constant ^Module::getOrInsertTargetIntrinsic(System::String ^Name, FunctionType ^Ty, AttributeSet ^AttributeList)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(base->getOrInsertTargetIntrinsic(ctx.marshal_as<const char *>(Name), Ty->base, *AttributeList->base));
+	return Constant::_wrap(base->getOrInsertTargetIntrinsic(ctx.marshal_as<const char *>(Name), Ty->base, *AttributeList->base));
 }
 Function ^Module::getFunction(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Function(base->getFunction(ctx.marshal_as<const char *>(Name)));
+	return Function::_wrap(base->getFunction(ctx.marshal_as<const char *>(Name)));
 }
 GlobalVariable ^Module::getGlobalVariable(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew GlobalVariable(base->getGlobalVariable(ctx.marshal_as<const char *>(Name)));
+	return GlobalVariable::_wrap(base->getGlobalVariable(ctx.marshal_as<const char *>(Name)));
 }
 GlobalVariable ^Module::getGlobalVariable(System::String ^Name, bool AllowInternal)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew GlobalVariable(base->getGlobalVariable(ctx.marshal_as<const char *>(Name), AllowInternal));
+	return GlobalVariable::_wrap(base->getGlobalVariable(ctx.marshal_as<const char *>(Name), AllowInternal));
 }
 GlobalVariable ^Module::getNamedGlobal(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew GlobalVariable(base->getNamedGlobal(ctx.marshal_as<const char *>(Name)));
+	return GlobalVariable::_wrap(base->getNamedGlobal(ctx.marshal_as<const char *>(Name)));
 }
 Constant ^Module::getOrInsertGlobal(System::String ^Name, Type ^Ty)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Constant(base->getOrInsertGlobal(ctx.marshal_as<const char *>(Name), Ty->base));
+	return Constant::_wrap(base->getOrInsertGlobal(ctx.marshal_as<const char *>(Name), Ty->base));
 }
 GlobalAlias ^Module::getNamedAlias(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew GlobalAlias(base->getNamedAlias(ctx.marshal_as<const char *>(Name)));
+	return GlobalAlias::_wrap(base->getNamedAlias(ctx.marshal_as<const char *>(Name)));
 }
 NamedMDNode ^Module::getNamedMetadata(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew NamedMDNode(base->getNamedMetadata(ctx.marshal_as<const char *>(Name)));
+	return NamedMDNode::_wrap(base->getNamedMetadata(ctx.marshal_as<const char *>(Name)));
 }
 NamedMDNode ^Module::getOrInsertNamedMetadata(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew NamedMDNode(base->getOrInsertNamedMetadata(ctx.marshal_as<const char *>(Name)));
+	return NamedMDNode::_wrap(base->getOrInsertNamedMetadata(ctx.marshal_as<const char *>(Name)));
 }
 void Module::eraseNamedMetadata(NamedMDNode ^NMD)
 {
@@ -180,11 +184,11 @@ array<Module::ModuleFlagEntry ^> ^Module::getModuleFlagsMetadataArray()
 }
 NamedMDNode ^Module::getModuleFlagsMetadata()
 {
-	return gcnew NamedMDNode(base->getModuleFlagsMetadata());
+	return NamedMDNode::_wrap(base->getModuleFlagsMetadata());
 }
 NamedMDNode ^Module::getOrInsertModuleFlagsMetadata()
 {
-	return gcnew NamedMDNode(base->getOrInsertModuleFlagsMetadata());
+	return NamedMDNode::_wrap(base->getOrInsertModuleFlagsMetadata());
 }
 void Module::addModuleFlag(ModFlagBehavior Behavior, System::String ^Key, Value ^Val)
 {
@@ -206,7 +210,7 @@ void Module::setMaterializer(GVMaterializer ^GVM)
 }
 GVMaterializer ^Module::getMaterializer()
 {
-	return gcnew GVMaterializer(base->getMaterializer());
+	return GVMaterializer::_wrap(base->getMaterializer());
 }
 bool Module::isMaterializable(GlobalValue ^GV)
 {
@@ -237,7 +241,7 @@ System::Collections::Generic::List<GlobalVariable ^> ^Module::getGlobalList()
 	auto r = &base->getGlobalList();
 	auto s = gcnew System::Collections::Generic::List<GlobalVariable ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew GlobalVariable(it));
+		s->Add(GlobalVariable::_wrap(it));
 	return s;
 }
 System::Collections::Generic::List<Function ^> ^Module::getFunctionList()
@@ -245,7 +249,7 @@ System::Collections::Generic::List<Function ^> ^Module::getFunctionList()
 	auto r = &base->getFunctionList();
 	auto s = gcnew System::Collections::Generic::List<Function ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew Function(it));
+		s->Add(Function::_wrap(it));
 	return s;
 }
 System::Collections::Generic::List<GlobalAlias ^> ^Module::getAliasList()
@@ -253,7 +257,7 @@ System::Collections::Generic::List<GlobalAlias ^> ^Module::getAliasList()
 	auto r = &base->getAliasList();
 	auto s = gcnew System::Collections::Generic::List<GlobalAlias ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew GlobalAlias(it));
+		s->Add(GlobalAlias::_wrap(it));
 	return s;
 }
 System::Collections::Generic::List<NamedMDNode ^> ^Module::getNamedMDList()
@@ -261,12 +265,12 @@ System::Collections::Generic::List<NamedMDNode ^> ^Module::getNamedMDList()
 	auto r = &base->getNamedMDList();
 	auto s = gcnew System::Collections::Generic::List<NamedMDNode ^>(r->size());
 	for (auto it = r->begin(); it != r->end(); ++it)
-		s->Add(gcnew NamedMDNode(it));
+		s->Add(NamedMDNode::_wrap(it));
 	return s;
 }
 ValueSymbolTable ^Module::getValueSymbolTable()
 {
-	return gcnew ValueSymbolTable(&base->getValueSymbolTable());
+	return ValueSymbolTable::_wrap(&base->getValueSymbolTable());
 }
 bool Module::global_empty()
 {

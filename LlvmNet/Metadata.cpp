@@ -18,6 +18,10 @@ MDString::MDString(llvm::MDString *base)
 	, Value(base)
 {
 }
+inline MDString ^MDString::_wrap(llvm::MDString *base)
+{
+	return base ? gcnew MDString(base) : nullptr;
+}
 MDString::!MDString()
 {
 }
@@ -28,7 +32,7 @@ MDString::~MDString()
 MDString ^MDString::get(LLVMContext ^Context, System::String ^Str)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew MDString(llvm::MDString::get(*Context->base, ctx.marshal_as<const char *>(Str)));
+	return MDString::_wrap(llvm::MDString::get(*Context->base, ctx.marshal_as<const char *>(Str)));
 }
 System::String ^MDString::getString()
 {
@@ -49,6 +53,10 @@ MDNode::MDNode(llvm::MDNode *base)
 	, Value(base)
 {
 }
+inline MDNode ^MDNode::_wrap(llvm::MDNode *base)
+{
+	return base ? gcnew MDNode(base) : nullptr;
+}
 MDNode::!MDNode()
 {
 }
@@ -62,7 +70,7 @@ MDNode ^MDNode::get(LLVMContext ^Context, array<Value ^> ^Vals)
 	for (int i = 0; i < Vals->Length; i++)
 		b[i] = Vals[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Vals->Length);
-	auto r = gcnew MDNode(llvm::MDNode::get(*Context->base, brr));
+	auto r = MDNode::_wrap(llvm::MDNode::get(*Context->base, brr));
 	delete b;
 	return r;
 }
@@ -72,7 +80,7 @@ MDNode ^MDNode::getWhenValsUnresolved(LLVMContext ^Context, array<Value ^> ^Vals
 	for (int i = 0; i < Vals->Length; i++)
 		b[i] = Vals[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Vals->Length);
-	auto r = gcnew MDNode(llvm::MDNode::getWhenValsUnresolved(*Context->base, brr, isFunctionLocal));
+	auto r = MDNode::_wrap(llvm::MDNode::getWhenValsUnresolved(*Context->base, brr, isFunctionLocal));
 	delete b;
 	return r;
 }
@@ -82,7 +90,7 @@ MDNode ^MDNode::getIfExists(LLVMContext ^Context, array<Value ^> ^Vals)
 	for (int i = 0; i < Vals->Length; i++)
 		b[i] = Vals[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Vals->Length);
-	auto r = gcnew MDNode(llvm::MDNode::getIfExists(*Context->base, brr));
+	auto r = MDNode::_wrap(llvm::MDNode::getIfExists(*Context->base, brr));
 	delete b;
 	return r;
 }
@@ -92,7 +100,7 @@ MDNode ^MDNode::getTemporary(LLVMContext ^Context, array<Value ^> ^Vals)
 	for (int i = 0; i < Vals->Length; i++)
 		b[i] = Vals[i]->base;
 	llvm::ArrayRef<llvm::Value*> brr(b, Vals->Length);
-	auto r = gcnew MDNode(llvm::MDNode::getTemporary(*Context->base, brr));
+	auto r = MDNode::_wrap(llvm::MDNode::getTemporary(*Context->base, brr));
 	delete b;
 	return r;
 }
@@ -106,7 +114,7 @@ void MDNode::replaceOperandWith(unsigned i, Value ^NewVal)
 }
 Value ^MDNode::getOperand(unsigned i)
 {
-	return gcnew Value(base->getOperand(i));
+	return Value::_wrap(base->getOperand(i));
 }
 unsigned MDNode::getNumOperands()
 {
@@ -122,21 +130,25 @@ bool MDNode::classof(Value ^V)
 }
 MDNode ^MDNode::getMostGenericTBAA(MDNode ^A, MDNode ^B)
 {
-	return gcnew MDNode(llvm::MDNode::getMostGenericTBAA(A->base, B->base));
+	return MDNode::_wrap(llvm::MDNode::getMostGenericTBAA(A->base, B->base));
 }
 MDNode ^MDNode::getMostGenericFPMath(MDNode ^A, MDNode ^B)
 {
-	return gcnew MDNode(llvm::MDNode::getMostGenericFPMath(A->base, B->base));
+	return MDNode::_wrap(llvm::MDNode::getMostGenericFPMath(A->base, B->base));
 }
 MDNode ^MDNode::getMostGenericRange(MDNode ^A, MDNode ^B)
 {
-	return gcnew MDNode(llvm::MDNode::getMostGenericRange(A->base, B->base));
+	return MDNode::_wrap(llvm::MDNode::getMostGenericRange(A->base, B->base));
 }
 
 
 NamedMDNode::NamedMDNode(llvm::NamedMDNode *base)
 	: base(base)
 {
+}
+inline NamedMDNode ^NamedMDNode::_wrap(llvm::NamedMDNode *base)
+{
+	return base ? gcnew NamedMDNode(base) : nullptr;
 }
 NamedMDNode::!NamedMDNode()
 {
@@ -155,11 +167,11 @@ void NamedMDNode::dropAllReferences()
 }
 inline Module ^NamedMDNode::getParent()
 {
-	return gcnew Module(base->getParent());
+	return Module::_wrap(base->getParent());
 }
 MDNode ^NamedMDNode::getOperand(unsigned i)
 {
-	return gcnew MDNode(base->getOperand(i));
+	return MDNode::_wrap(base->getOperand(i));
 }
 unsigned NamedMDNode::getNumOperands()
 {

@@ -12,7 +12,12 @@ public ref class PassManagerBase
 {
 internal:
 	llvm::PassManagerBase *base;
+
+protected:
 	PassManagerBase(llvm::PassManagerBase *base);
+
+internal:
+	static inline PassManagerBase ^_wrap(llvm::PassManagerBase *base);
 
 public:
 	!PassManagerBase();
@@ -27,9 +32,15 @@ public ref class PassManager
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::PassManager *base;
+
+protected:
 	PassManager(llvm::PassManager *base);
+
+internal:
+	static inline PassManager ^_wrap(llvm::PassManager *base);
 
 public:
 	!PassManager();
@@ -45,9 +56,15 @@ public ref class FunctionPassManager
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::FunctionPassManager *base;
+
+protected:
 	FunctionPassManager(llvm::FunctionPassManager *base);
+
+internal:
+	static inline FunctionPassManager ^_wrap(llvm::FunctionPassManager *base);
 
 public:
 	!FunctionPassManager();

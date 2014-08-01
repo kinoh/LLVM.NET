@@ -13,6 +13,7 @@ ref class AnalysisUsage;
 value class AnalysisID;
 ref class ImmutablePass;
 ref class PMDataManager;
+ref class Pass;
 ref class Function;
 ref class BasicBlock;
 
@@ -54,7 +55,12 @@ public ref class Pass
 {
 internal:
 	llvm::Pass *base;
+
+protected:
 	Pass(llvm::Pass *base);
+
+internal:
+	static inline Pass ^_wrap(llvm::Pass *base);
 
 public:
 	!Pass();
@@ -104,13 +110,18 @@ public ref class ModulePass
 {
 internal:
 	llvm::ModulePass *base;
+
+protected:
 	ModulePass(llvm::ModulePass *base);
+
+internal:
+	static inline ModulePass ^_wrap(llvm::ModulePass *base);
 
 public:
 	!ModulePass();
 	virtual ~ModulePass();
-	// Pass *createPrinterPass(raw_ostream &O, const std::string &Banner);
-	virtual bool runOnModule(Module ^M) override;
+	virtual Pass ^createPrinterPass(raw_ostream ^O, System::String ^Banner);
+	virtual bool runOnModule(Module ^M);
 	virtual void assignPassManager(PMStack ^PMS, PassManagerType T) override;
 	virtual PassManagerType getPotentialPassManagerType() override;
 	// explicit ModulePass(char &pid) : Pass(PT_Module, pid);
@@ -123,9 +134,15 @@ public ref class ImmutablePass
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::ImmutablePass *base;
+
+protected:
 	ImmutablePass(llvm::ImmutablePass *base);
+
+internal:
+	static inline ImmutablePass ^_wrap(llvm::ImmutablePass *base);
 
 public:
 	!ImmutablePass();
@@ -144,13 +161,18 @@ public ref class FunctionPass
 {
 internal:
 	llvm::FunctionPass *base;
+
+protected:
 	FunctionPass(llvm::FunctionPass *base);
+
+internal:
+	static inline FunctionPass ^_wrap(llvm::FunctionPass *base);
 
 public:
 	!FunctionPass();
 	virtual ~FunctionPass();
 	// explicit FunctionPass(char &pid) : Pass(PT_Function, pid);
-	// Pass *createPrinterPass(raw_ostream &O, const std::string &Banner);
+	Pass ^createPrinterPass(raw_ostream ^O, System::String ^Banner);
 	virtual bool runOnFunction(Function ^F);
 	virtual void assignPassManager(PMStack ^PMS, PassManagerType T) override;
 	virtual PassManagerType getPotentialPassManagerType() override;
@@ -162,13 +184,18 @@ public ref class BasicBlockPass
 {
 internal:
 	llvm::BasicBlockPass *base;
+
+protected:
 	BasicBlockPass(llvm::BasicBlockPass *base);
+
+internal:
+	static inline BasicBlockPass ^_wrap(llvm::BasicBlockPass *base);
 
 public:
 	!BasicBlockPass();
 	virtual ~BasicBlockPass();
 	// explicit BasicBlockPass(char &pid) : Pass(PT_BasicBlock, pid);
-	// Pass *createPrinterPass(raw_ostream &O, const std::string &Banner);
+	Pass ^createPrinterPass(raw_ostream ^O, System::String ^Banner);
 	// using llvm::Pass::doInitialization;
 	// using llvm::Pass::doFinalization;
 	virtual bool doInitialization(Function ^function);

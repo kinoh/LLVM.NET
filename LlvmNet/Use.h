@@ -11,14 +11,19 @@ public ref class Use
 {
 internal:
 	llvm::Use *base;
+
+protected:
 	Use(llvm::Use *base);
+
+internal:
+	static inline Use ^_wrap(llvm::Use *base);
 
 public:
 	!Use();
 	virtual ~Use();
 	void swap(Use ^RHS);
-	// typedef PointerIntPair<User*, 1, unsigned> UserRef;
-	// operator Value*();
+	// typedef PointerIntPair<User *, 1, unsigned> UserRef;
+	// operator Value *();
 	Value ^get();
 	User ^getUser();
 	inline void set(Value ^Val);

@@ -13,9 +13,15 @@ public ref class AnalysisUsage
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::AnalysisUsage *base;
+
+protected:
 	AnalysisUsage(llvm::AnalysisUsage *base);
+
+internal:
+	static inline AnalysisUsage ^_wrap(llvm::AnalysisUsage *base);
 
 public:
 	!AnalysisUsage();
@@ -47,9 +53,15 @@ public ref class AnalysisResolver
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::AnalysisResolver *base;
+
+protected:
 	AnalysisResolver(llvm::AnalysisResolver *base);
+
+internal:
+	static inline AnalysisResolver ^_wrap(llvm::AnalysisResolver *base);
 
 public:
 	!AnalysisResolver();

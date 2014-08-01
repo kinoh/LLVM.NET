@@ -56,19 +56,25 @@ public:
 	internal:
 		ModuleFlagEntry(llvm::Module::ModuleFlagEntry *base)
 			: Behavior(safe_cast<ModFlagBehavior>(base->Behavior))
-			, Key(gcnew MDString(base->Key))
-			, Val(gcnew Value(base->Val))
+			, Key(MDString::_wrap(base->Key))
+			, Val(Value::_wrap(base->Val))
 		{
 		}
 	};
 
 
 private:
-	bool constructed;	static llvm::Module *_construct(System::String ^ModuleID, LLVMContext ^C);
+	bool constructed;
+	static llvm::Module *_construct(System::String ^ModuleID, LLVMContext ^C);
 
 internal:
 	llvm::Module *base;
+
+protected:
 	Module(llvm::Module *base);
+
+internal:
+	static inline Module ^_wrap(llvm::Module *base);
 
 public:
 	!Module();
@@ -101,7 +107,7 @@ public:
 	GlobalValue ^getNamedValue(System::String ^Name);
 	unsigned getMDKindID(System::String ^Name);
 	array<System::String ^> ^getMDKindNamesArray();
-	// typedef DenseMap<StructType*, unsigned, DenseMapInfo<StructType*> >;
+	// typedef DenseMap<StructType *, unsigned, DenseMapInfo<StructType *> >;
 	//                  NumeredTypesMapTy;
 	StructType ^getTypeByName(System::String ^Name);
 	Constant ^getOrInsertFunction(System::String ^Name, FunctionType ^T, AttributeSet ^AttributeList);
@@ -135,16 +141,16 @@ public:
 	bool MaterializeAllPermanently();
 	// const GlobalListType   &getGlobalList();
 	System::Collections::Generic::List<GlobalVariable ^> ^getGlobalList();
-	// static iplist<GlobalVariable> Module::*getSublistAccess(GlobalVariable*);
+	// static iplist<GlobalVariable> Module::*getSublistAccess(GlobalVariable *);
 	// const FunctionListType &getFunctionList();
 	System::Collections::Generic::List<Function ^> ^getFunctionList();
-	// static iplist<Function> Module::*getSublistAccess(Function*);
+	// static iplist<Function> Module::*getSublistAccess(Function *);
 	// const AliasListType    &getAliasList();
 	System::Collections::Generic::List<GlobalAlias ^> ^getAliasList();
-	// static iplist<GlobalAlias> Module::*getSublistAccess(GlobalAlias*);
+	// static iplist<GlobalAlias> Module::*getSublistAccess(GlobalAlias *);
 	// const NamedMDListType  &getNamedMDList();
 	System::Collections::Generic::List<NamedMDNode ^> ^getNamedMDList();
-	// static ilist<NamedMDNode> Module::*getSublistAccess(NamedMDNode*);
+	// static ilist<NamedMDNode> Module::*getSublistAccess(NamedMDNode *);
 	// const ValueSymbolTable &getValueSymbolTable();
 	ValueSymbolTable ^getValueSymbolTable();
 	// global_iterator       global_begin();

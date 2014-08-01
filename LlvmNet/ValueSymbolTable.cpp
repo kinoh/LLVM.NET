@@ -10,6 +10,10 @@ ValueSymbolTable::ValueSymbolTable(llvm::ValueSymbolTable *base)
 	, constructed(false)
 {
 }
+inline ValueSymbolTable ^ValueSymbolTable::_wrap(llvm::ValueSymbolTable *base)
+{
+	return base ? gcnew ValueSymbolTable(base) : nullptr;
+}
 ValueSymbolTable::!ValueSymbolTable()
 {
 	if (constructed)
@@ -29,7 +33,7 @@ ValueSymbolTable::ValueSymbolTable()
 Value ^ValueSymbolTable::lookup(System::String ^Name)
 {
 	msclr::interop::marshal_context ctx;
-	return gcnew Value(base->lookup(ctx.marshal_as<const char *>(Name)));
+	return Value::_wrap(base->lookup(ctx.marshal_as<const char *>(Name)));
 }
 inline bool ValueSymbolTable::empty()
 {

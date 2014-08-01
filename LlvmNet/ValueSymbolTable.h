@@ -11,14 +11,20 @@ public ref class ValueSymbolTable
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::ValueSymbolTable *base;
+
+protected:
 	ValueSymbolTable(llvm::ValueSymbolTable *base);
+
+internal:
+	static inline ValueSymbolTable ^_wrap(llvm::ValueSymbolTable *base);
 
 public:
 	!ValueSymbolTable();
 	virtual ~ValueSymbolTable();
-	// typedef StringMap<Value*> ValueMap;
+	// typedef StringMap<Value *> ValueMap;
 	// typedef ValueMap::iterator iterator;
 	// typedef ValueMap::const_iterator const_iterator;
 	ValueSymbolTable();

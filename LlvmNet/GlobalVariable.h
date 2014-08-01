@@ -27,7 +27,8 @@ public:
 	};
 
 private:
-	bool constructed;	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name);
+	bool constructed;
+	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name);
 	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode);
 	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace);
 	static llvm::GlobalVariable *_construct(Type ^Ty, bool isConstant, LinkageTypes Linkage, Constant ^Initializer, System::String ^Name, ThreadLocalMode mode, unsigned AddressSpace, bool isExternallyInitialized);
@@ -39,7 +40,12 @@ private:
 
 internal:
 	llvm::GlobalVariable *base;
+
+protected:
 	GlobalVariable(llvm::GlobalVariable *base);
+
+internal:
+	static inline GlobalVariable ^_wrap(llvm::GlobalVariable *base);
 
 public:
 	!GlobalVariable();

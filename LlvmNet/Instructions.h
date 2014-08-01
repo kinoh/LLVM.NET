@@ -46,7 +46,8 @@ public ref class AllocaInst
 	: public UnaryInstruction
 {
 private:
-	bool constructed;	static llvm::AllocaInst *_construct(Type ^Ty, Value ^ArraySize, System::String ^Name);
+	bool constructed;
+	static llvm::AllocaInst *_construct(Type ^Ty, Value ^ArraySize, System::String ^Name);
 	static llvm::AllocaInst *_construct(Type ^Ty, Value ^ArraySize, System::String ^Name, Instruction ^InsertBefore);
 	static llvm::AllocaInst *_construct(Type ^Ty, Value ^ArraySize, System::String ^Name, BasicBlock ^InsertAtEnd);
 	static llvm::AllocaInst *_construct(Type ^Ty, System::String ^Name);
@@ -58,7 +59,12 @@ private:
 
 internal:
 	llvm::AllocaInst *base;
+
+protected:
 	AllocaInst(llvm::AllocaInst *base);
+
+internal:
+	static inline AllocaInst ^_wrap(llvm::AllocaInst *base);
 
 public:
 	!AllocaInst();
@@ -93,7 +99,8 @@ public ref class LoadInst
 	: public UnaryInstruction
 {
 private:
-	bool constructed;	static llvm::LoadInst *_construct(Value ^Ptr, System::String ^NameStr, Instruction ^InsertBefore);
+	bool constructed;
+	static llvm::LoadInst *_construct(Value ^Ptr, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::LoadInst *_construct(Value ^Ptr, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 	static llvm::LoadInst *_construct(Value ^Ptr, System::String ^NameStr);
 	static llvm::LoadInst *_construct(Value ^Ptr, System::String ^NameStr, bool isVolatile);
@@ -109,7 +116,12 @@ private:
 
 internal:
 	llvm::LoadInst *base;
+
+protected:
 	LoadInst(llvm::LoadInst *base);
+
+internal:
+	static inline LoadInst ^_wrap(llvm::LoadInst *base);
 
 public:
 	!LoadInst();
@@ -155,9 +167,15 @@ public ref class StoreInst
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::StoreInst *base;
+
+protected:
 	StoreInst(llvm::StoreInst *base);
+
+internal:
+	static inline StoreInst ^_wrap(llvm::StoreInst *base);
 
 public:
 	!StoreInst();
@@ -206,9 +224,15 @@ public ref class FenceInst
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::FenceInst *base;
+
+protected:
 	FenceInst(llvm::FenceInst *base);
+
+internal:
+	static inline FenceInst ^_wrap(llvm::FenceInst *base);
 
 public:
 	!FenceInst();
@@ -232,9 +256,15 @@ public ref class AtomicCmpXchgInst
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::AtomicCmpXchgInst *base;
+
+protected:
 	AtomicCmpXchgInst(llvm::AtomicCmpXchgInst *base);
+
+internal:
+	static inline AtomicCmpXchgInst ^_wrap(llvm::AtomicCmpXchgInst *base);
 
 public:
 	!AtomicCmpXchgInst();
@@ -288,9 +318,15 @@ public:
 
 private:
 	bool constructed;
+
 internal:
 	llvm::AtomicRMWInst *base;
+
+protected:
 	AtomicRMWInst(llvm::AtomicRMWInst *base);
+
+internal:
+	static inline AtomicRMWInst ^_wrap(llvm::AtomicRMWInst *base);
 
 public:
 	!AtomicRMWInst();
@@ -324,7 +360,12 @@ public ref class GetElementPtrInst
 {
 internal:
 	llvm::GetElementPtrInst *base;
+
+protected:
 	GetElementPtrInst(llvm::GetElementPtrInst *base);
+
+internal:
+	static inline GetElementPtrInst ^_wrap(llvm::GetElementPtrInst *base);
 
 public:
 	!GetElementPtrInst();
@@ -370,13 +411,19 @@ public ref class ICmpInst
 	: public CmpInst
 {
 private:
-	bool constructed;	static llvm::ICmpInst *_construct(Instruction ^InsertBefore, Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
+	bool constructed;
+	static llvm::ICmpInst *_construct(Instruction ^InsertBefore, Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
 	static llvm::ICmpInst *_construct(BasicBlock ^InsertAtEnd, Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
 	static llvm::ICmpInst *_construct(Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
 
 internal:
 	llvm::ICmpInst *base;
+
+protected:
 	ICmpInst(llvm::ICmpInst *base);
+
+internal:
+	static inline ICmpInst ^_wrap(llvm::ICmpInst *base);
 
 public:
 	!ICmpInst();
@@ -407,13 +454,19 @@ public ref class FCmpInst
 	: public CmpInst
 {
 private:
-	bool constructed;	static llvm::FCmpInst *_construct(Instruction ^InsertBefore, Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
+	bool constructed;
+	static llvm::FCmpInst *_construct(Instruction ^InsertBefore, Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
 	static llvm::FCmpInst *_construct(BasicBlock ^InsertAtEnd, Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
 	static llvm::FCmpInst *_construct(Predicate pred, Value ^LHS, Value ^RHS, System::String ^NameStr);
 
 internal:
 	llvm::FCmpInst *base;
+
+protected:
 	FCmpInst(llvm::FCmpInst *base);
+
+internal:
+	static inline FCmpInst ^_wrap(llvm::FCmpInst *base);
 
 public:
 	!FCmpInst();
@@ -438,7 +491,12 @@ public ref class CallInst
 {
 internal:
 	llvm::CallInst *base;
+
+protected:
 	CallInst(llvm::CallInst *base);
+
+internal:
+	static inline CallInst ^_wrap(llvm::CallInst *base);
 
 public:
 	!CallInst();
@@ -508,7 +566,12 @@ public ref class SelectInst
 {
 internal:
 	llvm::SelectInst *base;
+
+protected:
 	SelectInst(llvm::SelectInst *base);
+
+internal:
+	static inline SelectInst ^_wrap(llvm::SelectInst *base);
 
 public:
 	!SelectInst();
@@ -535,13 +598,19 @@ public ref class VAArgInst
 	: public UnaryInstruction
 {
 private:
-	bool constructed;	static llvm::VAArgInst *_construct(Value ^List, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::VAArgInst *_construct(Value ^List, Type ^Ty, System::String ^NameStr);
 	static llvm::VAArgInst *_construct(Value ^List, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::VAArgInst *_construct(Value ^List, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::VAArgInst *base;
+
+protected:
 	VAArgInst(llvm::VAArgInst *base);
+
+internal:
+	static inline VAArgInst ^_wrap(llvm::VAArgInst *base);
 
 public:
 	!VAArgInst();
@@ -565,7 +634,12 @@ public ref class ExtractElementInst
 {
 internal:
 	llvm::ExtractElementInst *base;
+
+protected:
 	ExtractElementInst(llvm::ExtractElementInst *base);
+
+internal:
+	static inline ExtractElementInst ^_wrap(llvm::ExtractElementInst *base);
 
 public:
 	!ExtractElementInst();
@@ -591,7 +665,12 @@ public ref class InsertElementInst
 {
 internal:
 	llvm::InsertElementInst *base;
+
+protected:
 	InsertElementInst(llvm::InsertElementInst *base);
+
+internal:
+	static inline InsertElementInst ^_wrap(llvm::InsertElementInst *base);
 
 public:
 	!InsertElementInst();
@@ -612,13 +691,19 @@ public ref class ShuffleVectorInst
 	: public Instruction
 {
 private:
-	bool constructed;	static llvm::ShuffleVectorInst *_construct(Value ^V1, Value ^V2, Value ^Mask, System::String ^NameStr);
+	bool constructed;
+	static llvm::ShuffleVectorInst *_construct(Value ^V1, Value ^V2, Value ^Mask, System::String ^NameStr);
 	static llvm::ShuffleVectorInst *_construct(Value ^V1, Value ^V2, Value ^Mask, System::String ^NameStr, Instruction ^InsertBefor);
 	static llvm::ShuffleVectorInst *_construct(Value ^V1, Value ^V2, Value ^Mask, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::ShuffleVectorInst *base;
+
+protected:
 	ShuffleVectorInst(llvm::ShuffleVectorInst *base);
+
+internal:
+	static inline ShuffleVectorInst ^_wrap(llvm::ShuffleVectorInst *base);
 
 public:
 	!ShuffleVectorInst();
@@ -647,7 +732,12 @@ public ref class ExtractValueInst
 {
 internal:
 	llvm::ExtractValueInst *base;
+
+protected:
 	ExtractValueInst(llvm::ExtractValueInst *base);
+
+internal:
+	static inline ExtractValueInst ^_wrap(llvm::ExtractValueInst *base);
 
 public:
 	!ExtractValueInst();
@@ -676,7 +766,12 @@ public ref class InsertValueInst
 {
 internal:
 	llvm::InsertValueInst *base;
+
+protected:
 	InsertValueInst(llvm::InsertValueInst *base);
+
+internal:
+	static inline InsertValueInst ^_wrap(llvm::InsertValueInst *base);
 
 public:
 	!InsertValueInst();
@@ -709,7 +804,12 @@ public ref class PHINode
 {
 internal:
 	llvm::PHINode *base;
+
+protected:
 	PHINode(llvm::PHINode *base);
+
+internal:
+	static inline PHINode ^_wrap(llvm::PHINode *base);
 
 public:
 	!PHINode();
@@ -720,7 +820,7 @@ public:
 	static PHINode ^Create(Type ^Ty, unsigned NumReservedValues, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 	// DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 	// typedef BasicBlock **block_iterator;
-	// typedef BasicBlock  *const *const_block_iterator;
+	// typedef BasicBlock * const *const_block_iterator;
 	// block_iterator block_begin();
 	// const_block_iterator block_begin();
 	// block_iterator block_end();
@@ -757,7 +857,12 @@ public:
 
 internal:
 	llvm::LandingPadInst *base;
+
+protected:
 	LandingPadInst(llvm::LandingPadInst *base);
+
+internal:
+	static inline LandingPadInst ^_wrap(llvm::LandingPadInst *base);
 
 public:
 	!LandingPadInst();
@@ -786,7 +891,12 @@ public ref class ReturnInst
 {
 internal:
 	llvm::ReturnInst *base;
+
+protected:
 	ReturnInst(llvm::ReturnInst *base);
+
+internal:
+	static inline ReturnInst ^_wrap(llvm::ReturnInst *base);
 
 public:
 	!ReturnInst();
@@ -810,7 +920,12 @@ public ref class BranchInst
 {
 internal:
 	llvm::BranchInst *base;
+
+protected:
 	BranchInst(llvm::BranchInst *base);
+
+internal:
+	static inline BranchInst ^_wrap(llvm::BranchInst *base);
 
 public:
 	!BranchInst();
@@ -840,7 +955,12 @@ public ref class SwitchInst
 {
 internal:
 	llvm::SwitchInst *base;
+
+protected:
 	SwitchInst(llvm::SwitchInst *base);
+
+internal:
+	static inline SwitchInst ^_wrap(llvm::SwitchInst *base);
 
 public:
 	!SwitchInst();
@@ -886,7 +1006,12 @@ public ref class IndirectBrInst
 {
 internal:
 	llvm::IndirectBrInst *base;
+
+protected:
 	IndirectBrInst(llvm::IndirectBrInst *base);
+
+internal:
+	static inline IndirectBrInst ^_wrap(llvm::IndirectBrInst *base);
 
 public:
 	!IndirectBrInst();
@@ -916,7 +1041,12 @@ public ref class InvokeInst
 {
 internal:
 	llvm::InvokeInst *base;
+
+protected:
 	InvokeInst(llvm::InvokeInst *base);
+
+internal:
+	static inline InvokeInst ^_wrap(llvm::InvokeInst *base);
 
 public:
 	!InvokeInst();
@@ -972,7 +1102,12 @@ public ref class ResumeInst
 {
 internal:
 	llvm::ResumeInst *base;
+
+protected:
 	ResumeInst(llvm::ResumeInst *base);
+
+internal:
+	static inline ResumeInst ^_wrap(llvm::ResumeInst *base);
 
 public:
 	!ResumeInst();
@@ -993,9 +1128,15 @@ public ref class UnreachableInst
 {
 private:
 	bool constructed;
+
 internal:
 	llvm::UnreachableInst *base;
+
+protected:
 	UnreachableInst(llvm::UnreachableInst *base);
+
+internal:
+	static inline UnreachableInst ^_wrap(llvm::UnreachableInst *base);
 
 public:
 	!UnreachableInst();
@@ -1014,13 +1155,19 @@ public ref class TruncInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::TruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::TruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::TruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::TruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::TruncInst *base;
+
+protected:
 	TruncInst(llvm::TruncInst *base);
+
+internal:
+	static inline TruncInst ^_wrap(llvm::TruncInst *base);
 
 public:
 	!TruncInst();
@@ -1038,13 +1185,19 @@ public ref class ZExtInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::ZExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::ZExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::ZExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::ZExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::ZExtInst *base;
+
+protected:
 	ZExtInst(llvm::ZExtInst *base);
+
+internal:
+	static inline ZExtInst ^_wrap(llvm::ZExtInst *base);
 
 public:
 	!ZExtInst();
@@ -1062,13 +1215,19 @@ public ref class SExtInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::SExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::SExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::SExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::SExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::SExtInst *base;
+
+protected:
 	SExtInst(llvm::SExtInst *base);
+
+internal:
+	static inline SExtInst ^_wrap(llvm::SExtInst *base);
 
 public:
 	!SExtInst();
@@ -1086,13 +1245,19 @@ public ref class FPTruncInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::FPTruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::FPTruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::FPTruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::FPTruncInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::FPTruncInst *base;
+
+protected:
 	FPTruncInst(llvm::FPTruncInst *base);
+
+internal:
+	static inline FPTruncInst ^_wrap(llvm::FPTruncInst *base);
 
 public:
 	!FPTruncInst();
@@ -1110,13 +1275,19 @@ public ref class FPExtInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::FPExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::FPExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::FPExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::FPExtInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::FPExtInst *base;
+
+protected:
 	FPExtInst(llvm::FPExtInst *base);
+
+internal:
+	static inline FPExtInst ^_wrap(llvm::FPExtInst *base);
 
 public:
 	!FPExtInst();
@@ -1134,13 +1305,19 @@ public ref class UIToFPInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::UIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::UIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::UIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::UIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::UIToFPInst *base;
+
+protected:
 	UIToFPInst(llvm::UIToFPInst *base);
+
+internal:
+	static inline UIToFPInst ^_wrap(llvm::UIToFPInst *base);
 
 public:
 	!UIToFPInst();
@@ -1158,13 +1335,19 @@ public ref class SIToFPInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::SIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::SIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::SIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::SIToFPInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::SIToFPInst *base;
+
+protected:
 	SIToFPInst(llvm::SIToFPInst *base);
+
+internal:
+	static inline SIToFPInst ^_wrap(llvm::SIToFPInst *base);
 
 public:
 	!SIToFPInst();
@@ -1182,13 +1365,19 @@ public ref class FPToUIInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::FPToUIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::FPToUIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::FPToUIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::FPToUIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::FPToUIInst *base;
+
+protected:
 	FPToUIInst(llvm::FPToUIInst *base);
+
+internal:
+	static inline FPToUIInst ^_wrap(llvm::FPToUIInst *base);
 
 public:
 	!FPToUIInst();
@@ -1206,13 +1395,19 @@ public ref class FPToSIInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::FPToSIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::FPToSIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::FPToSIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::FPToSIInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::FPToSIInst *base;
+
+protected:
 	FPToSIInst(llvm::FPToSIInst *base);
+
+internal:
+	static inline FPToSIInst ^_wrap(llvm::FPToSIInst *base);
 
 public:
 	!FPToSIInst();
@@ -1230,13 +1425,19 @@ public ref class IntToPtrInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::IntToPtrInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::IntToPtrInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::IntToPtrInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::IntToPtrInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::IntToPtrInst *base;
+
+protected:
 	IntToPtrInst(llvm::IntToPtrInst *base);
+
+internal:
+	static inline IntToPtrInst ^_wrap(llvm::IntToPtrInst *base);
 
 public:
 	!IntToPtrInst();
@@ -1256,13 +1457,19 @@ public ref class PtrToIntInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::PtrToIntInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::PtrToIntInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::PtrToIntInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::PtrToIntInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::PtrToIntInst *base;
+
+protected:
 	PtrToIntInst(llvm::PtrToIntInst *base);
+
+internal:
+	static inline PtrToIntInst ^_wrap(llvm::PtrToIntInst *base);
 
 public:
 	!PtrToIntInst();
@@ -1284,13 +1491,19 @@ public ref class BitCastInst
 	: public CastInst
 {
 private:
-	bool constructed;	static llvm::BitCastInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
+	bool constructed;
+	static llvm::BitCastInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr);
 	static llvm::BitCastInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, Instruction ^InsertBefore);
 	static llvm::BitCastInst *_construct(Value ^S, Type ^Ty, System::String ^NameStr, BasicBlock ^InsertAtEnd);
 
 internal:
 	llvm::BitCastInst *base;
+
+protected:
 	BitCastInst(llvm::BitCastInst *base);
+
+internal:
+	static inline BitCastInst ^_wrap(llvm::BitCastInst *base);
 
 public:
 	!BitCastInst();
