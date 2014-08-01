@@ -114,6 +114,7 @@
     <ClCompile Include="PassSupport.cpp" />
     <ClCompile Include="PrettyStackTrace.cpp" />
     <ClCompile Include="raw_ostream.cpp" />
+    <ClCompile Include="Transforms.cpp" />
     <ClCompile Include="Type.cpp" />
     <ClCompile Include="Use.cpp" />
     <ClCompile Include="User.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="PassSupport.h" />
     <ClInclude Include="PrettyStackTrace.h" />
     <ClInclude Include="raw_ostream.h" />
+    <ClInclude Include="Transforms.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="Use.h" />
     <ClInclude Include="User.h" />

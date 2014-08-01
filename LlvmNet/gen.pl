@@ -955,6 +955,11 @@ while (<F>)
 			print "global functions\n";
 			$class = 'Passes';
 		}
+		elsif ($1 eq 'llvm' and $folder eq 'Transforms')
+		{
+			print "global functions\n";
+			$class = 'Transforms';
+		}
 		else
 		{
 			next;
@@ -1178,7 +1183,7 @@ EOF
 			(?(DEFINE)
 				(?<TYPE>(?:const\ )?(?:\w+::)?\w+(?:<(?:\w+::)?\w+\s*(?:\*\s*)?>)?)
 				(?<ARG>(?&TYPE)(?:\ [*&]?\w*)?)
-				(?<DEF>\s*=\s*(?:\w+(?:\(\))?|\"\"))
+				(?<DEF>\s*=\s*(?:[\w-]+(?:\(\))?|\"\"))
 			)
 			/x and &func_filter($1, $2, $3, $4, $5, $6 . $7)
 			and not ($abstruct and $5 eq $class))
@@ -1396,7 +1401,7 @@ EOF
 	$arg =~ tr/*/^/;
 	my @args = split /,\s*/, $arg;
 	$varg =~ tr/*/^/;
-	$varg =~ s/\s*=\s*\w+//g;
+	$varg =~ s/\s*=\s*[^,]+//g;
 	my @vargs = split /,\s*/, $varg;
 	if (@vargs == 0) {
 		push @vargs, '';
